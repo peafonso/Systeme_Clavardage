@@ -3,41 +3,50 @@ package system;
 import java.util.ArrayList;
 
 
-enum Etat {CONNECTED, CONNECTING, DISCONNECTED };
+enum State {CONNECTED, CONNECTING, DISCONNECTED };
 
 public class User {
 	
 	private int id;
 	private String pseudo;
-	private Etat state;
+	private State state;
 
 
-	public User(int identifier, String pseudonyme ,Etat etat) {
+
+	public User(int identifier, String pseudonym) {
 		
 		//identifiant
 		this.setId(identifier);
 		
 		//Pseudonyme
-		this.setPseudo(pseudonyme);
+		Change_pseudo(pseudonym);
 		
-		//Etat de l'utilisateur (connecté ou déconnecté)
-		this.setState(etat);
+		//Etat de l'utilisateur (connecté car construction)
+		this.setState(State.CONNECTED);
 		
-		//Base de données des ptits potes
-		ArrayList<User> listeUsers=new ArrayList<User>();
-
 		
 	}
 	
+	public void Initilisation() {
+		//KIKÉLA
+		Contacts.Add(this);
+	}
 	 
 	
-	public void Connexion(String pseudonyme) {
-		this.pseudo=pseudonyme;
-		this.setState(Etat.CONNECTED);
+	public void Connexion() {
+		this.setState(State.CONNECTED);
+		
 	}
 	
 	public void Deconnexion() {
+		this.setState(State.DISCONNECTED);
+	}
 	
+	public void Change_pseudo(String pseudonym) {
+		
+		//itérateur afin de vérifier si quelqu'un a le même
+		Iterator<User> iter = 
+		
 	}
 	
 	
@@ -64,11 +73,11 @@ public class User {
 		this.pseudo = pseudo;
 	}
 
-	public Etat getState() {
+	public State getState() {
 		return state;
 	}
 
-	public void setState(Etat state) {
+	public void setState(State state) {
 		this.state = state;
 	}
 
