@@ -3,34 +3,35 @@ package system;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class SocketClient {
+public class SocketClient extends Thread {
+
+	private static String clientIP; //"127.0.0.1";
+    private static int clientPort ;
+    private static String msg;
 	
-	public static void main(String[] args) {
-        final int link_id = 123;
-        new Thread(() -> {
-            try {
-                Socket s = new Socket("127.0.0.1", 1234);
-                OutputStream os = s.getOutputStream();
-                SendMessage(os,"salut c'est toto");
-                os.close();
-                s.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-}
+    public SocketClient(String IP, int port, String message){
+        this.clientIP=IP;
+        this.clientPort=port;
+        this.msg=message;
+    }
+    
 
 
-public static void SendMessage(OutputStream os, String msg)  {
-	try {
-		// Converts the string into bytes
-        byte[] dataBytes = msg.getBytes();
-        os.write(dataBytes);
-	}
-	 catch (Exception e) {
-         e.getStackTrace();
-     }    
+public static void SendMessage(String msg)  {
+    new Thread(() -> {
+        try {
+            Socket s = new Socket(clientIP, clientPort);
+            OutputStream os = s.getOutputStream();
+    		// Converts the string into bytes
+            byte[] dataBytes = msg.getBytes();
+            os.write(dataBytes);
+            os.close();
+            s.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }).start();
+        
 }
 
 
