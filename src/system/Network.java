@@ -25,7 +25,7 @@ public class Network {
 	        socket.close();
 	    }
 	    
-	    static ArrayList<InetAddress> listAllBroadcastAddresses() throws SocketException {
+	    /*static ArrayList<InetAddress> listAllBroadcastAddresses() throws SocketException {
 	        ArrayList<InetAddress> broadcastList = new ArrayList<>();
 	        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 	        while (interfaces.hasMoreElements()) {
@@ -41,7 +41,7 @@ public class Network {
 	              .forEach(broadcastList::add);
 	        }
 	        return broadcastList;
-	    }
+	    }*/
 	    
 	    }
 	

@@ -2,7 +2,7 @@ package system;
 import java.util.Random;
 import java.util.Iterator;
 
-
+//rajouter un mot de passe pour les connexions et protéger les pseudos
 enum State {CONNECTED, CONNECTING, DISCONNECTED };
 
 public class User {
