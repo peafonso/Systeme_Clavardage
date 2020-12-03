@@ -7,16 +7,12 @@ import java.util.Objects;
 
 public class Network {
 	
-	//première connexion envoi d'un broadcast aux numéros de ports (même num de port si IP différentes sinon num port différents)
+	//première connexion envoi d'un broadcast aux numéros de ports (même num de port si
 	    private static DatagramSocket socket = null;
 
 	    public static void main(String[] args) throws IOException {
 	    	System.out.println("Envoi Hello");
-<<<<<<< HEAD
-	        broadcast("Hello tete de noeud", InetAddress.getByName("255.255.255.255"));
-=======
 	        broadcast("Hello", InetAddress.getByName("255.255.255.255"));
->>>>>>> db4ef11490f868fcee7f5b486d9f33766367fcd6
 	    }
 
 	    public static void broadcast(String broadcastMessage, InetAddress address) throws IOException {
@@ -29,8 +25,24 @@ public class Network {
 	        socket.close();
 	    }
 	    
-	    
+	    static ArrayList<InetAddress> listAllBroadcastAddresses() throws SocketException {
+	        ArrayList<InetAddress> broadcastList = new ArrayList<>();
+	        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+	        while (interfaces.hasMoreElements()) {
+	            NetworkInterface networkInterface = interfaces.nextElement();
 
+	            if (networkInterface.isLoopback() || !networkInterface.isUp()) {
+	                continue;
+	            }
+
+	            networkInterface.getInterfaceAddresses().stream() 
+	              .map(a -> a.getBroadcast())
+	              .filter(Objects::nonNull)
+	              .forEach(broadcastList::add);
+	        }
+	        return broadcastList;
+	    }
+	    
 	    }
 	
 	
