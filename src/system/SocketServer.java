@@ -1,6 +1,10 @@
 package system;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,7 +18,33 @@ public class SocketServer extends Thread{
         this.serverPort=port;
     }
     
-    public void Listen() {
+	public void Listen() {    
+	      try {
+	        DatagramSocket serverSocket = new DatagramSocket(serverPort);
+	      //1 char= 1 octet
+	       	//Max message 100*10^6 octets
+	        byte[] array = new byte[100000000];
+
+	        System.out.printf("Listening on udp:%s:%d%n",
+	                InetAddress.getLocalHost().getHostAddress(), serverPort);     
+	        DatagramPacket receivePacket = new DatagramPacket(array,
+	                           array.length);
+
+	        while(true)
+	        {
+	              serverSocket.receive(receivePacket);
+	              String sentence = new String( receivePacket.getData(), 0,
+	                                 receivePacket.getLength() );
+	              System.out.println("RECEIVED: " + sentence);
+	             
+	        }
+	      } catch (IOException e) {
+	              System.out.println(e);
+	      }
+	      // should close serverSocket in finally block
+	}
+
+    /*public void Listen() {
 
     	try {
     		//Creating a ServerSocket instance
@@ -49,6 +79,6 @@ public class SocketServer extends Thread{
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	            }
-	        }
+	        }*/
     }
 
