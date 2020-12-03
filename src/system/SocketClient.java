@@ -7,12 +7,10 @@ public class SocketClient extends Thread {
 
 	private static String clientIP; //"127.0.0.1";
     private static int clientPort ;
-    private static String msg;
 	
-    public SocketClient(String IP, int port, String message){
+    public SocketClient(String IP, int port){
         this.clientIP=IP;
         this.clientPort=port;
-        this.msg=message;
     }
     
 

@@ -9,12 +9,12 @@ public class SocketServer extends Thread{
 	private static String serverIP; //"127.0.0.1";
     private static int serverPort ;
     
-    public void SocketServer(String IP, int port){
+    public SocketServer(String IP, int port){
         this.serverIP=IP;
         this.serverPort=port;
     }
     
-    public static void main(String[] args) {
+    public void Listen() {
 
     	try {
     		//Creating a ServerSocket instance
