@@ -11,11 +11,10 @@ public class Test {
 		coumbz.Change_pseudo("pp");
 		coumbz.Change_pseudo("pp2");
 		Contacts.showContacts();*/
-
-		//Test de broadcast
-		SocketServer sockserv= new SocketServer("127.0.0.1",4445);
-		sockserv.Listen();
 		
+		//Test Broadcast
+		SocketServer sok = new SocketServer("127.0.0.1",4445);
+		sok.Listen();
 	}
 
 }

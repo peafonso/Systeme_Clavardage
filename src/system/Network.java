@@ -12,7 +12,11 @@ public class Network {
 
 	    public static void main(String[] args) throws IOException {
 	    	System.out.println("Envoi Hello");
+<<<<<<< HEAD
 	        broadcast("Hello tete de noeud", InetAddress.getByName("255.255.255.255"));
+=======
+	        broadcast("Hello", InetAddress.getByName("255.255.255.255"));
+>>>>>>> db4ef11490f868fcee7f5b486d9f33766367fcd6
 	    }
 
 	    public static void broadcast(String broadcastMessage, InetAddress address) throws IOException {
@@ -20,7 +24,6 @@ public class Network {
 	        socket.setBroadcast(true);
 
 	        byte[] buffer = broadcastMessage.getBytes();
-
 	        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 4445);
 	        socket.send(packet);
 	        socket.close();
