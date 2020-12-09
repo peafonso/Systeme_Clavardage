@@ -35,7 +35,7 @@ public class SocketServer extends Thread{
 	              serverSocket.receive(receivePacket);
 	              String sentence = new String( receivePacket.getData(), 0,
 	                                 receivePacket.getLength() );
-	              System.out.println("RECEIVED: " + sentence);
+	              System.out.println("RECEIVED: " + sentence+ " from " +receivePacket.getAddress().getHostAddress());
 	             
 	        }
 	      } catch (IOException e) {
