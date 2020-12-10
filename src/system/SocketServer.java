@@ -7,19 +7,17 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class SocketServer extends Thread{
 	
-	private static String serverIP; //"127.0.0.1";
-    private static int serverPort ;
+    private int serverPort ;
     
-    public SocketServer(String IP, int port){
-        this.serverIP=IP;
+    public SocketServer(int port){
         this.serverPort=port;
     }
     
-	public void Listen() {    
-	      try {
+	public String Listen() throws IOException {    
 	        DatagramSocket serverSocket = new DatagramSocket(serverPort);
 	      //1 char= 1 octet
 	       	//Max message 100*10^6 octets
@@ -30,18 +28,15 @@ public class SocketServer extends Thread{
 	        DatagramPacket receivePacket = new DatagramPacket(array,
 	                           array.length);
 
-	        while(true)
+	        for (int i=0;i<10;i++)
 	        {
 	              serverSocket.receive(receivePacket);
 	              String sentence = new String( receivePacket.getData(), 0,
 	                                 receivePacket.getLength() );
-	              System.out.println("RECEIVED: " + sentence+ " from " +receivePacket.getAddress().getHostAddress());
-	             
+	              return sentence;
 	        }
-	      } catch (IOException e) {
-	              System.out.println(e);
-	      }
-	      // should close serverSocket in finally block
+	       
+	       return receivePacket.getAddress().getHostAddress();
 	}
 
     /*public void Listen() {

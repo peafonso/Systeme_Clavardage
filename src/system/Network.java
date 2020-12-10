@@ -7,8 +7,7 @@ import java.util.Objects;
 
 public class Network {
 	
-	//première connexion envoi d'un broadcast aux numéros de ports (même num de port si
-	    private static DatagramSocket socket = null;
+	//première connexion envoi d'un broadcast aux numéros de ports 
 
 	    public static void main(String[] args) throws IOException {
 	    	System.out.println("Envoi Hello");
@@ -16,7 +15,7 @@ public class Network {
 	    }
 
 	    public static void broadcast(String broadcastMessage, InetAddress address) throws IOException {
-	        socket = new DatagramSocket();
+	    	DatagramSocket socket = new DatagramSocket();
 	        socket.setBroadcast(true);
 
 	        byte[] buffer = broadcastMessage.getBytes();
@@ -43,12 +42,7 @@ public class Network {
 	        return broadcastList;
 	    }*/
 	    
-	    }
+}
 	
 	
-	//connexion déjà faite et communication entre deux utilisateurs
-	//public void Conversation (user1, user2) {
-		
-	//}
-
-
+	

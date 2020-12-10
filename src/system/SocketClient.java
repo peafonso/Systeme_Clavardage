@@ -5,8 +5,8 @@ import java.net.Socket;
 
 public class SocketClient extends Thread {
 
-	private static String clientIP; //"127.0.0.1";
-    private static int clientPort ;
+	private String clientIP; //"127.0.0.1";
+    private int clientPort ;
 	
     public SocketClient(String IP, int port){
         this.clientIP=IP;
@@ -15,7 +15,7 @@ public class SocketClient extends Thread {
     
 
 
-public static void SendMessage(String msg)  {
+public void SendMessage(String msg)  {
     new Thread(() -> {
         try {
             Socket s = new Socket(clientIP, clientPort);
@@ -31,6 +31,8 @@ public static void SendMessage(String msg)  {
     }).start();
         
 }
+
+
 
 
 }
