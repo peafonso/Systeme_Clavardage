@@ -1,11 +1,15 @@
 package system;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
-public class Interface {
+public class Interface implements ActionListener{
 	
 	//Fenêtre avant connexion de bienvenue avec register/login
 	//Fenêtre connexion refusée
@@ -14,29 +18,47 @@ public class Interface {
 	//Fenêtre chat avec un user
 	//Fenêtre deconnexion
 	public static void bienvenue () {
-		JFrame frame = new JFrame("CleverChat");
+		JFrame frame = new BackgroundJFrame("CleverChat");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setSize(400, 400);
+    	frame.setSize(500, 500);
     	JMenuBar mb= new JMenuBar();
     	JMenu m1 =new JMenu("File");
     	JMenu m2= new JMenu("Help");
     	mb.add(m1);
     	mb.add(m2);
-    	ImageIcon reg = new ImageIcon();
-    	reg = createImageIcon("/images/LOGIN(1).png");
-        JButton register = new JButton("register",reg);
+    	
+    	JPanel panel1= new JPanel();
+   
+        
+    	//bouton login
+    	ImageIcon log = new ImageIcon();
+    	log = createImageIcon("/images/LOGIN_bis.png");
+    	log = scaleImage (log, 200,100);
+        JButton login = new JButton(log);
+        JLabel identifier = new JLabel("PSEUDONYM");
+		JTextField p = new JTextField(10);
+		panel1.add(identifier);
+		panel1.add(p);
+		
+		//ouverture fenêtre accueil sur vérification du login
+        login.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e) {
+        		String pseudo=p.getText();
+        		if (pseudo_ok(pseudo)) {
+        			BackgroundJFrame pageprincipale = new BackgroundJFrame("CleverChat - Accueil");
+        			frame.setVisible(false);
+        			pageprincipale.setVisible(true);
+        		}       		
+        		
+        	}
+        });
+        
+        panel1.add(login);
+   	
+        //panel2.add(label);
+    	frame.getContentPane().add(BorderLayout.CENTER, panel1);
+    	//frame.getContentPane().add(BorderLayout.NORTH, panel2);
 
-        /*JPanel panneau = new JPanel();
-        panneau.add(bouton);
-        setContentPane(panneau);
-        setSize(200,100);*/
-    	
-    	JButton login= new JButton("Login");
-    	JPanel panel= new JPanel();
-    	panel.add(register);
-    	panel.add(login);
-    	frame.getContentPane().add(BorderLayout.CENTER, panel);
-    	
     	//centrer la fenêtre au milieu de l'écran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2 - frame.getWidth()/2, dim.height/2 - frame.getHeight()/2);
@@ -58,6 +80,44 @@ public class Interface {
         }
     }
     
+    public static ImageIcon scaleImage(ImageIcon icon, int w, int h){
+        int nw = icon.getIconWidth();
+        int nh = icon.getIconHeight();
+
+        if(icon.getIconWidth() > w){
+          nw = w;
+          nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
+        }
+
+        if(nh > h){
+          nh = h;
+          nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
+        }
+
+        return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
+    }
+    
+    public static boolean pseudo_ok(String pseudo) {
+    	return true;
+    }
+    
+    
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+    	/*test bouton login
+    	ImageIcon log = new ImageIcon();
+    	log = createImageIcon("/images/LOGIN_bis.png");
+    	log = scaleImage (log, 200,100);
+        JButton login = new JButton(log);
+        
+    	if (e.getActionCommand().equals(login)) {
+    		
+    	}*/
+		
+	}
+	
 	public static void main(String[] args) {
 		/*JFrame frame= new JFrame("Chat Frame");
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,5 +150,8 @@ public class Interface {
 		
 		
 	}
+
+
+
 	
 }
