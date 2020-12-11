@@ -12,6 +12,9 @@ public class Network {
 	    public static void main(String[] args) throws IOException {
 	    	System.out.println("Envoi Hello");
 	        broadcast("Hello", InetAddress.getByName("255.255.255.255"));
+	        SocketServer sok = new SocketServer(4445);
+			//tant qu'on appelle pas envoyer message on attend de recevoir quelque chose
+			System.out.println(sok.Listen());
 	    }
 
 	    public static void broadcast(String broadcastMessage, InetAddress address) throws IOException {
@@ -24,23 +27,6 @@ public class Network {
 	        socket.close();
 	    }
 	    
-	    /*static ArrayList<InetAddress> listAllBroadcastAddresses() throws SocketException {
-	        ArrayList<InetAddress> broadcastList = new ArrayList<>();
-	        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-	        while (interfaces.hasMoreElements()) {
-	            NetworkInterface networkInterface = interfaces.nextElement();
-
-	            if (networkInterface.isLoopback() || !networkInterface.isUp()) {
-	                continue;
-	            }
-
-	            networkInterface.getInterfaceAddresses().stream() 
-	              .map(a -> a.getBroadcast())
-	              .filter(Objects::nonNull)
-	              .forEach(broadcastList::add);
-	        }
-	        return broadcastList;
-	    }*/
 	    
 }
 	
