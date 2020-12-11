@@ -11,7 +11,7 @@ class BackgroundJFrame extends JFrame
 	public BackgroundJFrame(String name)
 	{
 		super(name);
-		setTitle("Background Color for JFrame");
+		//setTitle("Background Color for JFrame");
 		setSize(500,500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -20,12 +20,31 @@ class BackgroundJFrame extends JFrame
 
 	// Another way
 	setLayout(new BorderLayout());
-	setContentPane(new JLabel(new ImageIcon("C:\\Users\\coumba\\Documents\\insa\\4A\\Cours\\COO\\Systeme_Clavardage\\src\\images\\Fond.png")));
+	ImageIcon fond = new ImageIcon();
+	if (name.contentEquals("CleverChat")) {
+    	fond = createImageIcon("/images/Fond.png");
+	}else {
+		//setSize(1000,800);
+	}
+	setContentPane(new JLabel(fond));
 	setLayout(new FlowLayout());
 
 	// Just for refresh :) Not optional!
-	   setSize(499,499);
+	   setSize(501,501);
 	   setSize(500,500);
 	   }
+	
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imageURL = Interface.class.getResource(path);
+
+        if (imageURL == null) {
+            System.err.println("Resource not found: "
+                               + path);
+            return null;
+        } else {
+            return new ImageIcon(imageURL);
+        }
+    }
 
 }

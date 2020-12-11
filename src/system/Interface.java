@@ -1,6 +1,7 @@
 package system;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -45,9 +46,33 @@ public class Interface implements ActionListener{
         	public void actionPerformed(ActionEvent e) {
         		String pseudo=p.getText();
         		if (pseudo_ok(pseudo)) {
-        			BackgroundJFrame pageprincipale = new BackgroundJFrame("CleverChat - Accueil");
         			frame.setVisible(false);
-        			pageprincipale.setVisible(true);
+        			JFrame accueil = new JFrame("CleverChat - Accueil");
+        	    	accueil.setSize(1000, 800);
+        	    	
+        	    	//centrer la fenêtre au milieu de l'écran
+        	    	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        	        accueil.setLocation(dim.width/2 - accueil.getWidth()/2, dim.height/2 - accueil.getHeight()/2);
+
+        	    	JMenuBar menu= new JMenuBar();
+        	    	JMenu m1 =new JMenu("HOME");
+        	    	JMenu m2= new JMenu("CHAT");
+        	    	menu.add(m1);
+        	    	menu.add(m2);
+        	    	
+        	    	ImageIcon fond_acc = new ImageIcon();
+        	    	fond_acc = createImageIcon("/images/ACCUEIL_FOND.png");
+        	    	fond_acc = scaleImage (fond_acc, 1000,700);
+        	    	
+        	    	JLabel welcome= new JLabel("WELCOME", JLabel.CENTER);
+        	    	JLabel imageFond = new JLabel(fond_acc, JLabel.CENTER);
+        	    	imageFond.add(welcome);
+        	    	welcome.setFont(new Font("Serif", Font.BOLD, 100));
+        	    	accueil.getContentPane().add(BorderLayout.NORTH, menu);
+        	    	//accueil.getContentPane().add(BorderLayout.NORTH, welcome);
+        	    	accueil.getContentPane().add(BorderLayout.CENTER, imageFond);
+
+        			accueil.setVisible(true);
         		}       		
         		
         	}
@@ -56,7 +81,7 @@ public class Interface implements ActionListener{
         panel1.add(login);
    	
         //panel2.add(label);
-    	frame.getContentPane().add(BorderLayout.CENTER, panel1);
+    	frame.getContentPane().add(BorderLayout.SOUTH, panel1);
     	//frame.getContentPane().add(BorderLayout.NORTH, panel2);
 
     	//centrer la fenêtre au milieu de l'écran
