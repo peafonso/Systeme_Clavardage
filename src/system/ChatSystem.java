@@ -6,15 +6,20 @@ import java.util.Scanner;
 
 public class ChatSystem {
 	private static User user;
-	static SocketServer sockserv= new SocketServer(user.getPort());
+	static SocketServer sockserv;
 
+	public ChatSystem(User us,SocketServer ss) {
+		this.user=us;
+		this.sockserv=ss;
+	}
 	public static void main(String[] args) throws IOException {
-		Connexion();
+		ChatSystem csys= new ChatSystem(new User("127.0.0.1",1234,"pp"),new SocketServer(1234));
+		csys.Connexion();
 		SocketClient sockclient= new SocketClient(user.getIP(),user.getPort());
 		ChatSystemServer listener = new ChatSystemServer(user,sockserv,sockclient);
 		listener.run();
     }
-	public static void Connexion () {
+	public void Connexion () {
 		try {
 			//on commence par lancer un broadcast avec notre pseudo
 			Network.broadcast(user.toString(), InetAddress.getByName("255.255.255.255"));
