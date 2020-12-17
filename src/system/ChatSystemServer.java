@@ -18,6 +18,7 @@ public class ChatSystemServer extends Thread {
 	    	try {
 	    		//traitement
 	    		String response= sockserv.Listen();
+	    		System.out.println(response);
 	    		User usertoadd= user.toUser(response);
 	    		if (usertoadd.equals(user)) {
 	    			String envoiko= "not ok"+user.toString();
