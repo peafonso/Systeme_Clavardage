@@ -19,6 +19,7 @@ public class ChatSystem {
 		ChatSystemServer listener = new ChatSystemServer(user,sockserv,sockclient);
 		listener.run();
     }
+	
 	public void Connexion () {
 		try {
 			//on commence par lancer un broadcast avec notre pseudo
