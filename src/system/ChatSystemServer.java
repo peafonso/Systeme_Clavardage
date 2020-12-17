@@ -21,10 +21,12 @@ public class ChatSystemServer extends Thread {
 	    		System.out.println(response);
 	    		User usertoadd= user.toUser(response);
 	    		if (usertoadd.equals(user)) {
+		    		System.out.println("pseudo utilisé");
 	    			String envoiko= "not ok"+user.toString();
 	    			sockclient.SendMessage(envoiko);
 	    		}
 	    		else {
+		    		System.out.println("pseudo ok");
 	    			String envoiko= "ok"+user.toString();
 	    			sockclient.SendMessage(envoiko);
 	    		}

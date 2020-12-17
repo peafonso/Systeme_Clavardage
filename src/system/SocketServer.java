@@ -36,7 +36,7 @@ public class SocketServer extends Thread{
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return "";
+			return "Erreur_reponse";
 		}
 	}
 
