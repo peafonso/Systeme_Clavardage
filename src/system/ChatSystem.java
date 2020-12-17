@@ -14,7 +14,7 @@ public class ChatSystem {
 	}
 	public static void main(String[] args) throws IOException {
 		ChatSystem csys= new ChatSystem(new User("127.0.0.1",1234,"pp"),new SocketServer(1234));
-		csys.Connexion();
+		//csys.Connexion();
 		SocketClient sockclient= new SocketClient(user.getIP(),user.getPort());
 		ChatSystemServer listener = new ChatSystemServer(user,sockserv,sockclient);
 		listener.run();
