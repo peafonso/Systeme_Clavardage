@@ -21,6 +21,10 @@ public class User {
 		this.contacts.add(e);
 	}
 	
+	//vérifie l'adresse ip pour récupérer un user
+	public boolean findUser (String adress) {
+		return this.iP.equals(adress);
+	}
 
 	//Methode affichant tous les contacts de la liste
 	public void showContacts() {

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
@@ -15,25 +16,29 @@ public class Database {
      */
     public static void createTables() {
         // SQLite connection string
-        String url = "jdbc:sqlite:C://sqlite/db/tests.db";
+        String url = "jdbc:sqlite:C://sqlite/db/test.db";
         
-        // SQL statement for creating a new table of contatcs
+        // SQL statement for creating a new tables
         String sqlcontacts = "CREATE TABLE IF NOT EXISTS contacts (\n"
-                + "	user User PRIMARY KEY,\n"
+        		+ "	contactid integer PRIMARY KEY,\n"
+                + "	ip text NOT NULL UNIQUE\n"
                 + ");";
         
         String sqlconversation = "CREATE TABLE IF NOT EXISTS conversations (\n"
-        		+ "	usera User PRIMARY KEY,\n"
-        		+ " userb User NOT NULL,\n"
+        		+ "	convoid integer PRIMARY KEY,\n"
+        		+ "	ip1 text NOT NULL,\n"
+        		+ " ip2 text NOT NULL\n"
         		+ ");";
         
-        String sqlmessages = "CREATE TABLE IF NOT EXISTS messsages (\n"
-        		+ "	text Message PRIMARY KEY,\n"
+        String sqlmessages = "CREATE TABLE IF NOT EXISTS messages (\n"
+        		+ "	textid integer PRIMARY KEY,\n"
+        		+ "	message text NOT NULL,\n"
+        		+ "	time real NOT NULL\n"
         		+ ");";
         
                 
         try (Connection conn = DriverManager.getConnection(url);
-                Statement stmt = conn.createStatement()) {
+          Statement stmt = conn.createStatement()) {
             // create new tables
             stmt.execute(sqlcontacts);
             stmt.execute(sqlconversation);
@@ -52,9 +57,9 @@ public class Database {
 	    	try {
 				Class.forName("org.sqlite.JDBC");
 			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+	    	
 	        String url = "jdbc:sqlite:C:/sqlite/db/" + fileName;
 
 	        try (Connection conn = DriverManager.getConnection(url)) {
@@ -74,7 +79,7 @@ public class Database {
 	     * Connect to the test.db database
 	     * @return the Connection object
 	     */
-	 	private Connection connect() {
+		private Connection connect() {
 	        // SQLite connection string
 	        String url = "jdbc:sqlite:C://sqlite/db/test.db";
 	        Connection conn = null;
@@ -87,33 +92,147 @@ public class Database {
 	 	}
 	 	
 	 	/**
-	     * Insert a new row into the warehouses table
+	     * Insert a new row into the contacts table
 	     *
-	     * @param name
-	     * @param capacity
+	     * @param adress
 	     */
-	    public void insert(String name, double capacity) {
-	        String sql = "INSERT INTO contacts(user) VALUES(?,?)";
+	    public void insertcontact(String ip) {
+	        String sql = "INSERT INTO contacts(ip) VALUES(?)";
 
 	        try (Connection conn = this.connect();
 	        	PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	            pstmt.setString(1, name);
-	            pstmt.setDouble(2, capacity);
+	            pstmt.setString(1, ip);
 	            pstmt.executeUpdate();
 	        } catch (SQLException e) {
+	            System.out.println("error at insertcontact\n");
 	            System.out.println(e.getMessage());
 	        }
 	    }
 
+	    /**
+	     * Insert a new row into the conversation table
+	     *
+	     * @param ip1
+	     * @param ip2
+	     * 
+	     */
+	    public void insertconvo(String ip1,String ip2) {
+	        String sql = "INSERT INTO conversations(ip1,ip2) VALUES(?,?)";
 
+	        try (Connection conn = this.connect();
+	        	PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, ip1);
+	            pstmt.setString(2, ip2);
+	            pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println("error at insertconvo\n");
+	            System.out.println(e.getMessage());
+	        }
+	    }
 	 
+	    /**
+	     * Insert a new row into the messages table
+	     *
+	     * @param msg
+	     * @param time
+	     * 
+	     */
+	    public void inserttext(String msg,int time) {
+	        String sql = "INSERT INTO messages(msg,time) VALUES(?,?)";
+
+	        try (Connection conn = this.connect();
+	        	PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, msg);
+	            pstmt.setLong(2, time);
+	            pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println("error at inserttext\n");
+	            System.out.println(e.getMessage());
+	        }
+	    }
+
+	    /**
+	     * select all rows in the contacts table
+	     */
+	    public void selectContacts(){
+	        String sql = "SELECT contactid, ip FROM contacts";
+	        
+	        try (Connection conn = this.connect();
+	             Statement stmt  = conn.createStatement();
+	             ResultSet rs    = stmt.executeQuery(sql)){
+                System.out.println("\nTABLE CONTACTS (contactid, ip)");
+
+	            // loop through the result set
+	            while (rs.next()) {
+	                System.out.println(rs.getInt("contactid") +  "\t" + 
+	                                   rs.getString("ip"));
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("error at selectContacts\n");
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    /**
+	     * select all rows in the conversations table
+	     */
+	    public void selectConversations(){
+	        String sql = "SELECT convoid, ip1, ip2 FROM conversations";
+	        
+	        try (Connection conn = this.connect();
+	             Statement stmt  = conn.createStatement();
+	             ResultSet rs    = stmt.executeQuery(sql)){
+                System.out.println("\nTABLE CONVERSATIONS (convoid, ip1, ip2)");
+                
+	            // loop through the result set
+	            while (rs.next()) {
+	                System.out.println(rs.getInt("convoid") +  "\t" + 
+	                                   rs.getString("ip1") + "\t" +
+	                                   rs.getString("ip2"));
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("error at selectConversations\n");
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    /**
+	     * select all rows in the messages table
+	     */
+	    public void selectMessages(){
+	        String sql = "SELECT textid, message, time FROM messages";
+	        
+	        try (Connection conn = this.connect();
+	             Statement stmt  = conn.createStatement();
+	             ResultSet rs    = stmt.executeQuery(sql)){
+                System.out.println("\nTABLE MESSAGES (textid, message, time)\n");
+
+	            // loop through the result set
+	            while (rs.next()) {
+	                System.out.println(rs.getInt("textid") +  "\t" + 
+	                                   rs.getString("message") + "\t" +
+	                                   rs.getFloat("time"));
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("error at selectMessages\n");
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
 	 /**
 	  * @param args the command line arguments
 	 */
 	 public static void main(String[] args) {
+		 Database app= new Database();
+		 
 		 createNewDatabase("test.db");
 		 createTables();
-		 insert();
+		 app.insertcontact("127.0.0.1");
+		 app.selectContacts();
+		 //app.insertconvo("127.0.0.1", "127.0.0.1");
+		 app.selectConversations();
+		 app.selectMessages();
+		 
 	 }
 }
 
