@@ -1,5 +1,7 @@
 package system;
 
+import model.User;
+
 public class Message {
 	private User sender;
 	private User receiver;

@@ -1,24 +1,19 @@
-package system;
-import java.util.ArrayList;
-
+package model;
 
 public class User {
 	
 	private String iP;
 	private String pseudo;
 	private int port;
-	//liste des personnes connectés
-	private ArrayList<User> contacts= new ArrayList<User>();
- 
-
+	private int id; 
+	public static int nbuser=1;
+	
 	public User(String address, int port, String pseudonym) {
 		this.setIP(address);
 		this.setPort(port);
 		this.setPseudo(pseudo);
-	}
-	
-	public void addContact(User e) {
-		this.contacts.add(e);
+		this.setId(nbuser);
+		nbuser++;
 	}
 	
 	//vérifie l'adresse ip pour récupérer un user
@@ -26,13 +21,6 @@ public class User {
 		return this.iP.equals(adress);
 	}
 
-	//Methode affichant tous les contacts de la liste
-	public void showContacts() {
-		System.out.println("Contacts list:");
-		for (User user : this.contacts) {
-			System.out.println(user.getPseudo());
-		}
-	}
 	
 	//teste l'égalité de deux users par rapport à leur pseudo
 	public boolean equals (User user) {
@@ -47,7 +35,7 @@ public class User {
 		return "_"+this.pseudo+"_"+this.iP+"_"+String.valueOf(this.port);
 	}
 	
-	public User toUser(String s) {
+	public static User toUser(String s) {
 		String[] parametersuser=s.split("_");
 		//String validate= parametersuser[0];
 		String userpseudo = parametersuser[1];
@@ -82,6 +70,14 @@ public class User {
 
 	public void setPort(int p) {
 		this.port = p;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

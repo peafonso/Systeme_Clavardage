@@ -1,4 +1,4 @@
-package system;
+package model;
 
 import java.util.ArrayList;
 
@@ -20,5 +20,36 @@ public class Contacts extends ArrayList<User>{
 			System.out.println(user.getPseudo());
 		}
 	}
+	
+	public void addContact(User e) {
+		contacts.add(e);
+	}
+	
+	public void deleteContact (User e) {
+		contacts.remove(e);
+	}
+	
+	public boolean appartient (String pseudo) {
+		for (User user : contacts) {
+			if (user.getPseudo().equals(pseudo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//Récupérer un utilisateur d'après son pseudo
+	public User getUserfromPseudo (String pseudo) {
+		User toreturn = null;
+		for (User user : contacts) {
+			if (user.getPseudo().equals(pseudo)) {
+				toreturn=user;
+			}
+		}
+		return toreturn;
+	}
+	
+	
+	
 
 }

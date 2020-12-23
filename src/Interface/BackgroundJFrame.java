@@ -1,6 +1,7 @@
-package system;
+package Interface;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 

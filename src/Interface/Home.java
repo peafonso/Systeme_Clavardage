@@ -9,9 +9,6 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-
-import system.Interface;
-
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Color;

@@ -1,5 +1,7 @@
 package system;
 
+import model.User;
+
 public class ChatSystemServer extends Thread {
 	private static User user;
 	static SocketServer sockserv;
@@ -19,16 +21,16 @@ public class ChatSystemServer extends Thread {
 	    		//traitement
 	    		String response= sockserv.Listen();
 	    		System.out.println(response);
-	    		User usertoadd= user.toUser(response);
+	    		User usertoadd= User.toUser(response);
 	    		if (usertoadd.equals(user)) {
 		    		System.out.println("pseudo utilisé");
 	    			String envoiko= "not ok"+user.toString();
-	    			sockclient.SendMessage(envoiko);
+	    			sockclient.SendMessage(envoiko, usertoadd.getIP(), usertoadd.getPort());
 	    		}
 	    		else {
 		    		System.out.println("pseudo ok");
 	    			String envoiko= "ok"+user.toString();
-	    			sockclient.SendMessage(envoiko);
+	    			sockclient.SendMessage(envoiko,usertoadd.getIP(), usertoadd.getPort());
 	    		}
 	    	}
 	    	catch (Exception e) {

@@ -2,20 +2,34 @@ package system;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import model.Contacts;
+import model.User;
 
 public class ChatSystem {
 	private static User user;
+	private Contacts listeusers;
 	static SocketServer sockserv;
 
 	public ChatSystem(User us,SocketServer ss) {
 		this.user=us;
 		this.sockserv=ss;
 	}
+	
+	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG };
+	
 	public static void main(String[] args) throws IOException {
 		ChatSystem csys= new ChatSystem(new User("127.0.0.1",1234,"pp"),new SocketServer(1234));
-		//csys.Connexion();
-		SocketClient sockclient= new SocketClient(user.getIP(),user.getPort());
+		
+		//si on est le premier utilisateur on a pas besoin de checker l'unicité des pseudos
+		if (user.getId()!=1) {
+				csys.Connexion();
+		}
+		
+		SocketClient sockclient= new SocketClient();
 		ChatSystemServer listener = new ChatSystemServer(user,sockserv,sockclient);
 		listener.run();
     }
@@ -23,12 +37,12 @@ public class ChatSystem {
 	public void Connexion () {
 		try {
 			//on commence par lancer un broadcast avec notre pseudo
-			Network.broadcast(user.toString(), InetAddress.getByName("255.255.255.255"));
+			Network.broadcast("CHANGEMENT PSEUDO_"+user.toString(), InetAddress.getByName("255.255.255.255"));
 			Scanner scanner= new Scanner(System.in);
 			long start = System.currentTimeMillis();
 			while( System.currentTimeMillis() < ( start + (1000 * 30))) {
 			String response= sockserv.Listen();
-			User usertoadd= user.toUser(response);
+			User usertoadd= User.toUser(response);
 			String[] parametersuser=response.split("_");
 			String validate= parametersuser[0];
 			if (validate.equals("not ok")){
@@ -40,7 +54,7 @@ public class ChatSystem {
 			}
 			else {
 				//on ajoute le user à notre liste de personnes connectés
-				user.addContact(usertoadd);
+				listeusers.add(usertoadd);
 			}
 			}
             scanner.close();
@@ -51,5 +65,32 @@ public class ChatSystem {
 
 	}
 	
+	public void Deconnexion() {
+		try {
+			Network.broadcast("DECONNEXION_"+user.getPseudo(), InetAddress.getByName("255.255.255.255"));
+			//un utilisateur en moins sur le système
+			User.nbuser--;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 	
+	
+	public void ReceptionMsg (String msgrecu) {
+		String[] splitmessage=msgrecu.split("_");
+		
+		typemsg type= typemsg.valueOf(splitmessage[0]);
+		System.out.println(type);
+        switch (type) {
+        case DECONNEXION:
+        	break;
+        case CONNEXION:
+        	break;
+        case ENVOIMSG:
+		default:
+			break;
+        
+        }
+	}
 }

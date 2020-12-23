@@ -1,4 +1,4 @@
-package system;
+package model;
 
 public class Super_user extends User{
 

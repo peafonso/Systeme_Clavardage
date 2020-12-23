@@ -1,24 +1,15 @@
 package system;
 
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class SocketClient extends Thread {
 
-	private String clientIP; //"127.0.0.1";
-    private int clientPort ;
-	
-    public SocketClient(String IP, int port){
-        this.clientIP=IP;
-        this.clientPort=port;
-    }
-    
-
-
-public void SendMessage(String msg)  {
+public void SendMessage(String msg, String clientIP, int clientPort)  {
     new Thread(() -> {
         try {
-            Socket s = new Socket(clientIP, clientPort);
+            Socket s = new Socket(InetAddress.getByName(clientIP), clientPort);
             OutputStream os = s.getOutputStream();
     		// Converts the string into bytes
             byte[] dataBytes = msg.getBytes();
@@ -31,8 +22,6 @@ public void SendMessage(String msg)  {
     }).start();
         
 }
-
-
 
 
 }
