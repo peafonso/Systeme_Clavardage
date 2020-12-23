@@ -13,32 +13,29 @@ public class ChatSystemServer extends Thread {
 		ChatSystemServer.sockclient=sc;
 		
 	}
+	
 	public void run() {
-	    long start = System.currentTimeMillis();
-	    // boucle tant que la durée de vie du thread est < à 30 secondes
-	    while( System.currentTimeMillis() < ( start + (1000 * 30))) {
-	    	try {
-	    		//traitement
-	    		String response= sockserv.Listen();
-	    		System.out.println(response);
-	    		User usertoadd= User.toUser(response);
-	    		if (usertoadd.equals(user)) {
-		    		System.out.println("pseudo utilisé");
-	    			String envoiko= "not ok"+user.toString();
-	    			sockclient.SendMessage(envoiko, usertoadd.getIP(), usertoadd.getPort());
-	    		}
-	    		else {
-		    		System.out.println("pseudo ok");
-	    			String envoiko= "ok"+user.toString();
-	    			sockclient.SendMessage(envoiko,usertoadd.getIP(), usertoadd.getPort());
-	    		}
-	    	}
-	    	catch (Exception e) {
-	    		e.printStackTrace();
-	    	}
-	     
+		try {
+			Thread.sleep(3000);
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		String response= sockserv.Listen();
+	    System.out.println(response);
+	    User usertoadd= User.toUser(response);
+	    if (usertoadd.equals(user)) {
+		    System.out.println("pseudo utilisé");
+	    	String envoiko= "not ok"+user.toString();
+	    	sockclient.SendMessage(envoiko, usertoadd.getIP(), usertoadd.getPort());
 	    }
-	  }   
+	    else {
+		    System.out.println("pseudo ok");
+	    	String envoiko= "ok"+user.toString();
+	    	sockclient.SendMessage(envoiko,usertoadd.getIP(), usertoadd.getPort());
+	    	}
+	}
+}
 	
 
-}
+

@@ -37,10 +37,14 @@ public class ChatSystem {
 	public void Connexion () {
 		try {
 			//on commence par lancer un broadcast avec notre pseudo
-			Network.broadcast("CHANGEMENT PSEUDO_"+user.toString(), InetAddress.getByName("255.255.255.255"));
 			Scanner scanner= new Scanner(System.in);
-			long start = System.currentTimeMillis();
-			while( System.currentTimeMillis() < ( start + (1000 * 30))) {
+			Network.broadcast("CHANGEMENT PSEUDO_"+user.toString(), InetAddress.getByName("255.255.255.255"));
+			try {
+				Thread.sleep(3000);
+			}
+			catch(InterruptedException e) {
+				e.printStackTrace();
+			}
 			String response= sockserv.Listen();
 			User usertoadd= User.toUser(response);
 			String[] parametersuser=response.split("_");
@@ -55,7 +59,6 @@ public class ChatSystem {
 			else {
 				//on ajoute le user à notre liste de personnes connectés
 				listeusers.add(usertoadd);
-			}
 			}
             scanner.close();
 
