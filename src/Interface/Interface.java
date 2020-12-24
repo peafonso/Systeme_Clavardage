@@ -12,12 +12,12 @@ import javax.swing.*;
 
 public class Interface implements ActionListener{
 	
-	//Fenêtre avant connexion de bienvenue avec register/login
-	//Fenêtre connexion refusée
-	//Fenêtre connexion en chargement au logiciel
-	//Fenêtre principale avec liste users et historique des connexions
-	//Fenêtre chat avec un user
-	//Fenêtre deconnexion
+	//Fenetre avant connexion de bienvenue avec register/login
+	//Fenetre connexion refusee
+	//Fenetre connexion en chargement au logiciel
+	//Fenetre principale avec liste users et historique des connexions
+	//Fenetre chat avec un user
+	//Fenetre deconnexion
 	public static void bienvenue () {
 		JFrame frame = new BackgroundJFrame("CleverChat");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +41,7 @@ public class Interface implements ActionListener{
 		panel1.add(identifier);
 		panel1.add(p);
 		
-		//ouverture fenêtre accueil sur vérification du login
+		//ouverture fenetre accueil sur verification du login
         login.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
         		String pseudo=p.getText();
@@ -50,7 +50,7 @@ public class Interface implements ActionListener{
         			JFrame accueil = new JFrame("CleverChat - Accueil");
         	    	accueil.setSize(1000, 800);
         	    	
-        	    	//centrer la fenêtre au milieu de l'écran
+        	    	//centrer la fenetre au milieu de l'ecran
         	    	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         	        accueil.setLocation(dim.width/2 - accueil.getWidth()/2, dim.height/2 - accueil.getHeight()/2);
 
@@ -84,7 +84,7 @@ public class Interface implements ActionListener{
     	frame.getContentPane().add(BorderLayout.SOUTH, panel1);
     	//frame.getContentPane().add(BorderLayout.NORTH, panel2);
 
-    	//centrer la fenêtre au milieu de l'écran
+    	//centrer la fenetre au milieu de l'ecran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2 - frame.getWidth()/2, dim.height/2 - frame.getHeight()/2);
         

@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-//Base de données des ptits gens
+//Base de donnees des ptits gens
 public class Contacts extends ArrayList<User>{
 	
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class Contacts extends ArrayList<User>{
 		return false;
 	}
 	
-	//Récupérer un utilisateur d'après son pseudo
+	//Recuperer un utilisateur d'apres son pseudo
 	public User getUserfromPseudo (String pseudo) {
 		User toreturn = null;
 		for (User user : contacts) {

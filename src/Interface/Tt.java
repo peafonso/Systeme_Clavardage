@@ -111,7 +111,7 @@ public class Tt {
 		JFrame accueil = new JFrame("CleverChat - Accueil");
     	accueil.setSize(1000, 800);
     	
-    	//centrer la fenêtre au milieu de l'écran
+    	//centrer la fenetre au milieu de l'ecran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         accueil.setLocation(dim.width/2 - accueil.getWidth()/2, dim.height/2 - accueil.getHeight()/2);
 

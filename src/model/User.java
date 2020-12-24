@@ -16,13 +16,13 @@ public class User {
 		nbuser++;
 	}
 	
-	//vérifie l'adresse ip pour récupérer un user
+	//verifie l'adresse ip pour recuperer un user
 	public boolean findUser (String adress) {
 		return this.iP.equals(adress);
 	}
 
 	
-	//teste l'égalité de deux users par rapport à leur pseudo
+	//teste l'egalite de deux users par rapport à leur pseudo
 	public boolean equals (User user) {
 		boolean bool= false;
 		if (this.pseudo.equals(user.pseudo)) {

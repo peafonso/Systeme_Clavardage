@@ -24,7 +24,7 @@ public class ChatSystem {
 	public static void main(String[] args) throws IOException {
 		ChatSystem csys= new ChatSystem(new User("127.0.0.1",1234,"pp"),new SocketServer(1234));
 		
-		//si on est le premier utilisateur on a pas besoin de checker l'unicité des pseudos
+		//si on est le premier utilisateur on a pas besoin de checker l'unicite des pseudos
 		if (user.getId()!=1) {
 				csys.Connexion();
 		}
@@ -53,11 +53,11 @@ public class ChatSystem {
 				System.out.println("pseudo existant; choissisez en un autre");
 	            String newpseudo= scanner.next();
 	            user.setPseudo(newpseudo);
-	            //on recommence la procédure pour tester l'unicité du nouveau pseudo
+	            //on recommence la procedure pour tester l'unicite du nouveau pseudo
 	            Connexion();
 			}
 			else {
-				//on ajoute le user à notre liste de personnes connectés
+				//on ajoute le user à notre liste de personnes connectes
 				listeusers.add(usertoadd);
 			}
             scanner.close();
@@ -71,7 +71,7 @@ public class ChatSystem {
 	public void Deconnexion() {
 		try {
 			Network.broadcast("DECONNEXION_"+user.getPseudo(), InetAddress.getByName("255.255.255.255"));
-			//un utilisateur en moins sur le système
+			//un utilisateur en moins sur le systeme
 			User.nbuser--;
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -2,7 +2,7 @@ package system;
 
 import java.io.IOException;
 
-//classe ouvrir conversation a intégrer à client
+//classe ouvrir conversation a integrer à client
 public class Test {
 
 	public static void main(String[] args) {

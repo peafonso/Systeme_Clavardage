@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Network {
 	
-	//première connexion envoi d'un broadcast aux numéros de ports 
+	//premiere connexion envoi d'un broadcast aux numeros de ports 
 
 	    public static void main(String[] args) throws IOException {
 	    	System.out.println("Envoi Hello");
