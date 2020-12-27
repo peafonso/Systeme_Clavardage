@@ -17,7 +17,18 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JButton;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
+
 import java.awt.Font;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.CardLayout;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
 
 public class Home {
 
@@ -50,20 +61,16 @@ public class Home {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new BackgroundJFrame("Home");
 		frame.setBackground(new Color(240, 240, 240));
 		//frame.setBounds(100, 100, 1640, 920);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1600,900);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ImageIcon homePicture = new ImageIcon();
 		homePicture=createImageIcon("/images/ACCUEIL_FOND2.jpg");
 		scaleImage(homePicture, 900, 800);
+		
 
-		lblNewLabel.setIcon(homePicture);
-		frame.getContentPane().add(lblNewLabel, BorderLayout.WEST);
 		
     	//centrer la fenetre au milieu de l'ecran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -82,6 +89,28 @@ public class Home {
         mntmNewMenuItem_1.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
         mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
         menuBar.add(mntmNewMenuItem_1);
+        frame.getContentPane().setLayout(null);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(211, 211, 211));
+        panel.setBounds(430, 201, 724, 430);
+        frame.getContentPane().add(panel);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBackground(new Color(95, 158, 160));
+        panel_1.setBounds(1231, 73, 307, 685);
+        frame.getContentPane().add(panel_1);
+        
+        
+        //Liste des contacts
+        /*JLabel pseudo1=new JLabel("Karen");
+        String pseudo2="Ronny";
+        String pseudo3="Jean";
+        String pseudo4="Manager";
+        JList<String> list = new JList<String>();
+        panel_1.add(list);
+        
+        list.add(pseudo1);*/
 		
 		/*accueil = new JFrame("CleverChat - Accueil");
     	accueil.setSize(1000, 800);
@@ -130,5 +159,9 @@ public class Home {
 
         return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
     }
-
+    
+    //ouverture d'une communication
+    public void Chats () {
+    	
+    }
 }
