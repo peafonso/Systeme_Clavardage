@@ -12,6 +12,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JButton;
+import java.awt.Insets;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class Home {
 
@@ -51,16 +57,31 @@ public class Home {
 		frame.setSize(1600,900);
 		
 		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ImageIcon homePicture = new ImageIcon();
-		homePicture=createImageIcon("/images/ACCUEIL_FOND.png");
+		homePicture=createImageIcon("/images/ACCUEIL_FOND2.jpg");
 		scaleImage(homePicture, 900, 800);
 
 		lblNewLabel.setIcon(homePicture);
-		frame.getContentPane().add(lblNewLabel, BorderLayout.CENTER);
+		frame.getContentPane().add(lblNewLabel, BorderLayout.WEST);
 		
     	//centrer la fenetre au milieu de l'ecran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2 - frame.getWidth()/2, dim.height/2 - frame.getHeight()/2);
+        
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setMargin(new Insets(1000, 0, 1000, 0));
+        frame.setJMenuBar(menuBar);
+        
+        JButton btnNewButton = new JButton("Home");
+        btnNewButton.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+        btnNewButton.setBackground(new Color(153, 153, 153));
+        menuBar.add(btnNewButton);
+        
+        JMenuItem mntmNewMenuItem_1 = new JMenuItem("Compose");
+        mntmNewMenuItem_1.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+        mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
+        menuBar.add(mntmNewMenuItem_1);
 		
 		/*accueil = new JFrame("CleverChat - Accueil");
     	accueil.setSize(1000, 800);

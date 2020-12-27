@@ -25,6 +25,7 @@ class BackgroundJFrame extends JFrame
 	if (name.contentEquals("CleverChat")) {
     	fond = createImageIcon("/images/Fond.png");
 	}else {
+		fond = createImageIcon("/images/fond_connexion.jpg");
 		//setSize(1000,800);
 	}
 	setContentPane(new JLabel(fond));
