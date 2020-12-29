@@ -19,6 +19,8 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import system.InteractiveChatSystem;
+
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
@@ -33,6 +35,8 @@ import javax.swing.AbstractListModel;
 public class Home {
 
 	private JFrame frame;
+	private InteractiveChatSystem cSystem;
+
 
 	/**
 	 * Launch the application.

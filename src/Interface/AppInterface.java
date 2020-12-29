@@ -7,6 +7,14 @@ import java.awt.GridLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import model.User;
+import system.ChatSystem;
+import system.ChatSystemServer;
+import system.InteractiveChatSystem;
+import system.SocketClient;
+import system.SocketServer;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -48,6 +56,7 @@ public class AppInterface {
 
 	private JFrame frame;
 	private JTextField textField;
+	private InteractiveChatSystem cSystem;
 
 	/**
 	 * Launch the application.
@@ -139,7 +148,8 @@ public class AppInterface {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String pseudo=textField.getText();
-        		if (pseudo_ok(pseudo)) {
+				//connexion
+        		if (cSystem.Connexion(pseudo)) {
         			openHome();
         		} else {
         			JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
@@ -192,16 +202,28 @@ public class AppInterface {
         }
     }
 	
-    public static boolean pseudo_ok(String pseudo) {
+    /*public static boolean pseudo_ok(String pseudo) {
     	boolean sol=false;
+    	
+		ChatSystem csys= new ChatSystem(new User("127.0.0.1",1234, pseudo),new SocketServer(1234));
+
+		//si on est le premier utilisateur on a pas besoin de checker l'unicite des pseudos
+		if (csys.getUser().getId()!=1) {
+				csys.Connexion();
+		}
+		
     	if (pseudo.equals("caca")) {
     		sol=true;
     	}
+		
     	return sol;
-    }
+    }*/
     
     private void openHome () {
     	frame.setVisible(false);
 		Home homepage= new Home();
     }
+    
+
+    
 }
