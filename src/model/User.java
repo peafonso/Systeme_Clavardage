@@ -22,7 +22,7 @@ public class User {
 	}
 
 	
-	//teste l'egalite de deux users par rapport à leur pseudo
+	//teste l'egalite de deux users par rapport a leur pseudo
 	public boolean equals (User user) {
 		boolean bool= false;
 		if (this.pseudo.equals(user.pseudo)) {
