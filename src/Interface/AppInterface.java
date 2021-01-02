@@ -8,6 +8,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
+import control.Application;
 import model.User;
 import system.ChatSystem;
 import system.ChatSystemServer;
@@ -53,7 +54,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AppInterface {
-
+	
+	private Application app;
 	private JFrame frame;
 	private JTextField textField;
 	private InteractiveChatSystem cSystem;
@@ -78,6 +80,9 @@ public class AppInterface {
 	 * Create the application.
 	 */
 	public AppInterface() {
+		User Michel= new User("127.0.0.1",1234,"michmich");
+		this.app=new Application(Michel);
+		this.cSystem= new InteractiveChatSystem(app.getMe());
 		initialize();
 	}
 

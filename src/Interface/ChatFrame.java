@@ -22,7 +22,6 @@ public class ChatFrame extends javax.swing.JFrame{
 	private User me;
 	
 	private static boolean bool; //true=server false=client
-	private static ChatFrame frame;
 	private javax.swing.JTextArea chatArea;
 	private javax.swing.JButton jButton1;
 	private javax.swing.JLabel jLabel1;
@@ -33,26 +32,29 @@ public class ChatFrame extends javax.swing.JFrame{
 	private javax.swing.JLabel status;	
 	
 	//chatframe server
-	public ChatFrame() {
+	public ChatFrame(User me) {
         initComponents();
         this.setTitle("Conversation");
         this.setVisible(true);
         status.setVisible(true);
         bool=true;
+        this.me=me;
 	}
 	
 	//chatframe client
-	public ChatFrame(String s) {
+	public ChatFrame(String s, User me) {
         initComponents();
         this.setTitle("Conversation");
         this.setVisible(true);
         status.setVisible(true);
         bool=false;
+        this.me=me;
 
 	}
 
 	public static void main(String[] args) {
-		ChatFrame window= new ChatFrame();
+		User Michel= new User("127.0.0.1",1234,"michmich");
+		ChatFrame window= new ChatFrame(Michel);
 		window.initComponents();
 		if (bool) {
 			window.startRunningServer();
@@ -143,17 +145,19 @@ public class ChatFrame extends javax.swing.JFrame{
         setLocationRelativeTo(null);
     }
 	
-	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         
         sendMessage(jTextField1.getText());
         jTextField1.setText("");
     }
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
         
         sendMessage(jTextField1.getText());
         jTextField1.setText("");
     }
+    
+    
 	public void startRunningServer()
     {
         try
