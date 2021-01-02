@@ -1,5 +1,6 @@
 package system;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ import model.User;
 
 //classe message pour toutes les communications tcp en clavardage
 
-public class Message {
+public class Message implements Serializable {
 	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG};
 	private User sender;
 	private User receiver;
