@@ -80,9 +80,9 @@ public class AppInterface {
 	 * Create the application.
 	 */
 	public AppInterface() {
-		User Michel= new User("127.0.0.1",1234,"michmich");
-		this.app=new Application(Michel);
-		this.cSystem= new InteractiveChatSystem(app.getMe());
+		User u1= new User();
+		app= new Application(u1);
+		cSystem= new InteractiveChatSystem(app.getMe());
 		initialize();
 	}
 
@@ -155,6 +155,7 @@ public class AppInterface {
 				String pseudo=textField.getText();
 				//connexion
         		if (cSystem.Connexion(pseudo)) {
+        			app.getMe().setPseudo(pseudo);
         			openHome();
         		} else {
         			JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
