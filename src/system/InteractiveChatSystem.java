@@ -38,7 +38,7 @@ public class InteractiveChatSystem {
 		
 		try {
 		    System.out.println("Tentative de changement de pseudo en broadcast");
-			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo), port);
+			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+user.getIP()+"_"+port), port);
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
 		}
