@@ -20,7 +20,7 @@ public class UDPListener extends Thread{
 		try {
 			
 	        serverSocket = new DatagramSocket(serverPort);
-	        serverSocket.setSoTimeout(10000);
+	        serverSocket.setSoTimeout(3000);
 	        String sentence="";
 	        //1 char= 1 octet
 	       	//Max message 100*10^6 octets
@@ -55,11 +55,11 @@ public class UDPListener extends Thread{
 	public void listenUDP(int port) {
 		try {
 	        serverSocket = new DatagramSocket(port);
-			while (ouvert) {
+			while (true) {
 		        //1 char= 1 octet
 		       	//Max message 100*10^6 octets
 		        byte[] array = new byte[100000000];
-
+		        
 		        System.out.printf("Listening on udp:%s:%d%n", InetAddress.getLocalHost().getHostAddress(), port);     
 		        receivePacket = new DatagramPacket(array, array.length);
 		        serverSocket.receive(receivePacket);
@@ -75,6 +75,28 @@ public class UDPListener extends Thread{
         serverSocket.close();
 	}
 	
+	public void run() {
+		try {
+	        serverSocket = new DatagramSocket(4445);
+			while (true) {
+		        //1 char= 1 octet
+		       	//Max message 100*10^6 octets
+		        byte[] array = new byte[100000000];
+		        
+		        System.out.printf("Listening on udp:%s:%d%n", InetAddress.getLocalHost().getHostAddress(), 4445);     
+		        receivePacket = new DatagramPacket(array, array.length);
+		        serverSocket.receive(receivePacket);
+		        String sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
+		        InteractiveChatSystem.ReceptionMsg(sentence);
+		        
+			}
+
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+        serverSocket.close();
+	}
 	
 	public boolean isOuvert() {
 		return ouvert;

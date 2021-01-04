@@ -139,9 +139,8 @@ public class Home {
     	accueil.getContentPane().add(BorderLayout.NORTH, menu);*/
 
 		frame.setVisible(true);
-		
 		UDPListener udpListen = new UDPListener();
-		udpListen.listenUDP(4445);
+		udpListen.start();
 	}
 	
     /** Returns an ImageIcon, or null if the path was invalid. */
@@ -178,6 +177,8 @@ public class Home {
     public void Chats () {
     	
     }
+    
+    
     
     public void etablirContacts() {
     	//TODO
