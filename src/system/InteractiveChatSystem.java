@@ -49,6 +49,7 @@ public class InteractiveChatSystem {
 			e.printStackTrace();
 		}
 		
+		user.setPseudo(newPseudo);
 		//Écoute tant qu'il y a une réponse
 	    System.out.println("Attente de reception");
 		String response= socketReception.receiveUDP(port);
@@ -98,6 +99,7 @@ public class InteractiveChatSystem {
         	break;
         case CHANGEMENTPSEUDO:
     	    System.out.println(msgrecu);
+    	    
     	    User usertoadd= User.toUser(msgrecu);
     	    if (usertoadd.getPseudo().equals(user.getPseudo())) {
     		    System.out.println("pseudo utilisé");
