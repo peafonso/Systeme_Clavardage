@@ -3,6 +3,8 @@ package system;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class UDPListener extends Thread{
 	
@@ -18,28 +20,36 @@ public class UDPListener extends Thread{
 		try {
 			
 	        serverSocket = new DatagramSocket(serverPort);
+	        serverSocket.setSoTimeout(10000);
+	        String sentence="";
 	        //1 char= 1 octet
 	       	//Max message 100*10^6 octets
 	        byte[] array = new byte[100000000];
 
 	        System.out.printf("Listening on udp:%s:%d%n",
-	        		InetAddress.getLocalHost().getHostAddress(), serverPort);     
-	        receivePacket = new DatagramPacket(array,
-	                           array.length);
-	        
-	        serverSocket.receive(receivePacket);
-	        String sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
-	        serverSocket.close();
-	        while (sentence=="") {
-	        	sentence=receiveUDP(serverPort);
+	        		InetAddress.getLocalHost().getHostAddress(), serverPort);
+	        while (true) {
+	        	try {
+			        receivePacket = new DatagramPacket(array, array.length);
+			        
+			        serverSocket.receive(receivePacket);
+			        sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
+			        return sentence;
+	        	}catch(SocketTimeoutException e){
+	        		sentence="ok_pseudo_IP_4445";
+	    	        serverSocket.close();
+	    	        return sentence;
+	        	}
+
 	        }
-	        return sentence;
-		}
+	        		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return "Erreur_reception";
+			return "ok_pseudo_IP_port";
 		}
 	}
+	
+
 	
 	
 	public void listenUDP(int port) {
@@ -65,7 +75,7 @@ public class UDPListener extends Thread{
         serverSocket.close();
 	}
 	
-
+	
 	public boolean isOuvert() {
 		return ouvert;
 	}

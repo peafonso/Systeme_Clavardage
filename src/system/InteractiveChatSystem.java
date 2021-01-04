@@ -5,6 +5,7 @@ import java.io.IOException;
 import model.Contacts;
 import model.User;
 import system.Message.typemsg;
+import java.util.Date;
 
 public class InteractiveChatSystem {
 
@@ -22,12 +23,8 @@ public class InteractiveChatSystem {
 	public boolean Connexion(String pseudo) {
 		boolean connected=false;
 		
-		if (getUser().getId()==1) {
+		if (ChangePseudo(pseudo)) {
 			connected=true;
-		}else {
-			if (ChangePseudo(pseudo)) {
-				connected=true;
-			}
 		}
 		return connected;
 	}		
@@ -40,6 +37,7 @@ public class InteractiveChatSystem {
 		int port=4445;
 		
 		try {
+		    System.out.println("Tentative de changement de pseudo");
 			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo), port);
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
@@ -52,19 +50,23 @@ public class InteractiveChatSystem {
 		}
 		
 		//Écoute tant qu'il y a une réponse
+	    System.out.println("Attente de reception");
 		String response= socketReception.receiveUDP(port);
+	    System.out.println("On a reçu: "+ response);
 		User usertoadd= User.toUser(response);
 		String[] parametersuser=response.split("_");
 		String validate= parametersuser[0];
 		//Si réponse négative then renvoi faux et ajoute le contact?
 		if (validate.equals("notOk")) {
+		    System.out.println("pseudo Not ok");
 			disponible=false;
 			listeusers.add(usertoadd);
 		}else {
 			//Si réponse positive then renvoi vrai
-            getUser().setPseudo(newPseudo);
-		}	
-		
+		    System.out.println("pseudo ok");
+	           getUser().setPseudo(newPseudo);
+		}
+			
 		return disponible;
 	}
 	
