@@ -1,12 +1,9 @@
 package system;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
-import control.Application;
 import model.Contacts;
 import model.User;
-import system.ChatSystem.typemsg;
 
 public class InteractiveChatSystem {
 
@@ -86,7 +83,7 @@ public class InteractiveChatSystem {
 		}
 	}
 	
-	public void ReceptionMsg (String msgrecu) {
+	public static void ReceptionMsg (String msgrecu) {
 		String[] splitmessage=msgrecu.split("_");
 		
 		typemsg type= typemsg.valueOf(splitmessage[0]);

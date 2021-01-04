@@ -9,7 +9,6 @@ public class UDPListener extends Thread{
 	private DatagramSocket serverSocket;
 	private DatagramPacket receivePacket;
 	private boolean ouvert;
-	private InteractiveChatSystem csystem;
 
 	public UDPListener() {
 		// TODO Auto-generated constructor stub
@@ -55,7 +54,7 @@ public class UDPListener extends Thread{
 		        receivePacket = new DatagramPacket(array, array.length);
 		        serverSocket.receive(receivePacket);
 		        String sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
-		        csystem.ReceptionMsg(sentence);
+		        InteractiveChatSystem.ReceptionMsg(sentence);
 		        
 			}
 
