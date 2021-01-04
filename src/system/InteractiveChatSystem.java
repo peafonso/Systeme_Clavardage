@@ -16,8 +16,6 @@ public class InteractiveChatSystem {
 			
 	}
 
-	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG, CHANGEMENTPSEUDO };
-
 	
 	//appel fonction Envoi message Broadcast à la liste des contacts pour vérification du pseudo
 	//if pseudoOk return true else return false

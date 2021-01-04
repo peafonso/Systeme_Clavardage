@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import system.InteractiveChatSystem;
+import system.UDPListener;
 
 import java.awt.Font;
 import javax.swing.JPanel;
@@ -139,7 +140,8 @@ public class Home {
 
 		frame.setVisible(true);
 		
-		
+		UDPListener udpListen = new UDPListener();
+		udpListen.listenUDP(4445);
 	}
 	
     /** Returns an ImageIcon, or null if the path was invalid. */

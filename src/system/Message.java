@@ -9,7 +9,7 @@ import model.User;
 //classe message pour toutes les communications tcp en clavardage
 
 public class Message implements Serializable {
-	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG};
+	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG, CHANGEMENTPSEUDO};
 	private User sender;
 	private User receiver;
 	private String data;
