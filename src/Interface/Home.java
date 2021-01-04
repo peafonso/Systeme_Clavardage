@@ -138,6 +138,8 @@ public class Home {
     	accueil.getContentPane().add(BorderLayout.NORTH, menu);*/
 
 		frame.setVisible(true);
+		
+		
 	}
 	
     /** Returns an ImageIcon, or null if the path was invalid. */

@@ -4,10 +4,7 @@ import java.io.IOException;
 
 import model.Contacts;
 import model.User;
-<<<<<<< HEAD
-=======
 import system.Message.typemsg;
->>>>>>> b5a0a32b1c24d33a7de1817cf38bbc64ec9b027a
 
 public class InteractiveChatSystem {
 
