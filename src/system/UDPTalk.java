@@ -19,7 +19,7 @@ public class UDPTalk {
 
         byte[] buffer = broadcastMessage.getBytes();
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("255.255.255.255"), port);
-		System.out.println("Envoi msg");
+		System.out.println("Envoi msg en broadcast");
         socket.send(packet);
         socket.close();
     }

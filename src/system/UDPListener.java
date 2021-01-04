@@ -20,7 +20,7 @@ public class UDPListener extends Thread{
 		try {
 			
 	        serverSocket = new DatagramSocket(serverPort);
-	        serverSocket.setSoTimeout(3000);
+	        serverSocket.setSoTimeout(10000);
 	        String sentence="";
 	        //1 char= 1 octet
 	       	//Max message 100*10^6 octets

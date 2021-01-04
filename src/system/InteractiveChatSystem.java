@@ -37,7 +37,7 @@ public class InteractiveChatSystem {
 		int port=4445;
 		
 		try {
-		    System.out.println("Tentative de changement de pseudo");
+		    System.out.println("Tentative de changement de pseudo en broadcast");
 			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo), port);
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
@@ -99,7 +99,7 @@ public class InteractiveChatSystem {
         case CHANGEMENTPSEUDO:
     	    System.out.println(msgrecu);
     	    User usertoadd= User.toUser(msgrecu);
-    	    if (usertoadd.getPseudo()==user.getPseudo()) {
+    	    if (usertoadd.getPseudo().equals(user.getPseudo())) {
     		    System.out.println("pseudo utilisé");
     	    	String envoiko= "notOk"+user.toString();
     	    	try {
