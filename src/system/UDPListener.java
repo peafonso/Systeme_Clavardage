@@ -87,6 +87,7 @@ public class UDPListener extends Thread{
 		        receivePacket = new DatagramPacket(array, array.length);
 		        serverSocket.receive(receivePacket);
 		        String sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
+		        System.out.println("on va dans receptionmsg\n");
 		        InteractiveChatSystem.ReceptionMsg(sentence);
 		        
 			}
