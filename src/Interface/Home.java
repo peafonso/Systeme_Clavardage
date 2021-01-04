@@ -24,13 +24,16 @@ import system.InteractiveChatSystem;
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.CardLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.ListModel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import model.User;
 
 public class Home {
 
@@ -105,6 +108,11 @@ public class Home {
         panel_1.setBounds(1231, 73, 307, 685);
         frame.getContentPane().add(panel_1);
         
+        ListModel<User> destinataires = new DefaultListModel<User>();
+        
+        JList list = new JList();
+        panel_1.add(list);
+        
         
         //Liste des contacts
         /*JLabel pseudo1=new JLabel("Karen");
@@ -167,5 +175,13 @@ public class Home {
     //ouverture d'une communication
     public void Chats () {
     	
+    }
+    
+    public void etablirContacts() {
+    	//TODO
+    }
+    
+    public void miseAJourContact() {
+    	//TODO
     }
 }

@@ -5,6 +5,7 @@ import java.net.InetAddress;
 
 import model.Contacts;
 import model.User;
+import system.ChatSystem.typemsg;
 
 public class InteractiveChatSystem {
 
@@ -17,6 +18,9 @@ public class InteractiveChatSystem {
 		this.setSockserv(ss);
 			
 	}
+
+	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG, CHANGEMENTPSEUDO };
+
 	
 	//appel fonction Envoi message Broadcast à la liste des contacts pour vérification du pseudo
 	//if pseudoOk return true else return false
@@ -35,14 +39,13 @@ public class InteractiveChatSystem {
 
 	
 	public boolean ChangePseudo(String newPseudo) {
-		//TODO
 		boolean disponible=true;
 		//envoi broadcast
 		UDPListener socketReception = new UDPListener();
-
 		int port=4445;
+		
 		try {
-			UDPTalk.broadcast(("CHANGEMENT PSEUDO_"+newPseudo), port);
+			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo), port);
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
 		}
@@ -59,7 +62,7 @@ public class InteractiveChatSystem {
 		String[] parametersuser=response.split("_");
 		String validate= parametersuser[0];
 		//Si réponse négative then renvoi faux et ajoute le contact?
-		if (validate.equals("not ok")) {
+		if (validate.equals("notOk")) {
 			disponible=false;
 			listeusers.add(usertoadd);
 		}else {
@@ -69,6 +72,8 @@ public class InteractiveChatSystem {
 		
 		return disponible;
 	}
+	
+	
 	
 	
 	public void Deconnexion() {
@@ -82,7 +87,44 @@ public class InteractiveChatSystem {
 		}
 	}
 	
-	
+	public void ReceptionMsg (String msgrecu) {
+		String[] splitmessage=msgrecu.split("_");
+		
+		typemsg type= typemsg.valueOf(splitmessage[0]);
+		System.out.println(type);
+        switch (type) {
+        case DECONNEXION:
+        	break;
+        case CONNEXION:
+        	break;
+        case ENVOIMSG:
+        	break;
+        case CHANGEMENTPSEUDO:
+    	    System.out.println(msgrecu);
+    	    User usertoadd= User.toUser(msgrecu);
+    	    if (usertoadd.getPseudo()==user.getPseudo()) {
+    		    System.out.println("pseudo utilisé");
+    	    	String envoiko= "notOk"+user.toString();
+    	    	try {
+        	    	UDPTalk.sendUDP(envoiko, usertoadd.getPort(), usertoadd.getIP());
+    	    	}catch (Exception e) {
+    	    		//TODO
+    	    	}
+    	    }else{
+    		    System.out.println("pseudo ok");
+    	    	String envoiko= "ok"+user.toString();
+       	    	try {
+        	    	UDPTalk.sendUDP(envoiko, usertoadd.getPort(), usertoadd.getIP());
+    	    	}catch (Exception e) {
+    	    		//TODO
+    	    	}    	    
+       	    }	
+        	
+		default:
+			break;
+        
+        }
+	}
 
 	public static User getUser() {
 		return user;
