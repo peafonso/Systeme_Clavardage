@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import control.Application;
 import model.Contacts;
 import model.User;
-import system.ChatSystem.typemsg;
+import system.Message.typemsg;
 
 public class InteractiveChatSystem {
 

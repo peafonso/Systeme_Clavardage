@@ -75,9 +75,6 @@ public class Home {
 		frame.setSize(1600,900);
 		ImageIcon homePicture = new ImageIcon();
 		homePicture=createImageIcon("/images/ACCUEIL_FOND2.jpg");
-		scaleImage(homePicture, 900, 800);
-		
-
 		
     	//centrer la fenetre au milieu de l'ecran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
