@@ -1,5 +1,8 @@
 package model;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class User {
 	
 	private String iP;
@@ -7,6 +10,17 @@ public class User {
 	private int port;
 	private int id; 
 	public static int nbuser=1;
+	
+	public User() {
+		try {
+			this.setIP(InetAddress.getLocalHost().getHostAddress());
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.setPort(1234);
+		this.setId(nbuser);
+		nbuser++;
+	}
 	
 	public User(String address, int port, String pseudonym) {
 		this.setIP(address);
@@ -22,7 +36,7 @@ public class User {
 	}
 
 	
-	//teste l'egalite de deux users par rapport à leur pseudo
+	//teste l'egalite de deux users par rapport a leur pseudo
 	public boolean equals (User user) {
 		boolean bool= false;
 		if (this.pseudo.equals(user.pseudo)) {

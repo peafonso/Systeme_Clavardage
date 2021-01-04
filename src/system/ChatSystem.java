@@ -18,9 +18,7 @@ public class ChatSystem {
 		this.setUser(us);
 		this.setSockserv(ss);
 	}
-	
-	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG };
-	
+		
 	public static void main(String[] args) throws IOException {
 		ChatSystem csys= new ChatSystem(new User("127.0.0.1",1234,"pp"),new SocketServer(1234));
 		
@@ -78,24 +76,7 @@ public class ChatSystem {
 		}
 
 	}
-	
-	
-	public void ReceptionMsg (String msgrecu) {
-		String[] splitmessage=msgrecu.split("_");
-		
-		typemsg type= typemsg.valueOf(splitmessage[0]);
-		System.out.println(type);
-        switch (type) {
-        case DECONNEXION:
-        	break;
-        case CONNEXION:
-        	break;
-        case ENVOIMSG:
-		default:
-			break;
-        
-        }
-	}
+
 
 	public static User getUser() {
 		return user;

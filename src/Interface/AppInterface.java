@@ -8,6 +8,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
+import control.Application;
 import model.User;
 import system.ChatSystem;
 import system.ChatSystemServer;
@@ -53,7 +54,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AppInterface {
-
+	
+	private Application app;
 	private JFrame frame;
 	private JTextField textField;
 	private InteractiveChatSystem cSystem;
@@ -78,6 +80,9 @@ public class AppInterface {
 	 * Create the application.
 	 */
 	public AppInterface() {
+		User u1= new User();
+		app= new Application(u1);
+		cSystem= new InteractiveChatSystem(app.getMe());
 		initialize();
 	}
 
@@ -150,6 +155,7 @@ public class AppInterface {
 				String pseudo=textField.getText();
 				//connexion
         		if (cSystem.Connexion(pseudo)) {
+        			app.getMe().setPseudo(pseudo);
         			openHome();
         		} else {
         			JTextPane txtpnPseudonymAlreadyIn = new JTextPane();

@@ -3,6 +3,7 @@ package system;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import control.Application;
 import model.Contacts;
 import model.User;
 import system.ChatSystem.typemsg;
@@ -11,11 +12,9 @@ public class InteractiveChatSystem {
 
 	private static User user;
 	private Contacts listeusers;
-	private static SocketServer sockserv;
 
-	public InteractiveChatSystem(User us,SocketServer ss,SocketClient sc) {
+	public InteractiveChatSystem(User us) {
 		this.setUser(us);
-		this.setSockserv(ss);
 			
 	}
 
@@ -126,20 +125,12 @@ public class InteractiveChatSystem {
         }
 	}
 
-	public static User getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public static void setUser(User user) {
+	public void setUser(User user) {
 		InteractiveChatSystem.user = user;
-	}
-
-	public static SocketServer getSockserv() {
-		return sockserv;
-	}
-
-	public static void setSockserv(SocketServer sockserv) {
-		InteractiveChatSystem.sockserv = sockserv;
 	}
 
 	public Contacts getListeusers() {
