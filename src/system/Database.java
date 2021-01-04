@@ -273,7 +273,6 @@ public class Database {
 		 
 		 createNewDatabase("test.db");
 		 createTables();
-		 app.insertcontact("127.0.0.1");
 		 app.selectContacts();
 		 app.selectConversations();
 		 app.selectMessages();
