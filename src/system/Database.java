@@ -27,7 +27,7 @@ public class Database {
         String sqlconversation = "CREATE TABLE IF NOT EXISTS conversations (\n"
         		+ "	convoid integer PRIMARY KEY,\n"
         		+ "	ip1 text NOT NULL,\n"
-        		+ " ip2 text NOT NULL\n"
+        		+ " ip2 text NOT NULL UNIQUE\n"
         		+ ");";
         
         String sqlmessages = "CREATE TABLE IF NOT EXISTS messages (\n"
@@ -150,6 +150,27 @@ public class Database {
 	            System.out.println(e.getMessage());
 	        }
 	    }
+	    
+	    /**
+	     * Delete a warehouse specified by the id
+	     *
+	     * @param id
+	     */
+	    public void deleteConversations(int id) {
+	        String sql = "DELETE FROM conversations WHERE convoid = ?";
+
+	        try (Connection conn = this.connect();
+	                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	            // set the corresponding param
+	            pstmt.setInt(1, id);
+	            // execute the delete statement
+	            pstmt.executeUpdate();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+	    }
 
 	    /**
 	     * select all rows in the contacts table
@@ -197,6 +218,31 @@ public class Database {
 	    }
 	    
 	    /**
+	     * select all rows in the conversations table
+	     */
+	    public boolean selectOneConversation(String u1){
+	    	boolean thereis= false;
+	        String sql = "SELECT convoid, ip1, ip2 FROM conversations WHERE ip2=?";
+	        
+	        try (Connection conn = this.connect();
+	                PreparedStatement pstmt  = conn.prepareStatement(sql)){
+                // set the value
+                pstmt.setString(1,u1);
+                ResultSet rs  = pstmt.executeQuery();
+	            while (rs.next()) {
+	                System.out.println(rs.getInt("convoid") +  "\t" + 
+	                                   rs.getString("ip1") + "\t" +
+	                                   rs.getString("ip2"));
+	                thereis=true;
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("error at selectOneConversation\n");
+	            System.out.println(e.getMessage());
+	        }
+			return thereis;
+	    }
+	    
+	    /**
 	     * select all rows in the messages table
 	     */
 	    public void selectMessages(){
@@ -229,10 +275,10 @@ public class Database {
 		 createTables();
 		 app.insertcontact("127.0.0.1");
 		 app.selectContacts();
-		 //app.insertconvo("127.0.0.1", "127.0.0.1");
 		 app.selectConversations();
 		 app.selectMessages();
-		 
+		 System.out.println(app.selectOneConversation("127.0.0.1"));
+
 	 }
 }
 
