@@ -12,7 +12,7 @@ import control.Application;
 public class InteractiveChatSystem {
 
 	private static User user;
-	private Application app;
+	private static Application app;
 
 	public InteractiveChatSystem(User us) {
 		this.setUser(us);
@@ -62,7 +62,6 @@ public class InteractiveChatSystem {
 			//Si réponse positive then renvoi vrai
 		    System.out.println("pseudo ok");
 	        getUser().setPseudo(newPseudo);
-			//app.getFriends().add(usertoadd);
 
 		}
 			
@@ -76,8 +75,6 @@ public class InteractiveChatSystem {
 		int port=4445;
 		try {
 			UDPTalk.broadcast(("DECONNEXION_"+getUser().getPseudo()), port);
-			//un utilisateur en moins sur le systeme
-			User.nbuser--;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,16 +103,17 @@ public class InteractiveChatSystem {
     	    		System.out.println("envoiko "+ usertoadd.getIP());
         	    	UDPTalk.sendUDP(envoiko, usertoadd.getPort(), usertoadd.getIP());
     	    	}catch (Exception e) {
-    	    		//TODO
+    	    		System.out.println("Pb envoi UDP KO");
     	    	}
     	    }else{
     		    System.out.println("pseudo ok");
     	    	String envoiok= "ok"+user.toString();
        	    	try {
     	    		System.out.println("envoiok "+ usertoadd.getIP());
+    				app.getFriends().add(usertoadd);
         	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
     	    	}catch (Exception e) {
-    	    		//TODO
+    	    		System.out.println("Pb envoi UDP OK");
     	    	}    	    
        	    }	
         	

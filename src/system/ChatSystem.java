@@ -70,7 +70,6 @@ public class ChatSystem {
 		try {
 			Network.broadcast("DECONNEXION_"+getUser().getPseudo(), InetAddress.getByName("255.255.255.255"));
 			//un utilisateur en moins sur le systeme
-			User.nbuser--;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

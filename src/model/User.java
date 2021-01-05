@@ -11,21 +11,16 @@ public class User {
 	private String pseudo;
 	private int port;
 	private int id; 
-	public static int nbuser=1;
 	
 	public User() {
 		this.setIP(UDPListener.getCurrentIp().getHostAddress());
 		this.setPort(1234);
-		this.setId(nbuser);
-		nbuser++;
 	}
 	
 	public User(String address, int port, String pseudonym) {
 		this.setIP(address);
 		this.setPort(port);
 		this.setPseudo(pseudonym);
-		this.setId(nbuser);
-		nbuser++;
 	}
 	
 	//verifie l'adresse ip pour recuperer un user

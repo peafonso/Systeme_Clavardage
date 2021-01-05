@@ -144,6 +144,45 @@ public class AppInterface {
 			}
 		});
 		
+		//pour qu'on puisse rentrer en apuyant sur la touche entree aussi 
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String pseudo=textField.getText();
+				//connexion
+        		if (cSystem.Connexion(pseudo)) {
+        			app.getMe().setPseudo(pseudo);
+        			openHome();
+        		} else {
+        			JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
+        			txtpnPseudonymAlreadyIn.setBackground(new Color(102, 153, 153));
+        			txtpnPseudonymAlreadyIn.setText("Pseudonym already in use. Try Again.");
+        			txtpnPseudonymAlreadyIn.setForeground(new Color(255, 51, 51));
+        			txtpnPseudonymAlreadyIn.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
+        			txtpnPseudonymAlreadyIn.setBounds(88, 231, 203, 20);
+        			panel.add(txtpnPseudonymAlreadyIn);
+        			textField.addMouseListener(new MouseListener() {           
+        				@Override
+        				public void mouseReleased(MouseEvent e) {}         
+        				@Override
+        				public void mousePressed(MouseEvent e) {}          
+        				@Override
+        				public void mouseExited(MouseEvent e) {}           
+        				@Override
+        				public void mouseEntered(MouseEvent e) {}          
+        				@Override
+        				public void mouseClicked(MouseEvent e) {
+        					JTextField texteField = ((JTextField)e.getSource());
+        					texteField.setText("");
+        					texteField.getFont().deriveFont(Font.PLAIN);
+        					texteField.setForeground(Color.black);
+        					texteField.removeMouseListener(this);
+        				}
+        			});
+        		}
+        		
+        	}
+        });
+		
 
 		JButton btnNewButton = new JButton("LOGIN");
 		btnNewButton.setBounds(103, 307, 169, 61);

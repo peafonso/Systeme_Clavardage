@@ -79,6 +79,7 @@ public class UDPListener extends Thread{
         serverSocket.close();
 	}
 	
+	//pour etre a l'ecoute des arrivees et departs sur le systeme continuellement port 4445
 	public void run() {
 		try {
 	        serverSocket = new DatagramSocket(4445);
