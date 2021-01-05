@@ -86,7 +86,7 @@ public class UDPListener extends Thread{
 		       	//Max message 100*10^6 octets
 		        byte[] array = new byte[100000000];
 		        
-		        System.out.printf("Listening on udp:%s:%d%n", InetAddress.getLocalHost().getHostAddress(), 4445);     
+		        System.out.printf("Listening on udp:%s:%d%n", UDPListener.getCurrentIp().getHostAddress(), 4445);     
 		        receivePacket = new DatagramPacket(array, array.length);
 		        serverSocket.receive(receivePacket);
 		        String sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
