@@ -7,13 +7,16 @@ import model.User;
 import system.Message.typemsg;
 import java.util.Date;
 
+import control.Application;
+
 public class InteractiveChatSystem {
 
 	private static User user;
-	private Contacts listeusers;
+	private Application app;
 
 	public InteractiveChatSystem(User us) {
 		this.setUser(us);
+		app= new Application(us);
 			
 	}
 
@@ -57,15 +60,16 @@ public class InteractiveChatSystem {
 		User usertoadd= User.toUser(response);
 		String[] parametersuser=response.split("_");
 		String validate= parametersuser[0];
-		//Si réponse négative then renvoi faux et ajoute le contact?
+		//Si réponse négative then renvoi faux
 		if (validate.equals("notOk")) {
 		    System.out.println("pseudo Not ok");
 			disponible=false;
-			listeusers.add(usertoadd);
 		}else {
 			//Si réponse positive then renvoi vrai
 		    System.out.println("pseudo ok");
-	           getUser().setPseudo(newPseudo);
+	        getUser().setPseudo(newPseudo);
+			//app.getFriends().add(usertoadd);
+
 		}
 			
 		return disponible;
@@ -105,15 +109,17 @@ public class InteractiveChatSystem {
     		    System.out.println("pseudo utilisé");
     	    	String envoiko= "notOk"+user.toString();
     	    	try {
+    	    		System.out.println("envoiko "+ usertoadd.getIP());
         	    	UDPTalk.sendUDP(envoiko, usertoadd.getPort(), usertoadd.getIP());
     	    	}catch (Exception e) {
     	    		//TODO
     	    	}
     	    }else{
     		    System.out.println("pseudo ok");
-    	    	String envoiko= "ok"+user.toString();
+    	    	String envoiok= "ok"+user.toString();
        	    	try {
-        	    	UDPTalk.sendUDP(envoiko, usertoadd.getPort(), usertoadd.getIP());
+    	    		System.out.println("envoiok "+ usertoadd.getIP());
+        	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
     	    	}catch (Exception e) {
     	    		//TODO
     	    	}    	    
@@ -131,14 +137,6 @@ public class InteractiveChatSystem {
 
 	public void setUser(User user) {
 		InteractiveChatSystem.user = user;
-	}
-
-	public Contacts getListeusers() {
-		return listeusers;
-	}
-
-	public void setListeusers(Contacts listeusers) {
-		this.listeusers = listeusers;
 	}
 
 }

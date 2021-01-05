@@ -24,7 +24,7 @@ public class UDPTalk {
     		socket.setBroadcast(true);
     		byte[] buffer = broadcastMessage.getBytes();
     		DatagramPacket packet = new DatagramPacket(buffer, buffer.length, addrbroadcast, port);
-    		System.out.println("Envoi msg en broadcast");
+    		System.out.println("Envoi msg en broadcast to"+addrbroadcast);
     		socket.send(packet);
     		socket.close();
 		}

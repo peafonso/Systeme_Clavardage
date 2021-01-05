@@ -23,7 +23,7 @@ public class User {
 	public User(String address, int port, String pseudonym) {
 		this.setIP(address);
 		this.setPort(port);
-		this.setPseudo(pseudo);
+		this.setPseudo(pseudonym);
 		this.setId(nbuser);
 		nbuser++;
 	}
