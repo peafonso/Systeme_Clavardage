@@ -37,6 +37,7 @@ public class UDPListener extends Thread{
 			        
 			        serverSocket.receive(receivePacket);
 			        sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
+	    	        serverSocket.close();
 			        return sentence;
 	        	}catch(SocketTimeoutException e){
 	        		sentence="ok_pseudo_IP_4445";
