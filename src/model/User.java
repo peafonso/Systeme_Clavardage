@@ -3,6 +3,8 @@ package model;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import system.UDPListener;
+
 public class User {
 	
 	private String iP;
@@ -12,11 +14,7 @@ public class User {
 	public static int nbuser=1;
 	
 	public User() {
-		try {
-			this.setIP(InetAddress.getLocalHost().getHostAddress());
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+		this.setIP(UDPListener.getCurrentIp().getHostAddress());
 		this.setPort(1234);
 		this.setId(nbuser);
 		nbuser++;

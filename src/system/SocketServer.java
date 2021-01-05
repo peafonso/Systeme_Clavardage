@@ -23,7 +23,7 @@ public class SocketServer extends Thread{
 	        byte[] array = new byte[100000000];
 
 	        System.out.printf("Listening on udp:%s:%d%n",
-	        		InetAddress.getLocalHost().getHostAddress(), serverPort);     
+	        		UDPListener.getCurrentIp().getHostAddress(), serverPort);     
 	        DatagramPacket receivePacket = new DatagramPacket(array,
 	                           array.length);
 	        

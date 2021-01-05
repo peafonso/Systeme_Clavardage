@@ -2,9 +2,12 @@ package system;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.Enumeration;
 
 public class UDPListener extends Thread{
 	
@@ -27,7 +30,7 @@ public class UDPListener extends Thread{
 	        byte[] array = new byte[100000000];
 
 	        System.out.printf("Listening on udp:%s:%d%n",
-	        		InetAddress.getLocalHost().getHostAddress(), serverPort);
+	        		getCurrentIp().getHostAddress(), serverPort);
 	        while (true) {
 	        	try {
 			        receivePacket = new DatagramPacket(array, array.length);
@@ -60,7 +63,7 @@ public class UDPListener extends Thread{
 		       	//Max message 100*10^6 octets
 		        byte[] array = new byte[100000000];
 		        
-		        System.out.printf("Listening on udp:%s:%d%n", InetAddress.getLocalHost().getHostAddress(), port);     
+		        System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), port);     
 		        receivePacket = new DatagramPacket(array, array.length);
 		        serverSocket.receive(receivePacket);
 		        String sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
@@ -98,6 +101,28 @@ public class UDPListener extends Thread{
 		}
         serverSocket.close();
 	}
+	
+	
+	//Recupere l'adresse IP de l'hote (si plusieurs disponibles, prend la première)
+	 public static InetAddress getCurrentIp() { 
+		 try { 
+			 Enumeration networkInterfaces = NetworkInterface .getNetworkInterfaces();
+			 while (networkInterfaces.hasMoreElements()) { 
+				 NetworkInterface ni = (NetworkInterface) networkInterfaces .nextElement(); 
+				 Enumeration nias = ni.getInetAddresses(); 
+				 while(nias.hasMoreElements()) { 
+					 InetAddress ia= (InetAddress) nias.nextElement();
+					 if (!ia.isLinkLocalAddress() && !ia.isLoopbackAddress() && ia instanceof Inet4Address) { 
+						 return ia; 
+					 } 
+				 } 
+			 } 
+		 } 
+		 catch (SocketException e) {
+			 System.out.println("unable to get current IP " + e.getMessage());
+		 } 
+	return null;
+	} 
 	
 	public boolean isOuvert() {
 		return ouvert;
