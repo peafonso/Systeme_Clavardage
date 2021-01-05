@@ -1,10 +1,11 @@
 package Interface;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import system.Conversation;
+
 import java.awt.Image;
 
 import java.awt.Color;
@@ -17,31 +18,33 @@ import javax.swing.JTable;
 
 
 public class Messenger extends JFrame {
-
+	
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTable table;
+	private Conversation conv;
+	
+	enum side {SERVER, CLIENT};
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Messenger frame = new Messenger();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public Messenger(Conversation convo, side side) {
+		this.conv= convo;
+		switch(side) {
+		case CLIENT:
+			conv.startChattingasClient();
+			break;
+		case SERVER:
+			conv.startChattingasServer();
+			break;
+		}
+		initialize();
 	}
 
 	/**
 	 * Create the frame.
+	 * @return 
 	 */
-	public Messenger() {
+	private void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 945, 598);
 		contentPane = new JPanel();
@@ -91,11 +94,34 @@ public class Messenger extends JFrame {
 		textField.setBounds(10, 509, 514, 19);
 		panel_1.add(textField);
 		textField.setColumns(10);
+		textField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	textFieldActionPerformed(evt);
+            }
+        });
 		
 		JButton btnNewButton = new JButton("send\r\n");
 		btnNewButton.setBounds(534, 509, 67, 19);
+		btnNewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	btnNewButtonActionPerformed(evt);
+            }
+        });
 		panel_1.add(btnNewButton);
 	}
+	
+	private void btnNewButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        
+        conv.sendMessage(textField.getText());
+        textField.setText("");
+    }
+
+    private void textFieldActionPerformed(java.awt.event.ActionEvent evt) {
+        
+        conv.sendMessage(textField.getText());
+        textField.setText("");
+    }
+    
 	
 
     /** Returns an ImageIcon, or null if the path was invalid. */
