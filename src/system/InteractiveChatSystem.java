@@ -45,12 +45,6 @@ public class InteractiveChatSystem {
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
 		}
-		try {
-		Thread.sleep(3000);
-		}
-		catch(InterruptedException e) {
-			e.printStackTrace();
-		}
 		
 		user.setPseudo(newPseudo);
 		//Écoute tant qu'il y a une réponse
@@ -93,8 +87,8 @@ public class InteractiveChatSystem {
 		String[] splitmessage=msgrecu.split("_");
 		
 		typemsg type= typemsg.valueOf(splitmessage[0]);
-		System.out.println(type);
-        switch (type) {
+
+		switch (type) {
         case DECONNEXION:
         	break;
         case CONNEXION:
