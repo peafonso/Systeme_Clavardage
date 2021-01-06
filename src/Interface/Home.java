@@ -19,6 +19,7 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import control.Application;
 import system.InteractiveChatSystem;
 import system.UDPListener;
 
@@ -39,8 +40,7 @@ import model.User;
 public class Home {
 
 	private JFrame frame;
-	private InteractiveChatSystem cSystem;
-
+	private Application app;
 
 	/**
 	 * Launch the application.
@@ -80,7 +80,7 @@ public class Home {
     	//centrer la fenetre au milieu de l'ecran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
     	frame.setSize(dim);
-        frame.setLocation(dim.width/2 - frame.getWidth()/2, dim.height/2 - frame.getHeight()/2);
+        frame.setLocation(dim.width/3 - frame.getWidth()/3, dim.height/3 - frame.getHeight()/3);
         
         JMenuBar menuBar = new JMenuBar();
         menuBar.setMargin(new Insets(1000, 0, 1000, 0));
@@ -91,25 +91,34 @@ public class Home {
         btnNewButton.setBackground(new Color(153, 153, 153));
         menuBar.add(btnNewButton);
         
-        JMenuItem mntmNewMenuItem_1 = new JMenuItem("Compose");
+  
+        JMenu mntmNewMenuItem_1 = new JMenu("Settings");
+    	JMenuItem mPseudo= new JMenuItem("Change Pseudo");
+    	mPseudo.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
         mntmNewMenuItem_1.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
         mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
         menuBar.add(mntmNewMenuItem_1);
+        mntmNewMenuItem_1.add(mPseudo);
         frame.getContentPane().setLayout(null);
+        
+        JButton btnDeconnexion = new JButton("Deconnect");
+        btnDeconnexion.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+        btnDeconnexion.setBackground(new Color(153, 153, 153));
+        menuBar.add(btnDeconnexion);
+        
         
         JPanel panel = new JPanel();
         panel.setBackground(new Color(211, 211, 211));
         panel.setBounds(430, 201, 724, 430);
         frame.getContentPane().add(panel);
-        
         JPanel panel_1 = new JPanel();
         panel_1.setBackground(new Color(95, 158, 160));
         panel_1.setBounds(1231, 73, 307, 685);
         frame.getContentPane().add(panel_1);
-        
-        ListModel<User> destinataires = new DefaultListModel<User>();
-        
-        JList list = new JList();
+
+
+        JList<String> list = new JList<String>();
+        list.add(list, app.getFriends().get(0).getPseudo());
         panel_1.add(list);
         
         
