@@ -11,13 +11,10 @@ import control.Application;
 
 public class InteractiveChatSystem {
 
-	private static User user;
 	private static Application app;
 
-	public InteractiveChatSystem(User us) {
-		this.setUser(us);
-		app= new Application(us);
-			
+	public InteractiveChatSystem(Application app) {
+		this.setApp(app);
 	}
 
 	
@@ -41,12 +38,12 @@ public class InteractiveChatSystem {
 		
 		try {
 		    System.out.println("Tentative de changement de pseudo en broadcast");
-			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+user.getIP()+"_"+port), port);
+			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
 		}
 		
-		user.setPseudo(newPseudo);
+		getApp().getMe().setPseudo(newPseudo);
 		//Écoute tant qu'il y a une réponse
 	    System.out.println("Attente de reception");
 		String response= socketReception.receiveUDP(port);
@@ -61,7 +58,8 @@ public class InteractiveChatSystem {
 		}else {
 			//Si réponse positive then renvoi vrai
 		    System.out.println("pseudo ok");
-	        getUser().setPseudo(newPseudo);
+		    getApp().getFriends().addContact(usertoadd);
+		    getApp().getMe().setPseudo(newPseudo);
 
 		}
 			
@@ -74,7 +72,7 @@ public class InteractiveChatSystem {
 	public void Deconnexion() {
 		int port=4445;
 		try {
-			UDPTalk.broadcast(("DECONNEXION_"+getUser().getPseudo()), port);
+			UDPTalk.broadcast(("DECONNEXION_"+getApp().getMe().getPseudo()), port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -96,9 +94,9 @@ public class InteractiveChatSystem {
     	    System.out.println(msgrecu);
     	    
     	    User usertoadd= User.toUser(msgrecu);
-    	    if (usertoadd.getPseudo().equals(user.getPseudo())) {
+    	    if (usertoadd.getPseudo().equals(getApp().getMe().getPseudo())) {
     		    System.out.println("pseudo utilisé");
-    	    	String envoiko= "notOk"+user.toString();
+    	    	String envoiko= "notOk"+getApp().getMe().toString();
     	    	try {
     	    		System.out.println("envoiko "+ usertoadd.getIP());
         	    	UDPTalk.sendUDP(envoiko, usertoadd.getPort(), usertoadd.getIP());
@@ -107,10 +105,10 @@ public class InteractiveChatSystem {
     	    	}
     	    }else{
     		    System.out.println("pseudo ok");
-    	    	String envoiok= "ok"+user.toString();
+    	    	String envoiok= "ok"+getApp().getMe().toString();
        	    	try {
     	    		System.out.println("envoiok "+ usertoadd.getIP());
-    				app.getFriends().add(usertoadd);
+    				getApp().getFriends().addContact(usertoadd);
         	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
     	    	}catch (Exception e) {
     	    		System.out.println("Pb envoi UDP OK");
@@ -123,12 +121,13 @@ public class InteractiveChatSystem {
         }
 	}
 
-	public User getUser() {
-		return user;
+	public static Application getApp() {
+		return app;
 	}
 
-	public void setUser(User user) {
-		InteractiveChatSystem.user = user;
+
+	public void setApp(Application app) {
+		InteractiveChatSystem.app = app;
 	}
 
 }

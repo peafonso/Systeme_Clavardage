@@ -82,7 +82,7 @@ public class AppInterface {
 	public AppInterface() {
 		User u1= new User();
 		app= new Application(u1);
-		cSystem= new InteractiveChatSystem(app.getMe());
+		cSystem= new InteractiveChatSystem(app);
 		initialize();
 	}
 

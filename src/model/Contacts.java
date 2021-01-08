@@ -40,13 +40,19 @@ public class Contacts extends ArrayList<User>{
 	
 	//pour récupérer un tableau de string des pseudos
 	public String[] getListPseudo() {
-		String[] liste = {};
 		if (!(contacts.isEmpty())) {
+			String[] tab= new String[length()];
+			int i=0;
 			for (User user : contacts) {
-				liste[liste.length]=user.getPseudo();
+				tab[i]=user.getPseudo();
+				i++;
 			}
+			return tab;
 		}
-		return liste;
+		else {
+			String[] tab= {};
+			return tab;
+		}
 	}
 	
 	//Recuperer un utilisateur d'apres son pseudo
@@ -60,6 +66,13 @@ public class Contacts extends ArrayList<User>{
 		return toreturn;
 	}
 	
+	public int length () {
+		int n=0;
+		for (User user : contacts) {
+			n++;
+		}
+		return n;
+	}
 	
 	
 

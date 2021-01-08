@@ -114,21 +114,11 @@ public class Home {
         panel_1.setBounds(1000, 0, 307, 690);
         frame.getContentPane().add(panel_1);
 
-        
+        System.out.println(app.getFriends().getListPseudo());
         JList<String> list = new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(list);
         
-        
-        //Liste des contacts
-        /*JLabel pseudo1=new JLabel("Karen");
-        String pseudo2="Ronny";
-        String pseudo3="Jean";
-        String pseudo4="Manager";
-        JList<String> list = new JList<String>();
-        panel_1.add(list);
-        
-        list.add(pseudo1);*/
-		
+
 		/*accueil = new JFrame("CleverChat - Accueil");
     	accueil.setSize(1000, 800);
     	
