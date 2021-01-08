@@ -148,42 +148,71 @@ public class AppInterface {
 		textField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String pseudo=textField.getText();
-				//connexion
-        		if (cSystem.Connexion(pseudo)) {
-        			app.getMe().setPseudo(pseudo);
-        			openHome();
-        		} else {
-        			JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
-        			txtpnPseudonymAlreadyIn.setBackground(new Color(102, 153, 153));
-        			txtpnPseudonymAlreadyIn.setText("Pseudonym already in use. Try Again.");
-        			txtpnPseudonymAlreadyIn.setForeground(new Color(255, 51, 51));
-        			txtpnPseudonymAlreadyIn.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
-        			txtpnPseudonymAlreadyIn.setBounds(88, 231, 203, 20);
-        			panel.add(txtpnPseudonymAlreadyIn);
-        			textField.addMouseListener(new MouseListener() {           
-        				@Override
-        				public void mouseReleased(MouseEvent e) {}         
-        				@Override
-        				public void mousePressed(MouseEvent e) {}          
-        				@Override
-        				public void mouseExited(MouseEvent e) {}           
-        				@Override
-        				public void mouseEntered(MouseEvent e) {}          
-        				@Override
-        				public void mouseClicked(MouseEvent e) {
-        					JTextField texteField = ((JTextField)e.getSource());
-        					texteField.setText("");
-        					texteField.getFont().deriveFont(Font.PLAIN);
-        					texteField.setForeground(Color.black);
-        					texteField.removeMouseListener(this);
-        				}
-        			});
-        		}
+				if(pseudo.length()>8) {
+					JTextPane txtlongpseudo = new JTextPane();
+					txtlongpseudo.setBackground(new Color(102, 153, 153));
+					txtlongpseudo.setText("Pseudonym too long, only 8 caracters are allowed");
+					txtlongpseudo.setForeground(new Color(255, 51, 51));
+					txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
+					txtlongpseudo.setBounds(88, 231, 203, 20);
+					panel.add(txtlongpseudo);
+					textField.addMouseListener(new MouseListener() {           
+						@Override
+						public void mouseReleased(MouseEvent e) {}         
+						@Override
+						public void mousePressed(MouseEvent e) {}          
+						@Override
+						public void mouseExited(MouseEvent e) {}           
+						@Override
+						public void mouseEntered(MouseEvent e) {}          
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							JTextField texteField = ((JTextField)e.getSource());
+							texteField.setText("");
+							texteField.getFont().deriveFont(Font.PLAIN);
+							texteField.setForeground(Color.black);
+							texteField.removeMouseListener(this);
+						}
+					});
+				}
+				else {
+					//connexion
+					if (cSystem.Connexion(pseudo)) {
+						app.getMe().setPseudo(pseudo);
+						openHome();
+					} else {
+						JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
+						txtpnPseudonymAlreadyIn.setBackground(new Color(102, 153, 153));
+						txtpnPseudonymAlreadyIn.setText("Pseudonym already in use. Try Again.");
+						txtpnPseudonymAlreadyIn.setForeground(new Color(255, 51, 51));
+						txtpnPseudonymAlreadyIn.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
+						txtpnPseudonymAlreadyIn.setBounds(88, 231, 203, 20);
+						panel.add(txtpnPseudonymAlreadyIn);
+						textField.addMouseListener(new MouseListener() {           
+							@Override
+							public void mouseReleased(MouseEvent e) {}         
+							@Override
+							public void mousePressed(MouseEvent e) {}          
+							@Override
+							public void mouseExited(MouseEvent e) {}           
+							@Override
+							public void mouseEntered(MouseEvent e) {}          
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								JTextField texteField = ((JTextField)e.getSource());
+								texteField.setText("");
+								texteField.getFont().deriveFont(Font.PLAIN);
+								texteField.setForeground(Color.black);
+								texteField.removeMouseListener(this);
+							}
+						});
+					}
         		
-        	}
-        });
+				}
+			}
+		});
 		
-
+		
 		JButton btnNewButton = new JButton("LOGIN");
 		btnNewButton.setBounds(103, 307, 169, 61);
 		btnNewButton.setBackground(new Color(204, 204, 204));
@@ -192,40 +221,70 @@ public class AppInterface {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String pseudo=textField.getText();
-				//connexion
-        		if (cSystem.Connexion(pseudo)) {
-        			app.getMe().setPseudo(pseudo);
-        			openHome();
-        		} else {
-        			JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
-        			txtpnPseudonymAlreadyIn.setBackground(new Color(102, 153, 153));
-        			txtpnPseudonymAlreadyIn.setText("Pseudonym already in use. Try Again.");
-        			txtpnPseudonymAlreadyIn.setForeground(new Color(255, 51, 51));
-        			txtpnPseudonymAlreadyIn.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
-        			txtpnPseudonymAlreadyIn.setBounds(88, 231, 203, 20);
-        			panel.add(txtpnPseudonymAlreadyIn);
-        			textField.addMouseListener(new MouseListener() {           
-        				@Override
-        				public void mouseReleased(MouseEvent e) {}         
-        				@Override
-        				public void mousePressed(MouseEvent e) {}          
-        				@Override
-        				public void mouseExited(MouseEvent e) {}           
-        				@Override
-        				public void mouseEntered(MouseEvent e) {}          
-        				@Override
-        				public void mouseClicked(MouseEvent e) {
-        					JTextField texteField = ((JTextField)e.getSource());
-        					texteField.setText("");
-        					texteField.getFont().deriveFont(Font.PLAIN);
-        					texteField.setForeground(Color.black);
-        					texteField.removeMouseListener(this);
-        				}
-        			});
-        		}
+				if(pseudo.length()>8) {
+					JTextPane txtlongpseudo = new JTextPane();
+					txtlongpseudo.setBackground(new Color(102, 153, 153));
+					txtlongpseudo.setText("Pseudonym too long, only 8 caracters are allowed");
+					txtlongpseudo.setForeground(new Color(255, 51, 51));
+					txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
+					txtlongpseudo.setBounds(88, 231, 203, 20);
+					panel.add(txtlongpseudo);
+					textField.addMouseListener(new MouseListener() {           
+						@Override
+						public void mouseReleased(MouseEvent e) {}         
+						@Override
+						public void mousePressed(MouseEvent e) {}          
+						@Override
+						public void mouseExited(MouseEvent e) {}           
+						@Override
+						public void mouseEntered(MouseEvent e) {}          
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							JTextField texteField = ((JTextField)e.getSource());
+							texteField.setText("");
+							texteField.getFont().deriveFont(Font.PLAIN);
+							texteField.setForeground(Color.black);
+							texteField.removeMouseListener(this);
+						}
+					});
+				}
+				else {
+					//connexion
+					if (cSystem.Connexion(pseudo)) {
+						app.getMe().setPseudo(pseudo);
+						openHome();
+					} else {
+						JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
+						txtpnPseudonymAlreadyIn.setBackground(new Color(102, 153, 153));
+						txtpnPseudonymAlreadyIn.setText("Pseudonym already in use. Try Again.");
+						txtpnPseudonymAlreadyIn.setForeground(new Color(255, 51, 51));
+						txtpnPseudonymAlreadyIn.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
+						txtpnPseudonymAlreadyIn.setBounds(88, 231, 203, 20);
+						panel.add(txtpnPseudonymAlreadyIn);
+						textField.addMouseListener(new MouseListener() {           
+							@Override
+							public void mouseReleased(MouseEvent e) {}         
+							@Override
+							public void mousePressed(MouseEvent e) {}          
+							@Override
+							public void mouseExited(MouseEvent e) {}           
+							@Override
+							public void mouseEntered(MouseEvent e) {}          
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								JTextField texteField = ((JTextField)e.getSource());
+								texteField.setText("");
+								texteField.getFont().deriveFont(Font.PLAIN);
+								texteField.setForeground(Color.black);
+								texteField.removeMouseListener(this);
+							}
+						});
+					}
         		
-        	}
-        });
+				}
+			}
+		});
+		
 		panel.setLayout(null);
 		panel.add(label);
 		panel.add(textField);
@@ -264,10 +323,12 @@ public class AppInterface {
     	return sol;
     }*/
     
+    
     private void openHome () {
     	frame.setVisible(false);
-		Home homepage= new Home();
+		Home homepage= new Home(app);
     }
+    
     
 
     

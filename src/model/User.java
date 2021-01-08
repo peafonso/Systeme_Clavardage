@@ -17,6 +17,10 @@ public class User {
 		this.setPort(1234);
 	}
 	
+	public User(String pseudonym) {
+		this.setPseudo(pseudonym);
+	}
+	
 	public User(String address, int port, String pseudonym) {
 		this.setIP(address);
 		this.setPort(port);

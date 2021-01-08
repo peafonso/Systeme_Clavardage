@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -13,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JButton;
 import java.awt.Insets;
@@ -20,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import control.Application;
+import system.Conversation;
 import system.InteractiveChatSystem;
 import system.UDPListener;
 
@@ -31,6 +35,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.CardLayout;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
 import javax.swing.JList;
@@ -41,27 +46,14 @@ public class Home {
 
 	private JFrame frame;
 	private Application app;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Home window = new Home();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextField textField;
+	private JPanel panel;
 
 	/**
 	 * Create the application.
 	 */
-	public Home() {
+	public Home(Application app) {
+		this.app=app;
 		initialize();
 	}
 
@@ -105,20 +97,25 @@ public class Home {
         btnDeconnexion.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
         btnDeconnexion.setBackground(new Color(153, 153, 153));
         menuBar.add(btnDeconnexion);
-        
+        btnDeconnexion.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		
+        	}
+        	}
+        );
         
         JPanel panel = new JPanel();
         panel.setBackground(new Color(211, 211, 211));
-        panel.setBounds(430, 201, 724, 430);
+        panel.setBounds(100, 101, 724, 430);
         frame.getContentPane().add(panel);
         JPanel panel_1 = new JPanel();
         panel_1.setBackground(new Color(95, 158, 160));
-        panel_1.setBounds(1231, 73, 307, 685);
+        panel_1.setBounds(1000, 0, 307, 690);
         frame.getContentPane().add(panel_1);
 
-
-        JList<String> list = new JList<String>();
-        list.add(list, app.getFriends().get(0).getPseudo());
+        
+        JList<String> list = new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(list);
         
         
@@ -183,12 +180,29 @@ public class Home {
     }
     
     //ouverture d'une communication
-    public void Chats () {
-    	
+    public void Chats (User u2) {
+    	Conversation conv= new Conversation(u2,app);
+    	textField = new JTextField();
+		textField.setBackground(new Color(211, 211, 211));
+		textField.setBounds(10, 509, 514, 19);
+		//panel_1.add(textField);
+		textField.setColumns(10);
+		textField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	conv.sendMessage(textField.getText());
+                textField.setText("");   
+            }
+        });
+    	JButton btnSend = new JButton("send\r\n");
+    	btnSend.setBounds(534, 509, 67, 19);
+    	btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	conv.sendMessage(textField.getText());
+                textField.setText("");          
+           }
+        });
     }
-    
-    
-    
+     
     public void etablirContacts() {
     	//TODO
     }
