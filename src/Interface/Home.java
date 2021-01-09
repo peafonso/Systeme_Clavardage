@@ -118,33 +118,29 @@ public class Home {
         System.out.println("pas d'amis? "+app.getFriends().isEmpty());
         list= new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(list);
-        
-
-		/*accueil = new JFrame("CleverChat - Accueil");
-    	accueil.setSize(1000, 800);
-    	
-    	//centrer la fenetre au milieu de l'ecran
-    	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        accueil.setLocation(dim.width/2 - accueil.getWidth()/2, dim.height/2 - accueil.getHeight()/2);
-
-    	JMenuBar menu= new JMenuBar();
-    	JMenu m1 =new JMenu("HOME");
-    	JMenu m2= new JMenu("CHAT");
-    	menu.add(m1);
-    	menu.add(m2);
-    	
-    	accueil.getContentPane().add(BorderLayout.NORTH, menu);*/
-
+    
 		frame.setVisible(true);
 		UDPListener udpListen = new UDPListener();
 		udpListen.start();
 		
-		while(true) {
-			if (app.getMaj()) {
-				miseAJourContact();
-			}
-		}
 	}
+	
+
+	/*accueil = new JFrame("CleverChat - Accueil");
+	accueil.setSize(1000, 800);
+	
+	//centrer la fenetre au milieu de l'ecran
+	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    accueil.setLocation(dim.width/2 - accueil.getWidth()/2, dim.height/2 - accueil.getHeight()/2);
+
+	JMenuBar menu= new JMenuBar();
+	JMenu m1 =new JMenu("HOME");
+	JMenu m2= new JMenu("CHAT");
+	menu.add(m1);
+	menu.add(m2);
+	
+	accueil.getContentPane().add(BorderLayout.NORTH, menu);*/
+
 	
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {

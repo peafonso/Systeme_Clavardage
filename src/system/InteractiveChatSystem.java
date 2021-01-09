@@ -7,6 +7,7 @@ import model.User;
 import system.Message.typemsg;
 import java.util.Date;
 
+import Interface.Home;
 import control.Application;
 
 public class InteractiveChatSystem {
