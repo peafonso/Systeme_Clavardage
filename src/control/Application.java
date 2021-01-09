@@ -2,17 +2,17 @@ package control;
 
 import model.Contacts;
 import model.User;
+import system.InteractiveChatSystem;
 
 //a remplir (main app)
 public class Application {
 	private User me;
 	private Contacts friends;
-	private boolean maj;
+	private InteractiveChatSystem cSystem;
 
 	public Application(User u1) {
 		this.setMe(u1);
 		setFriends(new Contacts());
-		setMaj(false);
 	}
 	
 	public static void main(String[] args) {
@@ -36,12 +36,13 @@ public class Application {
 		this.friends = friends;
 	}
 
-	public boolean getMaj() {
-		return maj;
+	public InteractiveChatSystem getcSystem() {
+		return cSystem;
 	}
 
-	public void setMaj(boolean maj) {
-		this.maj = maj;
+	public void setcSystem(InteractiveChatSystem cSystem) {
+		this.cSystem = cSystem;
 	}
+
 
 }

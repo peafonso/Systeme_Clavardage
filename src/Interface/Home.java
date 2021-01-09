@@ -1,12 +1,17 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -18,9 +23,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import control.Application;
 import system.Conversation;
@@ -45,10 +54,10 @@ import model.User;
 public class Home {
 
 	private Application app;
-	private JFrame frame;
+	private static JFrame frame;
 	private JTextField textField;
 	private JPanel panel;
-	private JList<String> list;
+	private JList<String> usersconnected;
 
 	/**
 	 * Create the application.
@@ -65,7 +74,7 @@ public class Home {
 		frame = new BackgroundJFrame("Home");
 		frame.setBackground(new Color(240, 240, 240));
 		//frame.setBounds(100, 100, 1640, 920);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		//frame.setSize(1600,900);
 		ImageIcon homePicture = new ImageIcon();
 		homePicture=createImageIcon("/images/ACCUEIL_FOND2.jpg");
@@ -79,29 +88,40 @@ public class Home {
         menuBar.setMargin(new Insets(1000, 0, 1000, 0));
         frame.setJMenuBar(menuBar);
         
+        //Bouton Home
         JButton btnNewButton = new JButton("Home");
         btnNewButton.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
         btnNewButton.setBackground(new Color(153, 153, 153));
         menuBar.add(btnNewButton);
         
-  
+        
+        //Bouton Settings
         JMenu mntmNewMenuItem_1 = new JMenu("Settings");
     	JMenuItem mPseudo= new JMenuItem("Change Pseudo");
     	mPseudo.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+    	mPseudo.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		new Settings(app); 
+        	}
+        	}
+        );
+    	
         mntmNewMenuItem_1.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
         mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
         menuBar.add(mntmNewMenuItem_1);
         mntmNewMenuItem_1.add(mPseudo);
         frame.getContentPane().setLayout(null);
         
-        JButton btnDeconnexion = new JButton("Deconnect");
+        //Boutton Deconnexion
+        JButton btnDeconnexion = new JButton("Disconnect");
         btnDeconnexion.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
         btnDeconnexion.setBackground(new Color(153, 153, 153));
         menuBar.add(btnDeconnexion);
         btnDeconnexion.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e)
         	{
-        		
+        		new Disconnect(app);
         	}
         	}
         );
@@ -115,32 +135,29 @@ public class Home {
         panel_1.setBounds(1000, 0, 307, 690);
         frame.getContentPane().add(panel_1);
 
-        System.out.println("pas d'amis? "+app.getFriends().isEmpty());
-        list= new JList<String>(app.getFriends().getListPseudo());
-        panel_1.add(list);
+        usersconnected= new JList<String>(app.getFriends().getListPseudo());
+        panel_1.add(usersconnected);
+        usersconnected.setPreferredSize(new Dimension(40,0));
+		usersconnected.addListSelectionListener(new ListSelectionListener() {
+		      public void valueChanged(ListSelectionEvent evt) {
+		           Chats(app.getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+		        }
+		      }
+		);
     
 		frame.setVisible(true);
-		UDPListener udpListen = new UDPListener();
-		udpListen.start();
+		
+		ListenerUDP();
+		miseAJourContact();
 		
 	}
 	
-
-	/*accueil = new JFrame("CleverChat - Accueil");
-	accueil.setSize(1000, 800);
+	public void ListenerUDP() {
+		UDPListener udpListen = new UDPListener();
+		udpListen.start();
+	}
+ 
 	
-	//centrer la fenetre au milieu de l'ecran
-	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    accueil.setLocation(dim.width/2 - accueil.getWidth()/2, dim.height/2 - accueil.getHeight()/2);
-
-	JMenuBar menu= new JMenuBar();
-	JMenu m1 =new JMenu("HOME");
-	JMenu m2= new JMenu("CHAT");
-	menu.add(m1);
-	menu.add(m2);
-	
-	accueil.getContentPane().add(BorderLayout.NORTH, menu);*/
-
 	
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {
@@ -175,6 +192,7 @@ public class Home {
     //ouverture d'une communication
     public void Chats (User u2) {
     	Conversation conv= new Conversation(u2,app);
+    	conv.startChattingasServer();
     	textField = new JTextField();
 		textField.setBackground(new Color(211, 211, 211));
 		textField.setBounds(10, 509, 514, 19);
@@ -202,7 +220,18 @@ public class Home {
     
     public void miseAJourContact() {
     	//je ne sais pas lequel des deux permet de mettre à jour la liste 
-    	list.updateUI();
-    	list.setListData(app.getFriends().getListPseudo());
+    	usersconnected.updateUI();
+    	usersconnected.setListData(app.getFriends().getListPseudo());
     }
+    
+	//pour afficher les erreurs
+	public static void Error(String error) {
+		JOptionPane.showMessageDialog(null, error, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+	//fermer la page home
+	public static void dispose() {
+		frame.dispose();
+	}
+
 }

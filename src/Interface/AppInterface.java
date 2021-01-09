@@ -58,7 +58,6 @@ public class AppInterface {
 	private Application app;
 	private JFrame frame;
 	private JTextField textField;
-	private InteractiveChatSystem cSystem;
 
 	/**
 	 * Launch the application.
@@ -82,7 +81,7 @@ public class AppInterface {
 	public AppInterface() {
 		User u1= new User();
 		app= new Application(u1);
-		cSystem= new InteractiveChatSystem(app);
+		app.setcSystem(new InteractiveChatSystem(app));
 		initialize();
 	}
 
@@ -97,7 +96,7 @@ public class AppInterface {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Tt.class.getResource("/images/ACCUEIL_FOND.png")));
 		frame.getContentPane().setForeground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 885, 579);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
     	//centrer la fenetre au milieu de l'ecran
@@ -177,7 +176,7 @@ public class AppInterface {
 				}
 				else {
 					//connexion
-					if (cSystem.Connexion(pseudo)) {
+					if (app.getcSystem().Connexion(pseudo)) {
 						app.getMe().setPseudo(pseudo);
 						openHome();
 					} else {
@@ -250,7 +249,7 @@ public class AppInterface {
 				}
 				else {
 					//connexion
-					if (cSystem.Connexion(pseudo)) {
+					if (app.getcSystem().Connexion(pseudo)) {
 						app.getMe().setPseudo(pseudo);
 						openHome();
 					} else {
@@ -326,9 +325,9 @@ public class AppInterface {
     
     private void openHome () {
     	frame.setVisible(false);
-		Home homepage= new Home(app);
+		new Home(app);
     }
-    
+ 
     
 
     
