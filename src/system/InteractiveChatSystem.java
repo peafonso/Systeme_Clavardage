@@ -13,7 +13,7 @@ import control.Application;
 public class InteractiveChatSystem {
 
 	private static Application app;
-	private static Home home;
+	//private static Home home;
 
 	public InteractiveChatSystem(Application app) {
 		this.setApp(app);
@@ -53,6 +53,7 @@ public class InteractiveChatSystem {
 		    	//si on est le 1er du réseau on ajoute personne 
 			    System.out.println("on ajoute "+usertoadd);
 		    	getApp().getFriends().addContact(usertoadd);
+
 		    }
 	    	getApp().getMe().setPseudo(newPseudo);
 		}
@@ -100,11 +101,12 @@ public class InteractiveChatSystem {
 		int port=4445;
 		try {
 			System.out.println("je me deconnecte et je l'envoie en broadcast ");
-			UDPTalk.broadcast(("DECONNEXION_"+getApp().getMe().getPseudo()), port);
+			UDPTalk.broadcast(("DECONNEXION_"+getApp().getMe().getPseudo()+"_"+getApp().getMe().getIP()+"_"+getApp().getMe().getPort()), port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public static void ReceptionMsg (String msgrecu) {
 		String[] splitmessage=msgrecu.split("_");
@@ -130,9 +132,10 @@ public class InteractiveChatSystem {
      	    	String envoiok= "ok"+getApp().getMe().toString();
         	    	try {
      	    		System.out.println("envoiok "+ usertoadd.getIP());
-    			    System.out.println("on ajoute1 "+usertoadd);
      				getApp().getFriends().addContact(usertoadd);
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
+        			Home.miseAJourContact();
+
      	    	}catch (Exception e) {
      	    		System.out.println("Pb envoi UDP OK");
      	    	}    	    
@@ -148,31 +151,36 @@ public class InteractiveChatSystem {
     		    System.out.println("JE MAUTORISE");
     	    }
     	    else {
-    	    if (usertocompare.getPseudo().equals(getApp().getMe().getPseudo())) {
-    		    System.out.println("pseudo utilisé");
-    	    	String envoiko= "notOk"+getApp().getMe().toString();
-    	    	try {
-    	    		System.out.println("envoiko "+ usertocompare.getIP());
-        	    	UDPTalk.sendUDP(envoiko, usertocompare.getPort(), usertocompare.getIP());
-    	    	}catch (Exception e) {
-    	    		System.out.println("Pb envoi UDP KO");
-    	    	}
-    	    }else{
-    		    System.out.println("pseudo ok");
-    	    	String envoiok= "ok"+getApp().getMe().toString();
-       	    	try {
-    	    		System.out.println("envoiok "+ usertocompare.getIP());
-        	    	UDPTalk.sendUDP(envoiok, usertocompare.getPort(), usertocompare.getIP());
-    	    	}catch (Exception e) {
-    	    		System.out.println("Pb envoi UDP OK");
-    	    	}    	    
-       	    }	
+    	    	if (usertocompare.getPseudo().equals(getApp().getMe().getPseudo())) {
+    	    		System.out.println("pseudo utilisé");
+    	    		String envoiko= "notOk"+getApp().getMe().toString();
+    	    		try {
+    	    			System.out.println("envoiko "+ usertocompare.getIP());
+    	    			UDPTalk.sendUDP(envoiko, usertocompare.getPort(), usertocompare.getIP());
+    	    		}catch (Exception e) {
+    	    			System.out.println("Pb envoi UDP KO");
+    	    		}
+    	    	}else{
+    	    		System.out.println("pseudo ok");
+    	    		String envoiok= "ok"+getApp().getMe().toString();
+    	    		try {
+    	    			System.out.println("envoiok "+ usertocompare.getIP());
+    	    			UDPTalk.sendUDP(envoiok, usertocompare.getPort(), usertocompare.getIP());
+    	    		}catch (Exception e) {
+    	    			System.out.println("Pb envoi UDP OK");
+    	    		}    	    
+    	    	}	
     	    }
     	    ;
         case ENVOIMSG:
         	break;
         case DECONNEXION:
-        	break;
+    	    System.out.println(msgrecu);
+    	    User usertodisconnect= User.toUser(msgrecu);
+			getApp().getFriends().deleteContact(usertodisconnect);
+			Home.miseAJourContact();
+			UDPListener.setOuvert(false);
+        	;
 		default:
 			break;
         
@@ -191,13 +199,6 @@ public class InteractiveChatSystem {
 	}
 
 
-	public Home getHome() {
-		return home;
-	}
 
-
-	public void setHome(Home home) {
-		InteractiveChatSystem.home = home;
-	}
 
 }

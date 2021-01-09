@@ -57,7 +57,7 @@ public class Home {
 	private static JFrame frame;
 	private JTextField textField;
 	private JPanel panel;
-	private JList<String> usersconnected;
+	private static JList<String> usersconnected;
 	static UDPListener udpListen = new UDPListener();
 
 
@@ -129,7 +129,7 @@ public class Home {
         	}
         );
         
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setBackground(new Color(211, 211, 211));
         panel.setBounds(100, 101, 724, 430);
         frame.getContentPane().add(panel);
@@ -140,25 +140,23 @@ public class Home {
 
         usersconnected= new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(usersconnected);
-		/*usersconnected.addListSelectionListener(new ListSelectionListener() {
+		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
 		           Chats(app.getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
 		        }
 		      }
-		);*/
+		);
     
 		frame.setVisible(true);
 		
 		udpListen.start();
 	 	miseAJourContact();
 		
-		
 	}
 	
 
-	
-	
-    /** Returns an ImageIcon, or null if the path was invalid. */
+
+	/** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {
         java.net.URL imageURL = Interface.class.getResource(path);
 
@@ -191,11 +189,12 @@ public class Home {
     //ouverture d'une communication
     public void Chats (User u2) {
     	Conversation conv= new Conversation(u2,app);
-    	conv.startChattingasServer();
+    	//conv.startChattingasServer();
     	textField = new JTextField();
 		textField.setBackground(new Color(211, 211, 211));
-		textField.setBounds(10, 509, 514, 19);
-		//panel_1.add(textField);
+		textField.setBounds(114, 422, 369, 20);
+		
+		panel.add(textField);
 		textField.setColumns(10);
 		textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,8 +202,9 @@ public class Home {
                 textField.setText("");   
             }
         });
-    	JButton btnSend = new JButton("send\r\n");
-    	btnSend.setBounds(534, 509, 67, 19);
+    	JButton btnSend = new JButton("send");
+    	btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+    	btnSend.setBounds(488, 419, 74, 27);
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	conv.sendMessage(textField.getText());
@@ -212,12 +212,8 @@ public class Home {
            }
         });
     }
-     
-    public void etablirContacts() {
-    	//TODO
-    }
-    
-    public void miseAJourContact() {
+
+    public static void miseAJourContact() {
     	//je ne sais pas lequel des deux permet de mettre à jour la liste 
     	usersconnected.updateUI();
     	//usersconnected.setListData(app.getFriends().getListPseudo());

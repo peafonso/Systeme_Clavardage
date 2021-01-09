@@ -14,7 +14,7 @@ public class Database {
      * Create a new table in the test database
      *
      */
-    public static void createTables() {
+    public void createTables() {
         // SQLite connection string
         String url = "jdbc:sqlite:C://sqlite/db/test.db";
         
@@ -53,7 +53,7 @@ public class Database {
 	*
 	* @param fileName the database file name
 	*/
-	 public static void createNewDatabase(String fileName) {
+	 public void createNewDatabase(String fileName) {
 	    	try {
 				Class.forName("org.sqlite.JDBC");
 			} catch (ClassNotFoundException e1) {
@@ -271,8 +271,8 @@ public class Database {
 	 public static void main(String[] args) {
 		 Database app= new Database();
 		 
-		 createNewDatabase("test.db");
-		 createTables();
+		 app.createNewDatabase("test.db");
+		 app.createTables();
 		 app.selectContacts();
 		 app.selectConversations();
 		 app.selectMessages();

@@ -13,10 +13,10 @@ public class UDPListener extends Thread{
 	
 	private DatagramSocket serverSocket;
 	private DatagramPacket receivePacket;
-	private boolean ouvert;
+	private static boolean ouvert;
 
 	public UDPListener() {
-		// TODO Auto-generated constructor stub
+		setOuvert(true);
 	}
 	
 	public String receiveUDP(int serverPort) {  
@@ -84,7 +84,7 @@ public class UDPListener extends Thread{
 	public void run() {
 		try {
 	        serverSocket = new DatagramSocket(4445);
-			while (true) {
+			while (ouvert) {
 		        //1 char= 1 octet
 		       	//Max message 100*10^6 octets
 		        byte[] array = new byte[100000000];
@@ -131,8 +131,8 @@ public class UDPListener extends Thread{
 		return ouvert;
 	}
 
-	public void setOuvert(boolean ouvert) {
-		this.ouvert = ouvert;
+	public static void setOuvert(boolean ouvert) {
+			UDPListener.ouvert = ouvert;
 	}
 
 }
