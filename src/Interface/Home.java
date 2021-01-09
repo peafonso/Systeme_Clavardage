@@ -138,7 +138,6 @@ public class Home {
 
         usersconnected= new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(usersconnected);
-        usersconnected.setPreferredSize(new Dimension(40,0));
 		/*usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
 		           Chats(app.getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));

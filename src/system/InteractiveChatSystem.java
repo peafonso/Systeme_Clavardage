@@ -51,6 +51,7 @@ public class InteractiveChatSystem {
 		    System.out.println("pseudo ok");
 		    if(!(usertoadd.getIP().equals("IP"))) {
 		    	//si on est le 1er du réseau on ajoute personne 
+			    System.out.println("on ajoute "+usertoadd);
 		    	getApp().getFriends().addContact(usertoadd);
 		    }
 	    	getApp().getMe().setPseudo(newPseudo);
@@ -129,6 +130,7 @@ public class InteractiveChatSystem {
      	    	String envoiok= "ok"+getApp().getMe().toString();
         	    	try {
      	    		System.out.println("envoiok "+ usertoadd.getIP());
+    			    System.out.println("on ajoute1 "+usertoadd);
      				getApp().getFriends().addContact(usertoadd);
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
      	    	}catch (Exception e) {
