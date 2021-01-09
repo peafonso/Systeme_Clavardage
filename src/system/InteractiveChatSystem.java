@@ -28,10 +28,10 @@ public class InteractiveChatSystem {
 		UDPListener socketReception = new UDPListener();
 		int port = 4445;
 		try {
-		    System.out.println("Tentative de changement de pseudo en broadcast");
+		    System.out.println("Tentative de connexion");
 			UDPTalk.broadcast(("CONNEXION_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
 		}catch (Exception e) {
-			System.out.println("Erreur broadcast dans ChangePseudo");
+			System.out.println("Erreur broadcast dans Connexion");
 		}
 		
 		getApp().getMe().setPseudo(newPseudo);
@@ -86,10 +86,6 @@ public class InteractiveChatSystem {
 		}else {
 			//Si réponse positive then renvoi vrai
 		    System.out.println("pseudo ok");
-		    if(!(usertoadd.getIP().equals("IP") | (getApp().getMe().findUser(usertoadd.getIP())))) {
-		    	//si on est le 1er du réseau on ajoute personne ou si on est deja dns le réseau
-		    	getApp().getFriends().addContact(usertoadd);
-		    }
 	    	getApp().getMe().setPseudo(newPseudo);
 		}
 			
@@ -116,6 +112,8 @@ public class InteractiveChatSystem {
 
 		switch (type) {
         case CONNEXION:
+    	    System.out.println(msgrecu);
+
         	User usertoadd= User.toUser(msgrecu);
      	    if (usertoadd.getPseudo().equals(getApp().getMe().getPseudo())) {
      		    System.out.println("pseudo utilisé");
@@ -133,7 +131,7 @@ public class InteractiveChatSystem {
      	    		System.out.println("envoiok "+ usertoadd.getIP());
      				getApp().getFriends().addContact(usertoadd);
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
-         	    	home.miseAJourContact();
+         	    	//home.miseAJourContact();
      	    	}catch (Exception e) {
      	    		System.out.println("Pb envoi UDP OK");
      	    	}    	    

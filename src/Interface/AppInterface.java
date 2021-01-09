@@ -96,7 +96,7 @@ public class AppInterface {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Tt.class.getResource("/images/ACCUEIL_FOND.png")));
 		frame.getContentPane().setForeground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 885, 579);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
     	//centrer la fenetre au milieu de l'ecran
@@ -304,24 +304,7 @@ public class AppInterface {
             return new ImageIcon(imageURL);
         }
     }
-	
-    /*public static boolean pseudo_ok(String pseudo) {
-    	boolean sol=false;
-    	
-		ChatSystem csys= new ChatSystem(new User("127.0.0.1",1234, pseudo),new SocketServer(1234));
 
-		//si on est le premier utilisateur on a pas besoin de checker l'unicite des pseudos
-		if (csys.getUser().getId()!=1) {
-				csys.Connexion();
-		}
-		
-    	if (pseudo.equals("caca")) {
-    		sol=true;
-    	}
-		
-    	return sol;
-    }*/
-    
     
     private void openHome () {
     	frame.setVisible(false);
