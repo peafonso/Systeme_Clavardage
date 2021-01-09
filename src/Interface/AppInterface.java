@@ -151,7 +151,7 @@ public class AppInterface {
 				if(pseudo.length()>8) {
 					JTextPane txtlongpseudo = new JTextPane();
 					txtlongpseudo.setBackground(new Color(102, 153, 153));
-					txtlongpseudo.setText("Pseudonym too long, only 8 caracters are allowed");
+					txtlongpseudo.setText("Only 8 caracters are allowed");
 					txtlongpseudo.setForeground(new Color(255, 51, 51));
 					txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
 					txtlongpseudo.setBounds(88, 231, 203, 20);
@@ -224,7 +224,7 @@ public class AppInterface {
 				if(pseudo.length()>8) {
 					JTextPane txtlongpseudo = new JTextPane();
 					txtlongpseudo.setBackground(new Color(102, 153, 153));
-					txtlongpseudo.setText("Pseudonym too long, only 8 caracters are allowed");
+					txtlongpseudo.setText("Only 8 caracters are allowed");
 					txtlongpseudo.setForeground(new Color(255, 51, 51));
 					txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
 					txtlongpseudo.setBounds(88, 231, 203, 20);

@@ -44,10 +44,11 @@ import model.User;
 
 public class Home {
 
-	private JFrame frame;
 	private Application app;
+	private JFrame frame;
 	private JTextField textField;
 	private JPanel panel;
+	private JList<String> list;
 
 	/**
 	 * Create the application.
@@ -114,8 +115,8 @@ public class Home {
         panel_1.setBounds(1000, 0, 307, 690);
         frame.getContentPane().add(panel_1);
 
-        System.out.println(app.getFriends().getListPseudo());
-        JList<String> list = new JList<String>(app.getFriends().getListPseudo());
+        System.out.println("pas d'amis? "+app.getFriends().isEmpty());
+        list= new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(list);
         
 
@@ -137,6 +138,12 @@ public class Home {
 		frame.setVisible(true);
 		UDPListener udpListen = new UDPListener();
 		udpListen.start();
+		
+		while(true) {
+			if (app.getMaj()) {
+				miseAJourContact();
+			}
+		}
 	}
 	
     /** Returns an ImageIcon, or null if the path was invalid. */
@@ -198,6 +205,8 @@ public class Home {
     }
     
     public void miseAJourContact() {
-    	//TODO
+    	//je ne sais pas lequel des deux permet de mettre à jour la liste 
+    	list.updateUI();
+    	list.setListData(app.getFriends().getListPseudo());
     }
 }

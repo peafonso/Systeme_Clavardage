@@ -111,6 +111,7 @@ public class InteractiveChatSystem {
     	    		System.out.println("envoiok "+ usertoadd.getIP());
     				getApp().getFriends().addContact(usertoadd);
         	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
+        	    	app.setMaj(true);
     	    	}catch (Exception e) {
     	    		System.out.println("Pb envoi UDP OK");
     	    	}    	    
@@ -121,6 +122,8 @@ public class InteractiveChatSystem {
         
         }
 	}
+
+
 
 	public static Application getApp() {
 		return app;
