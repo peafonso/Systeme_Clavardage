@@ -131,13 +131,12 @@ public class InteractiveChatSystem {
      	    		System.out.println("envoiok "+ usertoadd.getIP());
      				getApp().getFriends().addContact(usertoadd);
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
-         	    	//home.miseAJourContact();
      	    	}catch (Exception e) {
      	    		System.out.println("Pb envoi UDP OK");
      	    	}    	    
-       }	
+     	    }
+     	    ;
      	    
-
         case CHANGEMENTPSEUDO:
     	    System.out.println(msgrecu);
     	    
@@ -157,11 +156,11 @@ public class InteractiveChatSystem {
        	    	try {
     	    		System.out.println("envoiok "+ usertocompare.getIP());
         	    	UDPTalk.sendUDP(envoiok, usertocompare.getPort(), usertocompare.getIP());
-        	    	home.miseAJourContact();
     	    	}catch (Exception e) {
     	    		System.out.println("Pb envoi UDP OK");
     	    	}    	    
        	    }	
+    	    ;
         case ENVOIMSG:
         	break;
         case DECONNEXION:
