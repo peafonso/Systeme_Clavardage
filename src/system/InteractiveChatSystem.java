@@ -58,9 +58,10 @@ public class InteractiveChatSystem {
 		}else {
 			//Si réponse positive then renvoi vrai
 		    System.out.println("pseudo ok");
-		    getApp().getFriends().addContact(usertoadd);
-		    getApp().getMe().setPseudo(newPseudo);
-
+		    if(!(usertoadd.getIP().equals("IP"))) { //si on est le 1er du réseau on ajoute personne
+		    	getApp().getFriends().addContact(usertoadd);
+		    }
+	    	getApp().getMe().setPseudo(newPseudo);
 		}
 			
 		return disponible;
