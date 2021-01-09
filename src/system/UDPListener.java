@@ -83,7 +83,7 @@ public class UDPListener extends Thread{
 	//pour etre a l'ecoute des arrivees et departs sur le systeme continuellement port 4446
 	public void run() {
 		try {
-	        serverSocket = new DatagramSocket(4446);
+	        serverSocket = new DatagramSocket(4445);
 			while (true) {
 		        //1 char= 1 octet
 		       	//Max message 100*10^6 octets

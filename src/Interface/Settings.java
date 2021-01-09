@@ -113,7 +113,7 @@ public class Settings extends JFrame {
 				}
 				else {
 					//connexion
-					if (app.getcSystem().ChangePseudo(pseudo, 4456)) {
+					if (app.getcSystem().ChangePseudo(pseudo, 4445)) {
 						app.getMe().setPseudo(pseudo);
 						dispose(); //ferme la fenetre
 					} else {
