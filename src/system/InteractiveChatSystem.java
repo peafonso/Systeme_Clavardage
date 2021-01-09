@@ -29,7 +29,7 @@ public class InteractiveChatSystem {
 		int port = 4445;
 		try {
 		    System.out.println("Tentative de changement de pseudo en broadcast");
-			UDPTalk.broadcast(("CONNEXION"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
+			UDPTalk.broadcast(("CONNEXION_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
 		}
