@@ -112,6 +112,9 @@ public class Settings extends JFrame {
 					});
 				}
 				else {
+					if(Home.udpListen.isAlive()) {
+						Home.udpListen.interrupt();
+					}
 					//connexion
 					if (app.getcSystem().ChangePseudo(pseudo, 4445)) {
 						app.getMe().setPseudo(pseudo);

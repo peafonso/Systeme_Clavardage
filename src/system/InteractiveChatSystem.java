@@ -67,7 +67,7 @@ public class InteractiveChatSystem {
 		
 		try {
 		    System.out.println("Tentative de changement de pseudo en broadcast");
-			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
+			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+getApp().getMe().getPort()), port);
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
 		}
@@ -75,7 +75,7 @@ public class InteractiveChatSystem {
 		getApp().getMe().setPseudo(newPseudo);
 		//Écoute tant qu'il y a une réponse
 	    System.out.println("Attente de reception");
-		String response= socketReception.receiveUDP(port);
+		String response= socketReception.receiveUDP(getApp().getMe().getPort());
 	    System.out.println("On a reçu: "+ response);
 		User usertoadd= User.toUser(response);
 		String[] parametersuser=response.split("_");
@@ -141,8 +141,13 @@ public class InteractiveChatSystem {
      	    
         case CHANGEMENTPSEUDO:
     	    System.out.println(msgrecu);
-    	    
+    	 
     	    User usertocompare= User.toUser(msgrecu);
+    	    //Si c'est moi meme qui recoit
+    	    if(usertocompare.getIP().equals(getApp().getMe().getIP())) {
+    		    System.out.println("JE MAUTORISE");
+    	    }
+    	    else {
     	    if (usertocompare.getPseudo().equals(getApp().getMe().getPseudo())) {
     		    System.out.println("pseudo utilisé");
     	    	String envoiko= "notOk"+getApp().getMe().toString();
@@ -162,6 +167,7 @@ public class InteractiveChatSystem {
     	    		System.out.println("Pb envoi UDP OK");
     	    	}    	    
        	    }	
+    	    }
     	    ;
         case ENVOIMSG:
         	break;

@@ -58,6 +58,8 @@ public class Home {
 	private JTextField textField;
 	private JPanel panel;
 	private JList<String> usersconnected;
+	static UDPListener udpListen = new UDPListener();
+
 
 	/**
 	 * Create the application.
@@ -147,16 +149,13 @@ public class Home {
     
 		frame.setVisible(true);
 		
-		ListenerUDP();
-		miseAJourContact();
+		udpListen.start();
+	 	miseAJourContact();
+		
 		
 	}
 	
-	public void ListenerUDP() {
-		UDPListener udpListen = new UDPListener();
-		udpListen.start();
-	}
- 
+
 	
 	
     /** Returns an ImageIcon, or null if the path was invalid. */
@@ -221,7 +220,7 @@ public class Home {
     public void miseAJourContact() {
     	//je ne sais pas lequel des deux permet de mettre à jour la liste 
     	usersconnected.updateUI();
-    	usersconnected.setListData(app.getFriends().getListPseudo());
+    	//usersconnected.setListData(app.getFriends().getListPseudo());
     }
     
 	//pour afficher les erreurs
