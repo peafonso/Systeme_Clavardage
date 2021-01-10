@@ -48,5 +48,13 @@ public class Application {
 		this.cSystem = cSystem;
 	}
 
+	public Database getDb() {
+		return db;
+	}
+
+	public void setDb(Database db) {
+		this.db = db;
+	}
+
 
 }

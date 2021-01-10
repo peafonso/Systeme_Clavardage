@@ -36,6 +36,8 @@ import javax.swing.event.ListSelectionListener;
 import control.Application;
 import system.Conversation;
 import system.InteractiveChatSystem;
+import system.SocketClient;
+import system.SocketServer;
 import system.UDPListener;
 
 import java.awt.Font;
@@ -212,17 +214,19 @@ public class Home {
     
     //ouverture d'une communication
     public void Chats (User u2) {
-    	Conversation conv= new Conversation(u2,getApp());
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	conv.sendMessage(textField.getText());
-                textField.setText("");          
+            	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
+                SocketServer.Receive(u2.getIP(),u2.getPort());
+            	textField.setText("");          
            }
         });
+    	
     	textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	conv.sendMessage(textField.getText());
-                textField.setText("");   
+            	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
+                SocketServer.Receive(u2.getIP(),u2.getPort());
+            	textField.setText("");   
             }
         });
 

@@ -53,6 +53,7 @@ public class InteractiveChatSystem {
 		    	//si on est le 1er du réseau on ajoute personne 
 			    System.out.println("on ajoute "+usertoadd);
 		    	getApp().getFriends().addContact(usertoadd);
+ 				getApp().getDb().insertcontact(usertoadd.getIP()); //on ajoute dans la bd
 
 		    }
 	    	getApp().getMe().setPseudo(newPseudo);
@@ -132,7 +133,8 @@ public class InteractiveChatSystem {
      	    	String envoiok= "ok"+getApp().getMe().toString();
         	    	try {
      	    		System.out.println("envoiok "+ usertoadd.getIP());
-     				getApp().getFriends().addContact(usertoadd);
+     				getApp().getFriends().addContact(usertoadd); //on ajoute dans le tableau
+     				getApp().getDb().insertcontact(usertoadd.getIP()); //on ajoute dans la bd
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
          		    System.out.println("j'ajoute" +usertoadd+ "et je maj");
         			Home.miseAJourContact();
