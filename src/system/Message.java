@@ -16,6 +16,14 @@ public class Message implements Serializable {
 	private Date time; //variable pour l'horodatage
 	private typemsg type;
 	
+	public Message(User from, User to, String msg) {
+		this.setSender(from);
+		this.setReceiver(to);
+		this.setData(msg);
+		this.setTime(new Date());
+		this.setType(typemsg.ENVOIMSG);
+	}
+	
 	public Message(User from, User to, String msg, typemsg type) {
 		this.setSender(from);
 		this.setReceiver(to);

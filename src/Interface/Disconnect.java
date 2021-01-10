@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import control.Application;
+import system.UDPListener;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -46,6 +48,7 @@ public class Disconnect extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				UDPListener.setOuvert(false);
 				app.getcSystem().Deconnexion();;
 				dispose();
 				Home.dispose();

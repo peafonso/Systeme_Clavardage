@@ -182,7 +182,6 @@ public class InteractiveChatSystem {
     	    User usertodisconnect= User.toUser(msgrecu);
 			getApp().getFriends().deleteContact(usertodisconnect);
 			Home.miseAJourContact();
-			UDPListener.setOuvert(false);
         	;
 		default:
 			break;

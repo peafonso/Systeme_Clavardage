@@ -196,8 +196,8 @@ public class Home {
 		frame.setVisible(true);
 		udpListen.start();
 	 	miseAJourContact();
-        SocketServer.Receive(getApp().getMe().getIP(),getApp().getMe().getPort());
-
+	 	SocketServer receive= new SocketServer(getApp().getMe().getIP(),getApp().getMe().getPort());
+	 	receive.start();
 		
 	}
 	
@@ -235,22 +235,24 @@ public class Home {
     
     //ouverture d'une communication
     public void Chats (User u2) {
-    	talkingto.append(u2.getPseudo());
+    	talkingto.append(u2.getPseudo()); //pour afficher à qui on parle
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	
-            	SocketClient.SendMessage(textField.getText(),u2.getIP(),u2.getPort());
+            	String msg=textField.getText();
+            	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
             	textField.setText("");          
+            	textArea.append(msg);
            }
         });
     	
     	textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
-            	textField.setText("");   
+            	String msg=textField.getText();
+            	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
+            	textField.setText(""); 
+            	textArea.append(msg);
             }
         });
-
 
     }
 
