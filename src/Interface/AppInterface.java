@@ -10,8 +10,6 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import control.Application;
 import model.User;
-import system.ChatSystem;
-import system.ChatSystemServer;
 import system.InteractiveChatSystem;
 import system.SocketClient;
 import system.SocketServer;

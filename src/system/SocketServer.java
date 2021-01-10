@@ -13,14 +13,16 @@ public class SocketServer extends Thread{
 	public static void Receive(String clientIP, int clientPort)  {
 	    new Thread(() -> {
 	    	try {
-        	Socket link = new Socket(clientIP,clientPort);
-            byte[] array = new byte[100000000];
-            InputStream is = link.getInputStream();
-            is.read(array);
-            String data = new String(array);
-            System.out.println("Received: "+data);
-            is.close();
-            link.close();
+	    		while(true) {
+	    			Socket link = new Socket(clientIP,clientPort);
+	    			byte[] array = new byte[100000000];
+	    			InputStream is = link.getInputStream();
+	    			is.read(array);
+	    			String data = new String(array);
+	    			System.out.println("Received: "+data);
+	    			is.close();
+	    			link.close();
+	    		}
         } catch (Exception e) {
             e.printStackTrace();
         }}).start();

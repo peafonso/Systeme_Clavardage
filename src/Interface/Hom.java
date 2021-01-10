@@ -51,6 +51,7 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import model.User;
 import java.awt.SystemColor;
+import javax.swing.JTextArea;
 
 public class Hom {
 
@@ -151,6 +152,7 @@ public class Hom {
         panel_1.add(list);
         panel.setLayout(null);
         textField = new JTextField();
+        textField.setFont(new Font("Bahnschrift", Font.PLAIN, 11));
 		textField.setBackground(Color.WHITE);
 		textField.setBounds(80, 373, 453, 33);
 		textField.setColumns(10);
@@ -162,6 +164,22 @@ public class Hom {
     	btnSend.setBounds(558, 371, 76, 38);
     	
     			panel.add(btnSend);
+    			
+    			JTextArea textArea = new JTextArea();
+    			textArea.setBackground(SystemColor.controlHighlight);
+    			textArea.setBounds(58, 53, 591, 296);
+    			panel.add(textArea);
+    			
+    			JLabel lblNewLabel_1 = new JLabel("Talking with");
+    			lblNewLabel_1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+    			lblNewLabel_1.setBounds(60, 11, 126, 31);
+    			panel.add(lblNewLabel_1);
+    			
+    			JTextArea textArea_1 = new JTextArea();
+    			textArea_1.setBackground(Color.LIGHT_GRAY);
+    			textArea_1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+    			textArea_1.setBounds(177, 12, 156, 25);
+    			panel.add(textArea_1);
 		
         /*usersconnected= new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(usersconnected);

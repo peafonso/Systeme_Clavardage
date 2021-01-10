@@ -48,6 +48,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.CardLayout;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
@@ -62,6 +63,8 @@ public class Home {
 	private JTextField textField;
 	private JPanel panel;
 	private JButton btnSend;
+	private JTextArea textArea;
+	private JTextArea talkingto;
 	private static JList<String> usersconnected;
 	static UDPListener udpListen = new UDPListener();
 
@@ -163,13 +166,27 @@ public class Home {
         frame.getContentPane().add(panel_1);
         textField = new JTextField();
         textField.setBackground(Color.WHITE);
+        textField.setFont(new Font("Bahnschrift", Font.PLAIN, 11));
 		textField.setBounds(80, 373, 453, 33);
 		textField.setColumns(10);
     	btnSend = new JButton("send");
     	btnSend.setBackground(SystemColor.activeCaption);
     	btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
     	btnSend.setBounds(558, 371, 76, 38);
-    	
+    	textArea = new JTextArea();
+		textArea.setBackground(SystemColor.controlHighlight);
+		textArea.setBounds(58, 53, 591, 296);
+		JLabel lblTalkingwith = new JLabel("Talking with");
+		lblTalkingwith.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblTalkingwith.setBounds(60, 11, 126, 31);
+		talkingto = new JTextArea();
+		talkingto.setBackground(new Color(211, 211, 211));
+		talkingto.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		talkingto.setBounds(177, 12, 156, 25);
+		
+		panel.add(talkingto);
+		panel.add(lblTalkingwith);
+		panel.add(textArea);
 		panel.add(btnSend);
 		panel.add(textField);
 		
@@ -214,18 +231,19 @@ public class Home {
     
     //ouverture d'une communication
     public void Chats (User u2) {
+    	talkingto.append(u2.getPseudo());
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
                 SocketServer.Receive(u2.getIP(),u2.getPort());
+            	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
             	textField.setText("");          
            }
         });
     	
     	textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
                 SocketServer.Receive(u2.getIP(),u2.getPort());
+            	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
             	textField.setText("");   
             }
         });
