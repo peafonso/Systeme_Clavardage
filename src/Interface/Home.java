@@ -238,7 +238,8 @@ public class Home {
     	talkingto.append(u2.getPseudo());
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
+            	
+            	SocketClient.SendMessage(textField.getText(),u2.getIP(),u2.getPort());
             	textField.setText("");          
            }
         });
