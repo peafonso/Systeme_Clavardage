@@ -85,7 +85,6 @@ public class Home {
 		frame.setBackground(new Color(240, 240, 240));
 		//frame.setBounds(100, 100, 1640, 920);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setSize(1600,900);
 		ImageIcon homePicture = new ImageIcon();
 		homePicture=createImageIcon("/images/ACCUEIL_FOND2.jpg");
@@ -194,6 +193,8 @@ public class Home {
 		frame.setVisible(true);
 		udpListen.start();
 	 	miseAJourContact();
+        SocketServer.Receive(getApp().getMe().getIP(),getApp().getMe().getPort());
+
 		
 	}
 	
@@ -234,7 +235,6 @@ public class Home {
     	talkingto.append(u2.getPseudo());
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SocketServer.Receive(u2.getIP(),u2.getPort());
             	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
             	textField.setText("");          
            }
@@ -242,7 +242,6 @@ public class Home {
     	
     	textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SocketServer.Receive(u2.getIP(),u2.getPort());
             	SocketClient.SendMessage(textField.getText(),getApp().getMe().getIP(),getApp().getMe().getPort());
             	textField.setText("");   
             }
@@ -263,6 +262,7 @@ public class Home {
 
 	//fermer la page home
 	public static void dispose() {
+		app.getcSystem().Deconnexion();
 		frame.dispose();
 	}
 
