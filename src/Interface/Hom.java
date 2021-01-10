@@ -26,8 +26,6 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.Insets;
-import java.awt.SystemColor;
-
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -52,8 +50,9 @@ import javax.swing.ListModel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import model.User;
+import java.awt.SystemColor;
 
-public class Home {
+public class Hom {
 
 	private static Application app;
 	private static JFrame frame;
@@ -67,8 +66,8 @@ public class Home {
 	/**
 	 * Create the application.
 	 */
-	public Home(Application app) {
-		setApp(app);
+	public Hom(Application app) {
+		this.app=app;
 		initialize();
 	}
 
@@ -108,7 +107,7 @@ public class Home {
     	mPseudo.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e)
         	{
-        		new Settings(getApp()); 
+        		new Settings(app); 
         	}
         	}
         );
@@ -127,7 +126,7 @@ public class Home {
         btnDeconnexion.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e)
         	{
-        		new Disconnect(getApp());
+        		new Disconnect(app);
         	}
         	}
         );
@@ -135,44 +134,46 @@ public class Home {
         panel = new JPanel();
         panel.setBackground(new Color(211, 211, 211));
         panel.setBounds(100, 101, 724, 430);
-        panel.setLayout(null);
-
         frame.getContentPane().add(panel);
         JPanel panel_1 = new JPanel();
         panel_1.setBackground(new Color(95, 158, 160));
         panel_1.setBounds(1000, 0, 307, 690);
-        
-        JLabel lblcontacts = new JLabel("users connected\r\n");
-        lblcontacts.setFont(new Font("Bahnschrift", Font.PLAIN, 18));
-        lblcontacts.setBounds(64, 0, 161, 32);
-        panel_1.add(lblcontacts);
-        
-        usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
-        usersconnected.setBounds(0, 646, 272, -599);
-		usersconnected.addListSelectionListener(new ListSelectionListener() {
-		      public void valueChanged(ListSelectionEvent evt) {
-		           Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
-		        }
-		      }
-		);
-    
-        panel_1.add(usersconnected);
-
         frame.getContentPane().add(panel_1);
+        panel_1.setLayout(null);
+        
+        JLabel lblNewLabel = new JLabel("users connected\r\n");
+        lblNewLabel.setFont(new Font("Bahnschrift", Font.PLAIN, 18));
+        lblNewLabel.setBounds(64, 0, 161, 32);
+        panel_1.add(lblNewLabel);
+        
+        JList list = new JList();
+        list.setBounds(0, 646, 272, -599);
+        panel_1.add(list);
+        panel.setLayout(null);
         textField = new JTextField();
-        textField.setBackground(Color.WHITE);
+		textField.setBackground(Color.WHITE);
 		textField.setBounds(80, 373, 453, 33);
 		textField.setColumns(10);
+		panel.add(textField);
+		
     	btnSend = new JButton("send");
     	btnSend.setBackground(SystemColor.activeCaption);
     	btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
     	btnSend.setBounds(558, 371, 76, 38);
     	
-		panel.add(btnSend);
-		panel.add(textField);
+    			panel.add(btnSend);
 		
-
+        /*usersconnected= new JList<String>(app.getFriends().getListPseudo());
+        panel_1.add(usersconnected);
+		usersconnected.addListSelectionListener(new ListSelectionListener() {
+		      public void valueChanged(ListSelectionEvent evt) {
+		           Chats(app.getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+		        }
+		      }
+		);*/
+    
 		frame.setVisible(true);
+		
 		udpListen.start();
 	 	miseAJourContact();
 		
@@ -212,7 +213,7 @@ public class Home {
     
     //ouverture d'une communication
     public void Chats (User u2) {
-    	Conversation conv= new Conversation(u2,getApp());
+    	Conversation conv= new Conversation(u2,app);
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	conv.sendMessage(textField.getText());
@@ -231,7 +232,7 @@ public class Home {
 
     public static void miseAJourContact() {
     	//usersconnected.updateUI();
-    	usersconnected.setListData(getApp().getFriends().getListPseudo());
+    	usersconnected.setListData(app.getFriends().getListPseudo());
     }
     
 	//pour afficher les erreurs
@@ -243,13 +244,4 @@ public class Home {
 	public static void dispose() {
 		frame.dispose();
 	}
-
-	public static Application getApp() {
-		return app;
-	}
-
-	public static void setApp(Application app) {
-		Home.app = app;
-	}
-
 }
