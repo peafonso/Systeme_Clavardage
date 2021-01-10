@@ -169,6 +169,7 @@ public class InteractiveChatSystem {
     	    		try {
     	    			System.out.println("envoiok "+ usertocompare.getIP());
     	    			UDPTalk.sendUDP(envoiok, usertocompare.getPort(), usertocompare.getIP());
+    	    			Home.miseAJourContact();
     	    		}catch (Exception e) {
     	    			System.out.println("Pb envoi UDP OK");
     	    		}    	    

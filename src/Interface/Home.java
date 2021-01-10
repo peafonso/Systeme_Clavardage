@@ -196,7 +196,7 @@ public class Home {
 		frame.setVisible(true);
 		udpListen.start();
 	 	miseAJourContact();
-	 	SocketServer.Receive(getApp().getMe().getIP(),getApp().getMe().getPort());
+	 	//SocketServer.Receive(getApp().getMe().getIP(),getApp().getMe().getPort());
 		
 	}
 	
@@ -256,7 +256,7 @@ public class Home {
     }
 
     public static void miseAJourContact() {
-    	//usersconnected.updateUI();
+    	usersconnected.updateUI();
     	usersconnected.setListData(getApp().getFriends().getListPseudo());
     }
     
