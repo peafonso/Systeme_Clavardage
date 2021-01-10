@@ -214,7 +214,6 @@ public class Home {
     }
 
     public static void miseAJourContact() {
-    	//je ne sais pas lequel des deux permet de mettre à jour la liste 
     	usersconnected.updateUI();
     	//usersconnected.setListData(app.getFriends().getListPseudo());
     }

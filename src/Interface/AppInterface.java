@@ -57,6 +57,7 @@ public class AppInterface {
 	
 	private Application app;
 	private JFrame frame;
+	private JPanel panel;
 	private JTextField textField;
 
 	/**
@@ -103,7 +104,7 @@ public class AppInterface {
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2 - frame.getWidth()/2, dim.height/2 - frame.getHeight()/2);
 		
-		JPanel panel = new JPanel();
+        panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel.setBackground(new Color(102, 153, 153));
 		panel.setBounds(260, 62, 365, 401);
@@ -144,72 +145,7 @@ public class AppInterface {
 		});
 		
 		//pour qu'on puisse rentrer en apuyant sur la touche entree aussi 
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String pseudo=textField.getText();
-				if(pseudo.length()>8) {
-					JTextPane txtlongpseudo = new JTextPane();
-					txtlongpseudo.setBackground(new Color(102, 153, 153));
-					txtlongpseudo.setText("Only 8 caracters are allowed");
-					txtlongpseudo.setForeground(new Color(255, 51, 51));
-					txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
-					txtlongpseudo.setBounds(88, 231, 203, 20);
-					panel.add(txtlongpseudo);
-					textField.addMouseListener(new MouseListener() {           
-						@Override
-						public void mouseReleased(MouseEvent e) {}         
-						@Override
-						public void mousePressed(MouseEvent e) {}          
-						@Override
-						public void mouseExited(MouseEvent e) {}           
-						@Override
-						public void mouseEntered(MouseEvent e) {}          
-						@Override
-						public void mouseClicked(MouseEvent e) {
-							JTextField texteField = ((JTextField)e.getSource());
-							texteField.setText("");
-							texteField.getFont().deriveFont(Font.PLAIN);
-							texteField.setForeground(Color.black);
-							texteField.removeMouseListener(this);
-						}
-					});
-				}
-				else {
-					//connexion
-					if (app.getcSystem().Connexion(pseudo)) {
-						app.getMe().setPseudo(pseudo);
-						openHome();
-					} else {
-						JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
-						txtpnPseudonymAlreadyIn.setBackground(new Color(102, 153, 153));
-						txtpnPseudonymAlreadyIn.setText("Pseudonym already in use. Try Again.");
-						txtpnPseudonymAlreadyIn.setForeground(new Color(255, 51, 51));
-						txtpnPseudonymAlreadyIn.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
-						txtpnPseudonymAlreadyIn.setBounds(88, 231, 203, 20);
-						panel.add(txtpnPseudonymAlreadyIn);
-						textField.addMouseListener(new MouseListener() {           
-							@Override
-							public void mouseReleased(MouseEvent e) {}         
-							@Override
-							public void mousePressed(MouseEvent e) {}          
-							@Override
-							public void mouseExited(MouseEvent e) {}           
-							@Override
-							public void mouseEntered(MouseEvent e) {}          
-							@Override
-							public void mouseClicked(MouseEvent e) {
-								JTextField texteField = ((JTextField)e.getSource());
-								texteField.setText("");
-								texteField.getFont().deriveFont(Font.PLAIN);
-								texteField.setForeground(Color.black);
-								texteField.removeMouseListener(this);
-							}
-						});
-					}
-        		
-				}
-			}
-		});
+		textField.addActionListener(new Connect());
 		
 		
 		JButton btnNewButton = new JButton("LOGIN");
@@ -217,17 +153,64 @@ public class AppInterface {
 		btnNewButton.setBackground(new Color(204, 204, 204));
 		btnNewButton.setFont(new Font("Bahnschrift", Font.PLAIN, 17));
 		btnNewButton.setForeground(new Color(0, 0, 0));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String pseudo=textField.getText();
-				if(pseudo.length()>8) {
-					JTextPane txtlongpseudo = new JTextPane();
-					txtlongpseudo.setBackground(new Color(102, 153, 153));
-					txtlongpseudo.setText("Only 8 caracters are allowed");
-					txtlongpseudo.setForeground(new Color(255, 51, 51));
-					txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
-					txtlongpseudo.setBounds(88, 231, 203, 20);
-					panel.add(txtlongpseudo);
+		btnNewButton.addActionListener(new Connect());
+		
+		panel.setLayout(null);
+		panel.add(label);
+		panel.add(textField);
+		panel.add(btnNewButton);
+		
+
+	}
+	
+	
+	//--Action Listener sur le boutton et touche entrée pour tester le pseudo et se connecter
+	public class Connect implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			String pseudo=textField.getText();
+			
+			if(pseudo.length()>8) {
+				JTextPane txtlongpseudo = new JTextPane();
+				txtlongpseudo.setBackground(new Color(102, 153, 153));
+				txtlongpseudo.setText("Only 8 caracters are allowed");
+				txtlongpseudo.setForeground(new Color(255, 51, 51));
+				txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
+				txtlongpseudo.setBounds(88, 231, 203, 20);
+				panel.add(txtlongpseudo);
+				textField.addMouseListener(new MouseListener() {           
+					@Override
+					public void mouseReleased(MouseEvent e) {}         
+					@Override
+					public void mousePressed(MouseEvent e) {}          
+					@Override
+					public void mouseExited(MouseEvent e) {}           
+					@Override
+					public void mouseEntered(MouseEvent e) {}          
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						JTextField texteField = ((JTextField)e.getSource());
+						texteField.setText("");
+						texteField.getFont().deriveFont(Font.PLAIN);
+						texteField.setForeground(Color.black);
+						texteField.removeMouseListener(this);
+					}
+				});
+			}
+			else {
+				//connexion
+				if (app.getcSystem().Connexion(pseudo)) {
+					app.getMe().setPseudo(pseudo);
+					openHome();
+				} else {
+					JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
+					txtpnPseudonymAlreadyIn.setBackground(new Color(102, 153, 153));
+					txtpnPseudonymAlreadyIn.setText("Pseudonym already in use. Try Again.");
+					txtpnPseudonymAlreadyIn.setForeground(new Color(255, 51, 51));
+					txtpnPseudonymAlreadyIn.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
+					txtpnPseudonymAlreadyIn.setBounds(88, 231, 203, 20);
+					panel.add(txtpnPseudonymAlreadyIn);
 					textField.addMouseListener(new MouseListener() {           
 						@Override
 						public void mouseReleased(MouseEvent e) {}         
@@ -247,49 +230,9 @@ public class AppInterface {
 						}
 					});
 				}
-				else {
-					//connexion
-					if (app.getcSystem().Connexion(pseudo)) {
-						app.getMe().setPseudo(pseudo);
-						openHome();
-					} else {
-						JTextPane txtpnPseudonymAlreadyIn = new JTextPane();
-						txtpnPseudonymAlreadyIn.setBackground(new Color(102, 153, 153));
-						txtpnPseudonymAlreadyIn.setText("Pseudonym already in use. Try Again.");
-						txtpnPseudonymAlreadyIn.setForeground(new Color(255, 51, 51));
-						txtpnPseudonymAlreadyIn.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
-						txtpnPseudonymAlreadyIn.setBounds(88, 231, 203, 20);
-						panel.add(txtpnPseudonymAlreadyIn);
-						textField.addMouseListener(new MouseListener() {           
-							@Override
-							public void mouseReleased(MouseEvent e) {}         
-							@Override
-							public void mousePressed(MouseEvent e) {}          
-							@Override
-							public void mouseExited(MouseEvent e) {}           
-							@Override
-							public void mouseEntered(MouseEvent e) {}          
-							@Override
-							public void mouseClicked(MouseEvent e) {
-								JTextField texteField = ((JTextField)e.getSource());
-								texteField.setText("");
-								texteField.getFont().deriveFont(Font.PLAIN);
-								texteField.setForeground(Color.black);
-								texteField.removeMouseListener(this);
-							}
-						});
-					}
-        		
-				}
+    		
 			}
-		});
-		
-		panel.setLayout(null);
-		panel.add(label);
-		panel.add(textField);
-		panel.add(btnNewButton);
-		
-
+		}
 	}
 	
     /** Returns an ImageIcon, or null if the path was invalid. */
@@ -309,8 +252,9 @@ public class AppInterface {
     private void openHome () {
     	frame.setVisible(false);
 		new Home(app);
+		frame.dispose();
     }
- 
+
     
 
     

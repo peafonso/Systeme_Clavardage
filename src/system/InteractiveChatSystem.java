@@ -134,6 +134,7 @@ public class InteractiveChatSystem {
      	    		System.out.println("envoiok "+ usertoadd.getIP());
      				getApp().getFriends().addContact(usertoadd);
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
+         		    System.out.println("j'ajoute" +usertoadd+ "et je maj");
         			Home.miseAJourContact();
 
      	    	}catch (Exception e) {
