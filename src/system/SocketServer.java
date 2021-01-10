@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -14,9 +15,14 @@ public class SocketServer extends Thread{
 	    new Thread(() -> {
 	    	try {
 	    		while(true) {
-	    			Socket link = new Socket(clientIP,clientPort);
+	    			System.out.println("avant");
+	    			ServerSocket link = new ServerSocket(clientPort);
+	    			Socket sock=link.accept();
+	    			System.out.println("apres");
 	    			byte[] array = new byte[100000000];
-	    			InputStream is = link.getInputStream();
+	    			OutputStream out= sock.getOutputStream();
+	    			out.flush();
+	    			InputStream is = sock.getInputStream();
 	    			is.read(array);
 	    			String data = new String(array);
 	    			System.out.println("Received: "+data);

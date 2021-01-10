@@ -85,6 +85,9 @@ public class Home {
 		frame.setBackground(new Color(240, 240, 240));
 		//frame.setBounds(100, 100, 1640, 920);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
 		//frame.setSize(1600,900);
 		ImageIcon homePicture = new ImageIcon();
 		homePicture=createImageIcon("/images/ACCUEIL_FOND2.jpg");
