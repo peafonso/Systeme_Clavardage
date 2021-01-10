@@ -38,6 +38,13 @@ public class Contacts extends ArrayList<User>{
 		return false;
 	}
 	
+	public void deleteContactfromPseudo (String pseudo) {
+		for (User user : contacts) {
+			if (user.getPseudo().equals(pseudo)) {
+				contacts.remove(user);
+			}
+		}
+	}
 	//pour récupérer un tableau de string des pseudos
 	public String[] getListPseudo() {
 		if (!(contacts.isEmpty())) {

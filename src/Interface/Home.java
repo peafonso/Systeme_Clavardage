@@ -196,8 +196,7 @@ public class Home {
 		frame.setVisible(true);
 		udpListen.start();
 	 	miseAJourContact();
-	 	SocketServer receive= new SocketServer(getApp().getMe().getIP(),getApp().getMe().getPort());
-	 	receive.start();
+	 	SocketServer.Receive(getApp().getMe().getIP(),getApp().getMe().getPort());
 		
 	}
 	
@@ -241,7 +240,7 @@ public class Home {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
             	textField.setText("");          
-            	textArea.append(msg);
+            	textArea.append(msg+"\n");
            }
         });
     	
@@ -250,7 +249,7 @@ public class Home {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
             	textField.setText(""); 
-            	textArea.append(msg);
+            	textArea.append(msg+"\n");
             }
         });
 

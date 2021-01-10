@@ -38,8 +38,9 @@ public class SocketServer extends Thread{
 	public static void Receive(String clientIP, int clientPort)  {
 	    new Thread(() -> {
 	    	try {
-	    		while(true) {
+	    		System.out.println("qqq"+ clientPort);
 	    			ServerSocket link = new ServerSocket(clientPort);
+		    		System.out.println("qqq2");
 	    			Socket sock=link.accept();
 	    			byte[] array = new byte[100000000];
 	    			OutputStream out= sock.getOutputStream();
@@ -49,7 +50,7 @@ public class SocketServer extends Thread{
 	    			String data = new String(array);
 	    			is.close();
 	    			link.close();
-	    		}
+	    		
         } catch (Exception e) {
             e.printStackTrace();
         }}).start();
