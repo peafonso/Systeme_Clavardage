@@ -181,7 +181,7 @@ public class InteractiveChatSystem {
         case DECONNEXION:
     	    System.out.println(msgrecu);
     	    User usertodisconnect= User.toUser(msgrecu);
-			getApp().getFriends().deleteContactfromPseudo(usertodisconnect.getPseudo());
+			getApp().getFriends().deleteContact(getApp().getFriends().getUserfromPseudo(usertodisconnect.getPseudo()));
 			Home.miseAJourContact();
         	;
 		default:

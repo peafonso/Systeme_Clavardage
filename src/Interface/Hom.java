@@ -178,8 +178,12 @@ public class Hom {
     			JTextArea textArea_1 = new JTextArea();
     			textArea_1.setBackground(Color.LIGHT_GRAY);
     			textArea_1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-    			textArea_1.setBounds(177, 12, 156, 25);
+    			textArea_1.setBounds(177, 12, 76, 25);
     			panel.add(textArea_1);
+    			
+    			JTextPane textPane = new JTextPane();
+    			textPane.setBounds(420, 22, 279, 20);
+    			panel.add(textPane);
 		
         /*usersconnected= new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(usersconnected);

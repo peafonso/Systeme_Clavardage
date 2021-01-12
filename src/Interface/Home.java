@@ -19,10 +19,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Cursor;
+
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 
 import java.awt.Insets;
@@ -52,6 +55,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import model.User;
@@ -63,8 +67,10 @@ public class Home {
 	private JTextField textField;
 	private JPanel panel;
 	private JButton btnSend;
-	private JTextArea textArea;
+	private static JTextArea textArea;
+	private JScrollPane scrolltextArea;
 	private JTextArea talkingto;
+	private static JTextPane notification;
 	private static JList<String> usersconnected;
 	static UDPListener udpListen = new UDPListener();
 
@@ -85,7 +91,7 @@ public class Home {
 		frame.setBackground(new Color(240, 240, 240));
 		//frame.setBounds(100, 100, 1640, 920);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 		//frame.setSize(1600,900);
@@ -164,30 +170,47 @@ public class Home {
 		);
     
         panel_1.add(usersconnected);
-
         frame.getContentPane().add(panel_1);
+        
+        //TextField pour rédiger son message
         textField = new JTextField();
         textField.setBackground(Color.WHITE);
         textField.setFont(new Font("Bahnschrift", Font.PLAIN, 11));
 		textField.setBounds(80, 373, 453, 33);
 		textField.setColumns(10);
+		
+		//Bouton Send
     	btnSend = new JButton("send");
     	btnSend.setBackground(SystemColor.activeCaption);
     	btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
     	btnSend.setBounds(558, 371, 76, 38);
+    	
     	textArea = new JTextArea();
 		textArea.setBackground(SystemColor.controlHighlight);
 		textArea.setBounds(58, 53, 591, 296);
+		textArea.setColumns(20);
+		textArea.setRows(5);
+		scrolltextArea = new JScrollPane();
+		scrolltextArea.setViewportView(textArea);
+		scrolltextArea.setVisible(true);
+
 		JLabel lblTalkingwith = new JLabel("Talking with");
 		lblTalkingwith.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		lblTalkingwith.setBounds(60, 11, 126, 31);
 		talkingto = new JTextArea();
 		talkingto.setBackground(new Color(211, 211, 211));
 		talkingto.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		talkingto.setBounds(177, 12, 156, 25);
+		talkingto.setBounds(177, 12, 76, 25);
+
+		notification= new JTextPane();
+		notification.setBounds(420, 22, 279, 20);
+		notification.setBackground(new Color(211, 211, 211));
+		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 17));
 		
+		panel.add(notification);
 		panel.add(talkingto);
 		panel.add(lblTalkingwith);
+		panel.add(scrolltextArea);
 		panel.add(textArea);
 		panel.add(btnSend);
 		panel.add(textField);
@@ -196,7 +219,7 @@ public class Home {
 		frame.setVisible(true);
 		udpListen.start();
 	 	miseAJourContact();
-	 	//SocketServer.Receive(getApp().getMe().getIP(),getApp().getMe().getPort());
+	 	SocketServer.Receive(getApp().getMe().getIP(),getApp().getMe().getPort());
 		
 	}
 	
@@ -240,8 +263,8 @@ public class Home {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
             	textField.setText("");          
-            	textArea.append(msg+"\n");
-           }
+            	display(msg);
+            }
         });
     	
     	textField.addActionListener(new java.awt.event.ActionListener() {
@@ -249,7 +272,7 @@ public class Home {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
             	textField.setText(""); 
-            	textArea.append(msg+"\n");
+            	display(msg);
             }
         });
 
@@ -267,7 +290,7 @@ public class Home {
 
 	//fermer la page home
 	public static void dispose() {
-		app.getcSystem().Deconnexion();
+		//app.getcSystem().Deconnexion();
 		frame.dispose();
 	}
 
@@ -279,4 +302,11 @@ public class Home {
 		Home.app = app;
 	}
 
+	public static void display (String msg) {
+		textArea.append("\n"+msg);
+	}
+	
+	public static void displayNotification(String from) {
+		notification.setText("vous avez reçu un message de "+from);
+	}
 }

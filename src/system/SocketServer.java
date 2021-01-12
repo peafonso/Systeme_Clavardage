@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import Interface.Home;
+
 public class SocketServer extends Thread{
 	private String clientIP;
 	private int clientPort;
@@ -18,7 +20,7 @@ public class SocketServer extends Thread{
 	public void run() {
 		try {
     		while(true) {
-    			ServerSocket link = new ServerSocket(clientPort);
+    			ServerSocket link = new ServerSocket(2000);
     			Socket sock=link.accept();
     			byte[] array = new byte[100000000];
     			OutputStream out= sock.getOutputStream();
@@ -38,8 +40,9 @@ public class SocketServer extends Thread{
 	public static void Receive(String clientIP, int clientPort)  {
 	    new Thread(() -> {
 	    	try {
-	    		System.out.println("qqq"+ clientPort);
-	    			ServerSocket link = new ServerSocket(clientPort);
+	    		while(true) {
+	    			System.out.println("qqq");
+	    			ServerSocket link = new ServerSocket(2000);
 		    		System.out.println("qqq2");
 	    			Socket sock=link.accept();
 	    			byte[] array = new byte[100000000];
@@ -48,9 +51,10 @@ public class SocketServer extends Thread{
 	    			InputStream is = sock.getInputStream();
 	    			is.read(array);
 	    			String data = new String(array);
+	    			Home.displayNotification(clientIP);
 	    			is.close();
 	    			link.close();
-	    		
+	    		}	
         } catch (Exception e) {
             e.printStackTrace();
         }}).start();
