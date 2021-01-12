@@ -206,7 +206,7 @@ public class Home {
 		notification= new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
 		notification.setBackground(new Color(211, 211, 211));
-		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 8));
 		
 		panel.add(notification);
 		panel.add(talkingto);
@@ -218,7 +218,7 @@ public class Home {
 
 		frame.setVisible(true);
 		udpListen.start();
-	 	miseAJourContactConnexion();
+	 	miseAJourContact();
 	 	SocketServer.Receive(getApp().getMe().getPort());
 		
 	}
@@ -281,13 +281,11 @@ public class Home {
 		panel.add(textArea);
     }
 
-    public static void miseAJourContactConnexion() {
+    public static void miseAJourContact() {
     	usersconnected.setListData(getApp().getFriends().getListPseudo());
     }
     
-    public static void miseAJourContactDeconnexion() {
-    	usersconnected.updateUI();
-    }
+  
     
 	//pour afficher les erreurs
 	public static void Error(String error) {
@@ -312,7 +310,7 @@ public class Home {
 		textArea.append("\n"+msg);
 	}
 	
-	public static void displayNotification(String from) {
-		notification.setText("vous avez reçu un message de "+from);
+	public static void displayNotification(String IPfrom) {
+		notification.setText("vous avez reçu un message de "+getApp().getFriends().getUserfromIP(IPfrom));
 	}
 }

@@ -43,7 +43,7 @@ public class SocketServer extends Thread{
 	    			ServerSocket link = new ServerSocket(2000);
 		    		System.out.println("qqq2");
 	    			Socket sock=link.accept();
-	    			Home.displayNotification(link.getInetAddress().getHostAddress());
+	    			Home.displayNotification(sock.getInetAddress().getHostAddress());
 	    			byte[] array = new byte[100000000];
 	    			OutputStream out= sock.getOutputStream();
 	    			out.flush();

@@ -68,11 +68,11 @@ public class Contacts extends ArrayList<User>{
 	}
 	
 	//Recuperer un utilisateur d'apres son IP
-	public User getUserfromIP (String IP) {
-		User toreturn = null;
+	public String getUserfromIP (String IP) {
+		String toreturn = null;
 		for (User user : contacts) {
 			if (user.getIP().equals(IP)) {
-				toreturn=user;
+				toreturn=user.getPseudo();
 			}
 		}
 		return toreturn;
