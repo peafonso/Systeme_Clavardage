@@ -8,11 +8,9 @@ import java.net.Socket;
 import Interface.Home;
 
 public class SocketServer extends Thread{
-	private String clientIP;
 	private int clientPort;
 	
-	public SocketServer(String IP, int port) {
-		this.setClientIP(IP);
+	public SocketServer (int port) {
 		this.setClientPort(port);
 	}
 	
@@ -37,7 +35,7 @@ public class SocketServer extends Thread{
 		}
 	}
 	
-	public static void Receive(String clientIP, int clientPort)  {
+	public static void Receive(int clientPort)  {
 	    new Thread(() -> {
 	    	try {
 	    		while(true) {
@@ -45,13 +43,14 @@ public class SocketServer extends Thread{
 	    			ServerSocket link = new ServerSocket(2000);
 		    		System.out.println("qqq2");
 	    			Socket sock=link.accept();
+	    			Home.displayNotification(link.getInetAddress().getHostAddress());
 	    			byte[] array = new byte[100000000];
 	    			OutputStream out= sock.getOutputStream();
 	    			out.flush();
 	    			InputStream is = sock.getInputStream();
 	    			is.read(array);
 	    			String data = new String(array);
-	    			Home.displayNotification(clientIP);
+	    			Home.display(data);
 	    			is.close();
 	    			link.close();
 	    		}	
@@ -60,12 +59,8 @@ public class SocketServer extends Thread{
         }}).start();
 	        
 	}
-	public String getClientIP() {
-		return clientIP;
-	}
-	public void setClientIP(String clientIP) {
-		this.clientIP = clientIP;
-	}
+
+	
 	public int getClientPort() {
 		return clientPort;
 	}

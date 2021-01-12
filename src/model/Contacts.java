@@ -67,6 +67,17 @@ public class Contacts extends ArrayList<User>{
 		return toreturn;
 	}
 	
+	//Recuperer un utilisateur d'apres son IP
+	public User getUserfromIP (String IP) {
+		User toreturn = null;
+		for (User user : contacts) {
+			if (user.getIP().equals(IP)) {
+				toreturn=user;
+			}
+		}
+		return toreturn;
+	}
+		
 	public int length () {
 		int n=0;
 		for (User user : contacts) {

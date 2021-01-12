@@ -164,6 +164,7 @@ public class Home {
         usersconnected.setBounds(0, 646, 272, -599);
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
+		      		talkingto.append(""); 
 		           Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
 		        }
 		      }
@@ -188,8 +189,8 @@ public class Home {
     	textArea = new JTextArea();
 		textArea.setBackground(SystemColor.controlHighlight);
 		textArea.setBounds(58, 53, 591, 296);
-		textArea.setColumns(20);
-		textArea.setRows(5);
+		textArea.setEditable(false);
+		
 		scrolltextArea = new JScrollPane();
 		scrolltextArea.setViewportView(textArea);
 		scrolltextArea.setVisible(true);
@@ -205,21 +206,20 @@ public class Home {
 		notification= new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
 		notification.setBackground(new Color(211, 211, 211));
-		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 17));
+		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
 		
 		panel.add(notification);
 		panel.add(talkingto);
 		panel.add(lblTalkingwith);
-		panel.add(scrolltextArea);
-		panel.add(textArea);
+		
 		panel.add(btnSend);
 		panel.add(textField);
 		
 
 		frame.setVisible(true);
 		udpListen.start();
-	 	miseAJourContact();
-	 	SocketServer.Receive(getApp().getMe().getIP(),getApp().getMe().getPort());
+	 	miseAJourContactConnexion();
+	 	SocketServer.Receive(getApp().getMe().getPort());
 		
 	}
 	
@@ -257,6 +257,8 @@ public class Home {
     
     //ouverture d'une communication
     public void Chats (User u2) {
+    	System.out.println("talking to"+ u2.getPseudo());
+  
     	talkingto.append(u2.getPseudo()); //pour afficher à qui on parle
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,12 +277,16 @@ public class Home {
             	display(msg);
             }
         });
-
+    	panel.add(scrolltextArea);
+		panel.add(textArea);
     }
 
-    public static void miseAJourContact() {
-    	usersconnected.updateUI();
+    public static void miseAJourContactConnexion() {
     	usersconnected.setListData(getApp().getFriends().getListPseudo());
+    }
+    
+    public static void miseAJourContactDeconnexion() {
+    	usersconnected.updateUI();
     }
     
 	//pour afficher les erreurs

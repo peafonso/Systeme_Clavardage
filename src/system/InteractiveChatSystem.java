@@ -137,7 +137,7 @@ public class InteractiveChatSystem {
      				//getApp().getDb().insertcontact(usertoadd.getIP()); //on ajoute dans la bd
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
          		    System.out.println("j'ajoute" +usertoadd+ "et je maj");
-        			Home.miseAJourContact();
+        			Home.miseAJourContactConnexion();
 
      	    	}catch (Exception e) {
      	    		System.out.println("Pb envoi UDP OK");
@@ -169,7 +169,7 @@ public class InteractiveChatSystem {
     	    		try {
     	    			System.out.println("envoiok "+ usertocompare.getIP());
     	    			UDPTalk.sendUDP(envoiok, usertocompare.getPort(), usertocompare.getIP());
-    	    			Home.miseAJourContact();
+    	    			Home.miseAJourContactConnexion();
     	    		}catch (Exception e) {
     	    			System.out.println("Pb envoi UDP OK");
     	    		}    	    
@@ -182,7 +182,7 @@ public class InteractiveChatSystem {
     	    System.out.println(msgrecu);
     	    User usertodisconnect= User.toUser(msgrecu);
 			getApp().getFriends().deleteContact(getApp().getFriends().getUserfromPseudo(usertodisconnect.getPseudo()));
-			Home.miseAJourContact();
+			Home.miseAJourContactDeconnexion();
         	;
 		default:
 			break;
