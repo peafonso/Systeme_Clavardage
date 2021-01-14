@@ -162,7 +162,7 @@ public class Home {
         lblcontacts.setBounds(64, 0, 161, 32);
         panel_1.add(lblcontacts);
         
-        /*usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
+        usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
         usersconnected.setBounds(0, 646, 272, -599);
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
@@ -172,7 +172,7 @@ public class Home {
 		      }
 		);
     
-        panel_1.add(usersconnected);*/
+        panel_1.add(usersconnected);
         frame.getContentPane().add(panel_1);
         
         //TextField pour rédiger son message
