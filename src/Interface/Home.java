@@ -147,20 +147,22 @@ public class Home {
         
         panel = new JPanel();
         panel.setBackground(new Color(211, 211, 211));
-        panel.setBounds(100, 101, 724, 430);
+        panel.setBounds(151, 137, 820, 430);
         panel.setLayout(null);
 
         frame.getContentPane().add(panel);
         JPanel panel_1 = new JPanel();
+        panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
-        panel_1.setBounds(1000, 0, 307, 690);
+        panel_1.setBounds(1110, 29, 307, 690);
         
-        JLabel lblcontacts = new JLabel("users connected\r\n");
-        lblcontacts.setFont(new Font("Bahnschrift", Font.PLAIN, 18));
+        JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
+        lblcontacts.setBackground(new Color(192, 192, 192));
+        lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
         lblcontacts.setBounds(64, 0, 161, 32);
         panel_1.add(lblcontacts);
         
-        usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
+        /*usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
         usersconnected.setBounds(0, 646, 272, -599);
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
@@ -170,7 +172,7 @@ public class Home {
 		      }
 		);
     
-        panel_1.add(usersconnected);
+        panel_1.add(usersconnected);*/
         frame.getContentPane().add(panel_1);
         
         //TextField pour rédiger son message
@@ -188,15 +190,20 @@ public class Home {
     	
     	textArea = new JTextArea();
 		textArea.setBackground(SystemColor.controlHighlight);
-		textArea.setBounds(58, 53, 591, 296);
+		textArea.setBounds(70, 59, 654, 290);
 		textArea.setEditable(false);
 		
-		scrolltextArea = new JScrollPane();
+		/*scrolltextArea = new JScrollPane();
 		scrolltextArea.setViewportView(textArea);
-		scrolltextArea.setVisible(true);
-
+		scrolltextArea.setVisible(true);*/
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(60, 53, 664, 296);
+		scrollPane.setViewportView(textArea);
+		panel.add(scrollPane);
+		
 		JLabel lblTalkingwith = new JLabel("Talking with");
-		lblTalkingwith.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblTalkingwith.setFont(new Font("Bahnschrift", Font.BOLD, 20));
 		lblTalkingwith.setBounds(60, 11, 126, 31);
 		talkingto = new JTextArea();
 		talkingto.setBackground(new Color(211, 211, 211));
@@ -215,8 +222,9 @@ public class Home {
 		panel.add(btnSend);
 		panel.add(textField);
 		
-		panel.add(scrolltextArea);
-		panel.add(textArea);
+		//panel.add(scrolltextArea);
+		//panel.add(textArea);
+		
 		
 		frame.setVisible(true);
 		udpListen.start();
@@ -333,5 +341,4 @@ public class Home {
 		public void windowDeactivated(WindowEvent arg0) {}
 
 	}
-	
 }
