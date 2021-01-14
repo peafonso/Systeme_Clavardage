@@ -90,8 +90,8 @@ public class Home {
 		frame = new BackgroundJFrame("Home");
 		frame.setBackground(new Color(240, 240, 240));
 		//frame.setBounds(100, 100, 1640, 920);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addWindowListener(new windowClosingListener());
 
 
 		//frame.setSize(1600,900);
@@ -165,7 +165,7 @@ public class Home {
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
 		      		talkingto.append(""); 
-		           Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+		      		Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
 		        }
 		      }
 		);
@@ -215,7 +215,9 @@ public class Home {
 		panel.add(btnSend);
 		panel.add(textField);
 		
-
+		panel.add(scrolltextArea);
+		panel.add(textArea);
+		
 		frame.setVisible(true);
 		udpListen.start();
 	 	miseAJourContact();
@@ -277,12 +279,12 @@ public class Home {
             	display(msg);
             }
         });
-    	panel.add(scrolltextArea);
-		panel.add(textArea);
+    	
     }
 
     public static void miseAJourContact() {
     	usersconnected.setListData(getApp().getFriends().getListPseudo());
+    	//garder le pointeur du getSelectedValue même si qqn part 
     }
     
   
@@ -294,7 +296,8 @@ public class Home {
 
 	//fermer la page home
 	public static void dispose() {
-		//app.getcSystem().Deconnexion();
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		UDPListener.setOuvert(false);
 		frame.dispose();
 	}
 
@@ -313,4 +316,22 @@ public class Home {
 	public static void displayNotification(String IPfrom) {
 		notification.setText("vous avez reçu un message de "+getApp().getFriends().getUserfromIP(IPfrom));
 	}
+	
+	
+	public class windowClosingListener implements WindowListener {
+		
+		public void windowClosing(WindowEvent e) {
+			UDPListener.setOuvert(false);
+			app.getcSystem().Deconnexion();
+		}
+		
+		public void windowOpened(WindowEvent arg0) {}
+		public void windowClosed(WindowEvent arg0) {}
+		public void windowIconified(WindowEvent arg0) {}
+		public void windowDeiconified(WindowEvent arg0) {}
+		public void windowActivated(WindowEvent arg0) {}
+		public void windowDeactivated(WindowEvent arg0) {}
+
+	}
+	
 }

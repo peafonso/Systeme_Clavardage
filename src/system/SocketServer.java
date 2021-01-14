@@ -39,9 +39,8 @@ public class SocketServer extends Thread{
 	    new Thread(() -> {
 	    	try {
 	    		while(true) {
-	    			System.out.println("qqq");
+	    			System.out.println("jairecuqqchose");
 	    			ServerSocket link = new ServerSocket(2000);
-		    		System.out.println("qqq2");
 	    			Socket sock=link.accept();
 	    			Home.displayNotification(sock.getInetAddress().getHostAddress());
 	    			byte[] array = new byte[100000000];
