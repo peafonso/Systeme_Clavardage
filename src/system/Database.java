@@ -1,6 +1,7 @@
 package system;
 
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -10,58 +11,24 @@ import java.sql.SQLException;
 
 public class Database {
 	
-	/**
-     * Create a new table in the test database
-     *
-     */
-    public void createTables() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:C://sqlite/db/test.db";
-        
-        // SQL statement for creating a new tables
-        String sqlcontacts = "CREATE TABLE IF NOT EXISTS contacts (\n"
-        		+ "	contactid integer PRIMARY KEY,\n"
-                + "	ip text NOT NULL UNIQUE\n"
-                + ");";
-        
-        String sqlconversation = "CREATE TABLE IF NOT EXISTS conversations (\n"
-        		+ "	convoid integer PRIMARY KEY,\n"
-        		+ "	ip1 text NOT NULL,\n"
-        		+ " ip2 text NOT NULL UNIQUE\n"
-        		+ ");";
-        
-        String sqlmessages = "CREATE TABLE IF NOT EXISTS messages (\n"
-        		+ "	textid integer PRIMARY KEY,\n"
-        		+ "	message text NOT NULL,\n"
-        		+ "	time real NOT NULL\n"
-        		+ ");";
-        
-                
-        try (Connection conn = DriverManager.getConnection(url);
-          Statement stmt = conn.createStatement()) {
-            // create new tables
-            stmt.execute(sqlcontacts);
-            stmt.execute(sqlconversation);
-            stmt.execute(sqlmessages);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+	// SQLite connection string
+    String url = "jdbc:sqlite:C://sqlite/db/test.db";
     
-	/**
+	//creation d'une table pour chaque conversation du nom de la personne à qui on parle
+	//on met dedans tous les messages pour l'historique
+    
+    /**
 	* Connect to a sample database
 	*
 	* @param fileName the database file name
 	*/
-	 public void createNewDatabase(String fileName) {
+	 public void createNewDatabase() {
 	    	try {
 				Class.forName("org.sqlite.JDBC");
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			}
 	    	
-	        String url = "jdbc:sqlite:C:/sqlite/db/" + fileName;
-
 	        try (Connection conn = DriverManager.getConnection(url)) {
 	            if (conn != null) {
 	                DatabaseMetaData meta = conn.getMetaData();
@@ -73,83 +40,107 @@ public class Database {
 	            System.out.println(e.getMessage());
 	        }
 	 }
-	 
-	 
-	   /**
-	     * Connect to the test.db database
-	     * @return the Connection object
-	     */
-		private Connection connect() {
-	        // SQLite connection string
-	        String url = "jdbc:sqlite:C://sqlite/db/test.db";
-	        Connection conn = null;
-	        try {
-	            conn = DriverManager.getConnection(url);
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	        }
-	        return conn;
-	 	}
-	 	
-	 	/**
-	     * Insert a new row into the contacts table
-	     *
-	     * @param adress
-	     */
-	    public void insertcontact(String ip) {
-	        String sql = "INSERT INTO contacts(ip) VALUES(?)";
+	
+	/**
+     * Create a new table conversation ip2
+     *
+     */
+	public void createTableConvo(String ip2) {
+        String sqlconvo= "CREATE TABLE IF NOT EXISTS `" +getNomTable(ip2)+"`(\n"
+        		+ "	id integer PRIMARY KEY,\n"
+                + "	time text NOT NULL \n"
+        		+ " message text NOT NULL"
+                + ");"; 
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()) {
+        		stmt.execute(sqlconvo);
+        } catch (SQLException e) {
+                  System.out.println(e.getMessage());
+        }
+	}
+	
+	/**
+     * Recupérer historique par rapport à l'ip de notre correspondant
+     *
+     */
+	public ArrayList<Message> recupHistory(String ip2) {
+        ArrayList<Message> historique = new ArrayList<Message>();
+		String nomtable= getNomTable(ip2);
+		String sql = "SELECT id, time, message FROM `"+nomtable+"`";
+	        
+	    try (Connection conn = this.connect();
+			 Statement stmt  = conn.createStatement();
+	         ResultSet rs    = stmt.executeQuery(sql)){
+	    	System.out.println("\nTABLE MESSAGES (id, time, message)\n");
 
-	        try (Connection conn = this.connect();
-	        	PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	            pstmt.setString(1, ip);
-	            pstmt.executeUpdate();
+	    	// loop through the result set
+	    	while (rs.next()) {
+	    		//Message msg= Message()
+	    		//historique.add(e);
+	    		System.out.println(rs.getInt("textid") +  "\t" + 
+	    				rs.getString("message") + "\t" +
+	    				rs.getFloat("time"));
+	         	}
 	        } catch (SQLException e) {
-	            System.out.println("error at insertcontact\n");
+	            System.out.println("error at selectMessages\n");
 	            System.out.println(e.getMessage());
 	        }
+		return null;
+	}
+	
+	/**
+     * Ajouter des messages à l'historique 
+     *
+     */
+	public void addMessage(String ip2, Message msg) {
+		String nomtable= getNomTable(ip2);
+		String sql = "INSERT INTO `"+nomtable+"`(id,time,msg) VALUES(?,?,?)";
+
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, msg.getTimeString());
+	        pstmt.setString(2, msg.getData());
+	        pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	    	System.out.println("error at addMessage\n");
+	    	System.out.println(e.getMessage());
 	    }
+	}
+	
+	/**
+     * Récupérer le nom de la table correspondant à la conversation choisie
+     *
+     */
+	public String getNomTable(String ip2) {
+		return "Chatwith_"+ip2;
+	}
+	
+	/**
+     * On vérifie que la table n'existe pas
+     *
+     */
+	public boolean getNomTable( ) {
+		//TODO
+		return true;
+	}
 
-	    /**
-	     * Insert a new row into the conversation table
-	     *
-	     * @param ip1
-	     * @param ip2
-	     * 
-	     */
-	    public void insertconvo(String ip1,String ip2) {
-	        String sql = "INSERT INTO conversations(ip1,ip2) VALUES(?,?)";
+	/**
+     * Connect to the test.db database
+     * @return the Connection object
+     */
+	private Connection connect() {
+        // SQLite connection string
+        String url = "jdbc:sqlite:C://sqlite/db/test.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+ 	}
+ 	   
 
-	        try (Connection conn = this.connect();
-	        	PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	            pstmt.setString(1, ip1);
-	            pstmt.setString(2, ip2);
-	            pstmt.executeUpdate();
-	        } catch (SQLException e) {
-	            System.out.println("error at insertconvo\n");
-	            System.out.println(e.getMessage());
-	        }
-	    }
-	 
-	    /**
-	     * Insert a new row into the messages table
-	     *
-	     * @param msg
-	     * @param time
-	     * 
-	     */
-	    public void inserttext(String msg,int time) {
-	        String sql = "INSERT INTO messages(msg,time) VALUES(?,?)";
-
-	        try (Connection conn = this.connect();
-	        	PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	            pstmt.setString(1, msg);
-	            pstmt.setLong(2, time);
-	            pstmt.executeUpdate();
-	        } catch (SQLException e) {
-	            System.out.println("error at inserttext\n");
-	            System.out.println(e.getMessage());
-	        }
-	    }
 	    
 	    /**
 	     * Delete a warehouse specified by the id
@@ -264,20 +255,5 @@ public class Database {
 	            System.out.println(e.getMessage());
 	        }
 	    }
-	    
-	 /**
-	  * @param args the command line arguments
-	 */
-	 public static void main(String[] args) {
-		 Database app= new Database();
-		 
-		 app.createNewDatabase("test.db");
-		 app.createTables();
-		 app.selectContacts();
-		 app.selectConversations();
-		 app.selectMessages();
-		 System.out.println(app.selectOneConversation("127.0.0.1"));
-
-	 }
 }
 

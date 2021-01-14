@@ -24,6 +24,14 @@ public class Message implements Serializable {
 		this.setType(typemsg.ENVOIMSG);
 	}
 	
+	public Message(User from, User to, String msg, String daae) {
+		this.setSender(from);
+		this.setReceiver(to);
+		this.setData(msg);
+		this.setTime(new Date());
+		this.setType(typemsg.ENVOIMSG);
+	}
+	
 	public Message(User from, User to, String msg, typemsg type) {
 		this.setSender(from);
 		this.setReceiver(to);
@@ -94,9 +102,17 @@ public class Message implements Serializable {
 	public Date getTime() {
 		return time;
 	}
+	
+	public String getTimeString() {
+		return time.toString();
+	}
 
 	public void setTime(Date date) {
 		this.time = date;
+	}
+	
+	public void setTimeString (String date) {
+		//this.time= date.;
 	}
 
 	public typemsg getType() {
