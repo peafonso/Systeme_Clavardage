@@ -13,10 +13,9 @@ public class Application {
 	private Database db;
 
 	public Application(User u1) {
+		//on crée notre liste de contacts
 		this.setMe(u1);
 		setFriends(new Contacts());
-		//this.db.createNewDatabase("mydb");
-		//this.db.createTables(); 
 	}
 	
 	public static void main(String[] args) {

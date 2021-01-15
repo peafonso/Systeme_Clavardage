@@ -322,7 +322,7 @@ public class Home {
 	}
 	
 	public static void displayNotification(String IPfrom) {
-		notification.setText("vous avez reçu un message de "+getApp().getFriends().getUserfromIP(IPfrom));
+		notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
 	}
 	
 	

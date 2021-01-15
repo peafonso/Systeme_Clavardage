@@ -16,6 +16,7 @@ public class Message implements Serializable {
 	private Date time; //variable pour l'horodatage
 	private typemsg type;
 	
+	
 	public Message(User from, User to, String msg) {
 		this.setSender(from);
 		this.setReceiver(to);
@@ -40,6 +41,10 @@ public class Message implements Serializable {
 		this.setType(type);
 	}
 	
+	public Message() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String toString() {
 	    DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);

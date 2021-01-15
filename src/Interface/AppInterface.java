@@ -10,6 +10,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import control.Application;
 import model.User;
+import system.Database;
 import system.InteractiveChatSystem;
 import system.SocketClient;
 import system.SocketServer;
@@ -81,6 +82,7 @@ public class AppInterface {
 		User u1= new User();
 		app= new Application(u1);
 		app.setcSystem(new InteractiveChatSystem(app));
+		app.setDb(new Database(app));
 		initialize();
 	}
 

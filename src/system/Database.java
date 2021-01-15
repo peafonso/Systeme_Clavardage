@@ -1,7 +1,11 @@
 package system;
 
+import system.Message;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import control.Application;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -11,12 +15,19 @@ import java.sql.SQLException;
 
 public class Database {
 	
+	private static Application app;
+
 	// SQLite connection string
     String url = "jdbc:sqlite:C://sqlite/db/test.db";
     
 	//creation d'une table pour chaque conversation du nom de la personne à qui on parle
 	//on met dedans tous les messages pour l'historique
     
+    public Database(Application app) {
+    	this.setApp(app);
+    	createNewDatabase(); //on crée la base de données
+    	
+    }
     /**
 	* Connect to a sample database
 	*
@@ -41,22 +52,42 @@ public class Database {
 	        }
 	 }
 	
-	/**
-     * Create a new table conversation ip2
+	 /**
+	  * Connect to the test.db database
+	  * @return the Connection object
+	  *  */
+	 private Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+ 	}	 
+	 
+	 
+	/** 
+     * Create a new table conversation ip2 (nom Chatwith_IP2, id num du message 
+     * 1 était le plus ancien, time horodatage du message, message -> texte envoyé) 
+     * 
+     * Si on lance createTableConvo avec un correspondant avec lequel on a déjà conversé on 
+     * ne recrée pas une nouvelle table (IF NOT EXISTS)
      *
      */
 	public void createTableConvo(String ip2) {
-        String sqlconvo= "CREATE TABLE IF NOT EXISTS `" +getNomTable(ip2)+"`(\n"
+        String sqlconvo= "CREATE TABLE IF NOT EXISTS " +getNomTable(ip2)+"(\n"
         		+ "	id integer PRIMARY KEY,\n"
                 + "	time text NOT NULL \n"
         		+ " message text NOT NULL"
                 + ");"; 
         
         try (Connection conn = DriverManager.getConnection(url);
-                Statement stmt = conn.createStatement()) {
+        		Statement stmt = conn.createStatement()) {
         		stmt.execute(sqlconvo);
         } catch (SQLException e) {
-                  System.out.println(e.getMessage());
+         	System.out.println("erreur at createTableConvo\n");
+         	System.out.println(e.getMessage());
         }
 	}
 	
@@ -67,35 +98,37 @@ public class Database {
 	public ArrayList<Message> recupHistory(String ip2) {
         ArrayList<Message> historique = new ArrayList<Message>();
 		String nomtable= getNomTable(ip2);
-		String sql = "SELECT id, time, message FROM `"+nomtable+"`";
+		String sql = "SELECT id, time, message FROM "+nomtable;
 	        
 	    try (Connection conn = this.connect();
 			 Statement stmt  = conn.createStatement();
 	         ResultSet rs    = stmt.executeQuery(sql)){
-	    	System.out.println("\nTABLE MESSAGES (id, time, message)\n");
+	    	System.out.println("\nTABLE `"+nomtable+"` (id, time, message)\n");
 
 	    	// loop through the result set
 	    	while (rs.next()) {
-	    		//Message msg= Message()
-	    		//historique.add(e);
-	    		System.out.println(rs.getInt("textid") +  "\t" + 
-	    				rs.getString("message") + "\t" +
-	    				rs.getFloat("time"));
+	    		Message msg= new Message();
+	    		msg.setData(rs.getString("message"));
+	    		msg.setTimeString(rs.getString("time"));
+	    		msg.setSender(getApp().getMe());
+	    		msg.setReceiver(getApp().getFriends().getUserfromIP(ip2));
+	    		historique.add(msg);
 	         	}
 	        } catch (SQLException e) {
-	            System.out.println("error at selectMessages\n");
+	            System.out.println("error at recupHistory\n");
 	            System.out.println(e.getMessage());
 	        }
-		return null;
+		return historique;
 	}
-	
+
+
 	/**
      * Ajouter des messages à l'historique 
      *
      */
 	public void addMessage(String ip2, Message msg) {
 		String nomtable= getNomTable(ip2);
-		String sql = "INSERT INTO `"+nomtable+"`(id,time,msg) VALUES(?,?,?)";
+		String sql = "INSERT INTO "+nomtable+"(id,time,msg) VALUES(?,?,?)";
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, msg.getTimeString());
@@ -115,123 +148,27 @@ public class Database {
 		return "Chatwith_"+ip2;
 	}
 	
+	
 	/**
-     * On vérifie que la table n'existe pas
+     * On suprime la conversation 
      *
      */
-	public boolean getNomTable( ) {
-		//TODO
-		return true;
-	}
-
-	/**
-     * Connect to the test.db database
-     * @return the Connection object
-     */
-	private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:C://sqlite/db/test.db";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
- 	}
- 	   
-
-	    
-	    /**
-	     * Delete a warehouse specified by the id
-	     *
-	     * @param id
-	     */
-	    public void deleteConversations(int id) {
-	        String sql = "DELETE FROM conversations WHERE convoid = ?";
+	public void deleteConvo(String ip2) {
+		String nomtable= getNomTable(ip2);
+		String sql = "DROP TABLE "+nomtable;
 
 	        try (Connection conn = this.connect();
-	                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-	            // set the corresponding param
-	            pstmt.setInt(1, id);
-	            // execute the delete statement
+	            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.executeUpdate();
 
 	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
+	            System.out.println("erreur deleteconvo");
 	        }
-	    }
+	}
 
-	    /**
-	     * select all rows in the contacts table
-	     */
-	    public void selectContacts(){
-	        String sql = "SELECT contactid, ip FROM contacts";
-	        
-	        try (Connection conn = this.connect();
-	             Statement stmt  = conn.createStatement();
-	             ResultSet rs    = stmt.executeQuery(sql)){
-                System.out.println("\nTABLE CONTACTS (contactid, ip)");
-
-	            // loop through the result set
-	            while (rs.next()) {
-	                System.out.println(rs.getInt("contactid") +  "\t" + 
-	                                   rs.getString("ip"));
-	            }
-	        } catch (SQLException e) {
-	            System.out.println("error at selectContacts\n");
-	            System.out.println(e.getMessage());
-	        }
-	    }
 	    
-	    /**
-	     * select all rows in the conversations table
-	     */
-	    public void selectConversations(){
-	        String sql = "SELECT convoid, ip1, ip2 FROM conversations";
-	        
-	        try (Connection conn = this.connect();
-	             Statement stmt  = conn.createStatement();
-	             ResultSet rs    = stmt.executeQuery(sql)){
-                System.out.println("\nTABLE CONVERSATIONS (convoid, ip1, ip2)");
-                
-	            // loop through the result set
-	            while (rs.next()) {
-	                System.out.println(rs.getInt("convoid") +  "\t" + 
-	                                   rs.getString("ip1") + "\t" +
-	                                   rs.getString("ip2"));
-	            }
-	        } catch (SQLException e) {
-	            System.out.println("error at selectConversations\n");
-	            System.out.println(e.getMessage());
-	        }
-	    }
 	    
-	    /**
-	     * select all rows in the conversations table
-	     */
-	    public boolean selectOneConversation(String u1){
-	    	boolean thereis= false;
-	        String sql = "SELECT convoid, ip1, ip2 FROM conversations WHERE ip2=?";
-	        
-	        try (Connection conn = this.connect();
-	                PreparedStatement pstmt  = conn.prepareStatement(sql)){
-                // set the value
-                pstmt.setString(1,u1);
-                ResultSet rs  = pstmt.executeQuery();
-	            while (rs.next()) {
-	                System.out.println(rs.getInt("convoid") +  "\t" + 
-	                                   rs.getString("ip1") + "\t" +
-	                                   rs.getString("ip2"));
-	                thereis=true;
-	            }
-	        } catch (SQLException e) {
-	            System.out.println("error at selectOneConversation\n");
-	            System.out.println(e.getMessage());
-	        }
-			return thereis;
-	    }
+	  
 	    
 	    /**
 	     * select all rows in the messages table
@@ -255,5 +192,11 @@ public class Database {
 	            System.out.println(e.getMessage());
 	        }
 	    }
+		public static Application getApp() {
+			return app;
+		}
+		public void setApp(Application app) {
+			Database.app = app;
+		}
 }
 
