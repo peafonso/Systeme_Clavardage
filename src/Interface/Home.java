@@ -154,7 +154,7 @@ public class Home {
         JPanel panel_1 = new JPanel();
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
-        panel_1.setBounds(1110, 29, 307, 690);
+        panel_1.setBounds(980, 29, 307, 690);
         
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
