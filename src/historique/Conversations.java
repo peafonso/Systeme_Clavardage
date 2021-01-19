@@ -30,8 +30,10 @@ public class Conversations {
 	
 	public static void initialize_hist() {
 		//création répertoire historique et fichiers des contacts déjà présents dans la liste d'amis
+		System.out.println("Création repértoire historique");
 		File allConv = new File(".\\src\\historique\\");			
 		//si nom du fichier n'existe pas, pas encore de conv avec la personne donc création du message
+		System.out.println("Création des fichiers de conv");
 		for (User user : friends) {
 			File conv=new File(".\\src\\historique\\all_conv\\"+user.getPseudo()+".txt");
 		}
@@ -40,10 +42,11 @@ public class Conversations {
 	
 	public static void delete_historique(){
 		for (User user : friends) {
+			System.out.println("suppression des conv historique");
 			File conv=new File(".\\src\\historique\\all_conv\\"+user.getPseudo()+".txt");
 			conv.delete();
 		}
-		
+		System.out.println("suppression repertoire historique");
 		File allConv = new File(".\\src\\historique\\");			
 		allConv.delete();
 	}
@@ -68,6 +71,7 @@ public class Conversations {
 		
 		String msg="OUPPS J'AI RIEN LU";
 		
+		System.out.println("lecture du fichier du pseudo "+ pseudo);
 		BufferedReader fluxEntree=null;
 		try {
 			/* Création du flux vers le fichier texte */
@@ -96,6 +100,7 @@ public class Conversations {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("renvoie de "+msg+" lu dans l'historique de la conv avec "+pseudo);
 		return msg;
 
 	}
@@ -111,6 +116,7 @@ public class Conversations {
 			out = new PrintWriter(new BufferedWriter(new FileWriter(pathFichier)));
 
 			/* Ecriture d'une ligne puis saut de ligne */
+			System.out.println("ériture de "+msg+" lu dans l'historique de la conv avec "+pseudo);
 			out.println(msg);
 
 		}
