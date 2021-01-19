@@ -18,7 +18,7 @@ import system.InteractiveChatSystem;
 public class Conversations {
 	
 	private static Application app;
-	private Contacts friends;
+	private static Contacts friends;
 	
 	String recu;
 
@@ -28,7 +28,7 @@ public class Conversations {
 		friends=getApp().getFriends();
 	}
 	
-	public void initialize_hist() {
+	public static void initialize_hist() {
 		//création répertoire historique et fichiers des contacts déjà présents dans la liste d'amis
 		File allConv = new File(".\\src\\historique\\");			
 		//si nom du fichier n'existe pas, pas encore de conv avec la personne donc création du message
@@ -38,7 +38,7 @@ public class Conversations {
 		
 	}
 	
-	public void delete_historique(){
+	public static void delete_historique(){
 		for (User user : friends) {
 			File conv=new File(".\\src\\historique\\all_conv\\"+user.getPseudo()+".txt");
 			conv.delete();

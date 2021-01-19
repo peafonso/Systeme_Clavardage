@@ -174,6 +174,8 @@ public class Home {
 		);
     
         panel_1.add(usersconnected);
+        Conversations.initialize_hist();
+        
         frame.getContentPane().add(panel_1);
         
         //TextField pour rédiger son message
@@ -334,6 +336,7 @@ public class Home {
 		public void windowClosing(WindowEvent e) {
 			UDPListener.setOuvert(false);
 			app.getcSystem().Deconnexion();
+	        Conversations.delete_historique();
 		}
 		
 		public void windowOpened(WindowEvent arg0) {}
