@@ -44,8 +44,8 @@ public class SocketServer extends Thread{
 	    			Socket sock=link.accept();
 	    			Home.displayNotification(sock.getInetAddress().getHostAddress());
 	    			byte[] array = new byte[100000000];
-	    			OutputStream out= sock.getOutputStream();
-	    			out.flush();
+	    			/*OutputStream out= sock.getOutputStream();
+	    			out.flush();*/
 	    			InputStream is = sock.getInputStream();
 	    			is.read(array);
 	    			String data = new String(array);
