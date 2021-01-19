@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import Interface.Home;
+import historique.Conversations;
 
 public class SocketServer extends Thread{
 	private int clientPort;
@@ -49,7 +50,8 @@ public class SocketServer extends Thread{
 	    			InputStream is = sock.getInputStream();
 	    			is.read(array);
 	    			String data = new String(array);
-	    			Home.display(data);
+	    			Conversations.write_msg(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
+	    			Home.display(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
 	    			is.close();
 	    			link.close();
 	    		}	

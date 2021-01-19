@@ -37,6 +37,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import control.Application;
+import historique.Conversations;
 import system.Conversation;
 import system.InteractiveChatSystem;
 import system.SocketClient;
@@ -269,13 +270,14 @@ public class Home {
     public void Chats (User u2) {
     	System.out.println("talking to"+ u2.getPseudo());
   
+    	
     	talkingto.append(u2.getPseudo()); //pour afficher à qui on parle
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
             	textField.setText("");          
-            	display(msg);
+            	display(msg,u2.getPseudo());
             }
         });
     	
@@ -284,7 +286,7 @@ public class Home {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
             	textField.setText(""); 
-            	display(msg);
+            	display(msg,u2.getPseudo());
             }
         });
     	
@@ -317,7 +319,8 @@ public class Home {
 		Home.app = app;
 	}
 
-	public static void display (String msg) {
+	public static void display (String msg, String friend) {
+		textArea.append(Conversations.read_msg(friend));
 		textArea.append("\n"+msg);
 	}
 	
