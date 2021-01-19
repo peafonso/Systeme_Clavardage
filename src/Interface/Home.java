@@ -155,7 +155,7 @@ public class Home {
         JPanel panel_1 = new JPanel();
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
-        panel_1.setBounds(1110, 29, 307, 690);
+        panel_1.setBounds(981, 29, 307, 690);
         
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
@@ -163,7 +163,7 @@ public class Home {
         lblcontacts.setBounds(64, 0, 161, 32);
         panel_1.add(lblcontacts);
         
-        usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
+        /*usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
         usersconnected.setBounds(0, 646, 272, -599);
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
@@ -173,7 +173,7 @@ public class Home {
 		      }
 		);
     
-        panel_1.add(usersconnected);
+        panel_1.add(usersconnected);*/
         Conversations.initialize_hist();
         
         frame.getContentPane().add(panel_1);
