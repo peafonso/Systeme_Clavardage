@@ -155,7 +155,7 @@ public class Home {
         JPanel panel_1 = new JPanel();
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
-        panel_1.setBounds(981, 29, 307, 690);
+        panel_1.setBounds(1110, 29, 307, 690);
         
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
@@ -174,7 +174,7 @@ public class Home {
 		);
     
         panel_1.add(usersconnected);
-        Conversations.initialize_hist();
+        //Conversations.initialize_hist();
         
         frame.getContentPane().add(panel_1);
         
@@ -196,9 +196,6 @@ public class Home {
 		textArea.setBounds(70, 59, 654, 290);
 		textArea.setEditable(false);
 		
-		/*scrolltextArea = new JScrollPane();
-		scrolltextArea.setViewportView(textArea);
-		scrolltextArea.setVisible(true);*/
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(60, 53, 664, 296);
@@ -322,7 +319,7 @@ public class Home {
 	}
 
 	public static void display (String msg, String friend) {
-		textArea.append(Conversations.read_msg(friend));
+		//textArea.append(Conversations.read_msg(friend));
 		textArea.append("\n"+msg);
 	}
 	
@@ -336,7 +333,7 @@ public class Home {
 		public void windowClosing(WindowEvent e) {
 			UDPListener.setOuvert(false);
 			app.getcSystem().Deconnexion();
-	        Conversations.delete_historique();
+	        //Conversations.delete_historique();
 		}
 		
 		public void windowOpened(WindowEvent arg0) {}
