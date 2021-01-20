@@ -12,6 +12,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -40,6 +42,7 @@ import control.Application;
 import historique.Conversations;
 import system.Conversation;
 import system.InteractiveChatSystem;
+import system.Message;
 import system.SocketClient;
 import system.SocketServer;
 import system.UDPListener;
@@ -68,7 +71,7 @@ public class Home {
 	private JTextField textField;
 	private JPanel panel;
 	private JButton btnSend;
-	private static JTextArea textArea;
+	private static JEditorPane textArea;
 	private JScrollPane scrolltextArea;
 	private JTextArea talkingto;
 	private static JTextPane notification;
@@ -167,7 +170,15 @@ public class Home {
         usersconnected.setBounds(0, 646, 272, -599);
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
+		    	  if(evt.getValueIsAdjusting()) {
+						 int userselect = usersconnected.getSelectedIndex();
+						 if(userselect != -1) {
+						 String usertalk = usersconnected.getSelectedValue();
+						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
+						 }
+		    	  }
 		      		talkingto.append(""); 
+		      		//loadconvo()
 		      		Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
 		        }
 		      }
@@ -191,11 +202,11 @@ public class Home {
     	btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
     	btnSend.setBounds(558, 371, 76, 38);
     	
-    	textArea = new JTextArea();
+    	textArea = new JEditorPane();
 		textArea.setBackground(SystemColor.controlHighlight);
 		textArea.setBounds(70, 59, 654, 290);
 		textArea.setEditable(false);
-		
+	
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(60, 53, 664, 296);
@@ -291,7 +302,56 @@ public class Home {
     	
     }
 
-    public static void miseAJourContact() {
+    private void loadconvo(User u2) {
+		ArrayList<Message> history= getApp().getDb().recupHistory(u2.getIP());
+		String messages = "<style type='text/css'>"
+				+ ".message-sent{margin:3px 5px 3px 50px;padding:0 5px 5px 5px;background:#FF8075;color:white;font-size:14pt;}"
+				+ ".message-received{margin:3px 50px 3px 5px;padding:0 5px 5px 5px;background:#eeeeee;color:black;font-size:14pt;}"
+				+ ".date-sent{font-size:11pt;color:white;}"
+				+ ".date-received{font-size:11pt;color:black;}"
+				+ ".user-sent{font-size:11pt;color:#888888;margin:3px 0 0 55px;}"
+				+ ".user-received{font-size:11pt;color:#888888;margin:3px 0 0 10px;}"
+				+ "</style>";
+		for(Message msg : history) {
+			String username,content,date;
+			if(msg.getSender().equals(getApp().getMe())) {
+					content = "Vous avez envoye un message :<br/>";
+			}else {
+					content = "Vous avez recu un message :<br/>";
+			}
+			
+			// Format de la date
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			date = dateFormat.format(msg.getTimeString());
+			
+			// Message envoye par moi
+			if(msg.getSender().equals(getApp().getMe())) {
+				username = "<div class='user-sent'>Moi</div>";
+				date = "<span class='date-sent'>" + date + "</span>";
+				content = "<div class='message-sent'>" + date + "<br>" + content + "</div>";
+			}
+			// Message envoye par l'autre utilisateur
+			else {
+				username = "<div class='user-received'>" + msg.getSender().getPseudo() + "</div>";
+				date = "<span class='date-received'>" + date + "</span>";
+				content = "<div class='message-received'>" + date + "<br>" + content + "</div>";
+			}
+			
+			messages += username + content;
+		}
+
+		// Affichage des messages
+		textArea.setText(messages);
+		
+		// Scroll a la fin des messages
+		textArea.setCaretPosition(textArea.getDocument().getLength());
+		
+	}
+		
+		
+	
+
+	public static void miseAJourContact() {
     	usersconnected.setListData(getApp().getFriends().getListPseudo());
     	//garder le pointeur du getSelectedValue même si qqn part 
     }
@@ -318,9 +378,11 @@ public class Home {
 		Home.app = app;
 	}
 
+	
+	
 	public static void display (String msg, String friend) {
 		//textArea.append(Conversations.read_msg(friend));
-		textArea.append("\n"+msg);
+		//textArea.append("\n"+msg);
 	}
 	
 	public static void displayNotification(String IPfrom) {
