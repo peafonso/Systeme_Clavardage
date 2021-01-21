@@ -311,31 +311,17 @@ public class Home {
 		ArrayList<Message> history= getApp().getDb().recupHistory(u2.getIP());
 		String messages="";
 		for(Message msg : history) {
-			String username,content,date;
-			if(msg.getSender().equals(getApp().getMe())) {
-					content = "Vous avez envoye un message :<br/>";
-			}else {
-					content = "Vous avez recu un message :<br/>";
-			}
-			
-			// Format de la date
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			date = dateFormat.format(msg.getTimeString());
 			
 			// Message envoye par moi
 			if(msg.getSender().equals(getApp().getMe())) {
-				username = "<div class='user-sent'>Moi</div>";
-				date = "<span class='date-sent'>" + date + "</span>";
-				content = "<div class='message-sent'>" + date + "<br>" + content + "</div>";
+				messages+=msg.getData()+"  "+msg.getTime()+"  \n";
 			}
 			// Message envoye par l'autre utilisateur
 			else {
-				username = "<div class='user-received'>" + msg.getSender().getPseudo() + "</div>";
-				date = "<span class='date-received'>" + date + "</span>";
-				content = "<div class='message-received'>" + date + "<br>" + content + "</div>";
+				messages+="             "+msg.getData()+"  "+msg.getTime()+"  \n";
+
 			}
 			
-			messages += username + content;
 		}
 
 		// Affichage des messages
@@ -384,10 +370,8 @@ public class Home {
 	}
 	
 	public static void displayNotification(String IPfrom) {
-		for (int i=0;i<1000;i++) {
-			notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
-		}
-		notification.setText("");
+		notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
+		
 	}
 	
 	

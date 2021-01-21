@@ -2,6 +2,8 @@ package system;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import model.User;
@@ -13,7 +15,7 @@ public class Message implements Serializable {
 	private User sender;
 	private User receiver;
 	private String data;
-	private Date time; //variable pour l'horodatage
+	private String time; //variable pour l'horodatage
 	private typemsg type;
 	
 	public Message() {
@@ -24,7 +26,8 @@ public class Message implements Serializable {
 		this.setSender(from);
 		this.setReceiver(to);
 		this.setData(msg);
-		this.setTime(new Date());
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		this.setTime(dateFormat.format(new Date()));
 		this.setType(typemsg.ENVOIMSG);
 	}
 	
@@ -38,6 +41,9 @@ public class Message implements Serializable {
 	
 	public Message(String msg) {
 		this.setData(msg);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		this.setTime(dateFormat.format(new Date()));
+
 	}
 
 	@Override
@@ -99,7 +105,7 @@ public class Message implements Serializable {
 		this.receiver = receiver;
 	}
 
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
 	
@@ -107,12 +113,13 @@ public class Message implements Serializable {
 		return time.toString();
 	}
 
-	public void setTime(Date date) {
-		this.time = date;
+	public void setTime(String string) {
+		this.time = string;
 	}
 	
 	public void setTimeString (String date) {
-		//this.time= date.;
+		this.time = date;
+
 	}
 
 	public typemsg getType() {
