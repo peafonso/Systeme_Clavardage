@@ -227,7 +227,7 @@ public class Home {
 		notification= new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
 		notification.setBackground(new Color(211, 211, 211));
-		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 8));
+		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		
 		panel.add(notification);
 		panel.add(talkingto);
@@ -289,8 +289,9 @@ public class Home {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
+    			Home.getApp().getDb().addMessage(u2.getIP(), new Message(msg));
             	textField.setText("");          
-            	display(msg,u2.getPseudo());
+            	loadconvo(u2);
             }
         });
     	
@@ -298,8 +299,9 @@ public class Home {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
+    			Home.getApp().getDb().addMessage(u2.getIP(), new Message(msg));
             	textField.setText(""); 
-            	display(msg,u2.getPseudo());
+            	loadconvo(u2);
             }
         });
     	
@@ -307,15 +309,7 @@ public class Home {
 
     private void loadconvo(User u2) {
 		ArrayList<Message> history= getApp().getDb().recupHistory(u2.getIP());
-		String messages = "<style type='text/css'>"
-				+ ".message-sent{margin:3px 5px 3px 50px;padding:0 5px 5px 5px;background:#FF8075;color:white;font-size:14pt;}"
-				+ ".message-received{margin:3px 50px 3px 5px;padding:0 5px 5px 5px;background:#eeeeee;color:black;font-size:14pt;}"
-				+ ".date-sent{font-size:11pt;color:white;}"
-				+ ".date-received{font-size:11pt;color:black;}"
-				+ ".user-sent{font-size:11pt;color:#888888;margin:3px 0 0 55px;}"
-				+ ".user-received{font-size:11pt;color:#888888;margin:3px 0 0 10px;}"
-				+ "</style>";
-		
+		String messages="";
 		for(Message msg : history) {
 			String username,content,date;
 			if(msg.getSender().equals(getApp().getMe())) {
@@ -390,14 +384,10 @@ public class Home {
 	}
 	
 	public static void displayNotification(String IPfrom) {
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-		  @Override
-		  public void run() {
-				notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
-		  }
-		}, 2*60*1000);
-
+		for (int i=0;i<1000;i++) {
+			notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
+		}
+		notification.setText("");
 	}
 	
 	

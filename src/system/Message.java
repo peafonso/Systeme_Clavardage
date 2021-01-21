@@ -16,6 +16,9 @@ public class Message implements Serializable {
 	private Date time; //variable pour l'horodatage
 	private typemsg type;
 	
+	public Message() {
+		
+	}
 	
 	public Message(User from, User to, String msg) {
 		this.setSender(from);
@@ -25,24 +28,16 @@ public class Message implements Serializable {
 		this.setType(typemsg.ENVOIMSG);
 	}
 	
-	public Message(User from, User to, String msg, String daae) {
+	public Message(User from, User to, String msg, String date) {
 		this.setSender(from);
 		this.setReceiver(to);
 		this.setData(msg);
-		this.setTime(new Date());
+		this.setTimeString(date);
 		this.setType(typemsg.ENVOIMSG);
 	}
 	
-	public Message(User from, User to, String msg, typemsg type) {
-		this.setSender(from);
-		this.setReceiver(to);
+	public Message(String msg) {
 		this.setData(msg);
-		this.setTime(new Date());
-		this.setType(type);
-	}
-	
-	public Message() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -64,7 +59,7 @@ public class Message implements Serializable {
 		for (int i=1;i<tabdata.length;i++) {
 			data+=tabdata[i];
 		}
-		return new Message(sender,receiver,data,type);
+		return new Message(sender,receiver,data);
 	
 	}
 	

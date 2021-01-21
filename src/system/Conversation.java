@@ -29,7 +29,7 @@ public class Conversation extends Thread {
 	}
 	
 	public void sendMessage(String data){
-		Message msg= new Message(getThem(),getApp().getMe(),data,typemsg.ENVOIMSG);
+		Message msg= new Message(getThem(),getApp().getMe(),data);
 		try
 		{
 			getOutput().writeObject(" :" + msg.toString());
