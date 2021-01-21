@@ -16,7 +16,6 @@ import java.sql.SQLException;
 public class Database {
 	
 	private static Application app;
-
 	// SQLite connection string
     String url = "jdbc:sqlite:C://sqlite/db/test.db";
     
@@ -76,9 +75,9 @@ public class Database {
      *
      */
 	public void createTableConvo(String ip2) {
-        String sqlconvo= "CREATE TABLE IF NOT EXISTS " +getNomTable(ip2)+"(\n"
+        String sqlconvo= "CREATE TABLE IF NOT EXISTS `" +getNomTable(ip2)+"`(\n"
         		+ "	id integer PRIMARY KEY,\n"
-                + "	time text NOT NULL \n"
+                + "	time text NOT NULL, \n"
         		+ " message text NOT NULL"
                 + ");"; 
         
@@ -98,7 +97,7 @@ public class Database {
 	public ArrayList<Message> recupHistory(String ip2) {
         ArrayList<Message> historique = new ArrayList<Message>();
 		String nomtable= getNomTable(ip2);
-		String sql = "SELECT id, time, message FROM "+nomtable;
+		String sql = "SELECT id, time, message FROM `"+nomtable+"`";
 	        
 	    try (Connection conn = this.connect();
 			 Statement stmt  = conn.createStatement();
@@ -128,11 +127,13 @@ public class Database {
      */
 	public void addMessage(String ip2, Message msg) {
 		String nomtable= getNomTable(ip2);
-		String sql = "INSERT INTO "+nomtable+"(id,time,msg) VALUES(?,?,?)";
+		String sql = "INSERT INTO `"+nomtable+"`(id,time,message) VALUES(?,?,?)";
 
-		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, msg.getTimeString());
-	        pstmt.setString(2, msg.getData());
+		try (Connection conn =  this.connect() ; PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(2, msg.getTimeString());
+	        pstmt.setString(3, msg.getData());
+	    	System.out.println("on ajoute le msg");
+
 	        pstmt.executeUpdate();
 	    } catch (SQLException e) {
 	    	System.out.println("error at addMessage\n");
@@ -155,9 +156,9 @@ public class Database {
      */
 	public void deleteConvo(String ip2) {
 		String nomtable= getNomTable(ip2);
-		String sql = "DROP TABLE "+nomtable;
-
-	        try (Connection conn = this.connect();
+		String sql = "DROP TABLE `"+nomtable+"`";
+		System.out.println("DROP TABLE `"+nomtable+"`");
+	        try (Connection conn = DriverManager.getConnection(url);
 	            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.executeUpdate();
 
@@ -167,36 +168,13 @@ public class Database {
 	}
 
 	    
-	    
-	  
-	    
-	    /**
-	     * select all rows in the messages table
-	     */
-	    public void selectMessages(){
-	        String sql = "SELECT textid, message, time FROM messages";
-	        
-	        try (Connection conn = this.connect();
-	             Statement stmt  = conn.createStatement();
-	             ResultSet rs    = stmt.executeQuery(sql)){
-                System.out.println("\nTABLE MESSAGES (textid, message, time)\n");
-
-	            // loop through the result set
-	            while (rs.next()) {
-	                System.out.println(rs.getInt("textid") +  "\t" + 
-	                                   rs.getString("message") + "\t" +
-	                                   rs.getFloat("time"));
-	            }
-	        } catch (SQLException e) {
-	            System.out.println("error at selectMessages\n");
-	            System.out.println(e.getMessage());
-	        }
-	    }
+	   
 		public static Application getApp() {
 			return app;
 		}
 		public void setApp(Application app) {
 			Database.app = app;
 		}
+		
 }
 

@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -162,8 +164,9 @@ public class Home {
         JPanel panel_1 = new JPanel();
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
-        panel_1.setBounds(1110, 29, 307, 690);
-        
+        //panel_1.setBounds(1110, 29, 307, 690);
+        panel_1.setBounds(1000, 0, 307, 690);
+
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
         lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
@@ -179,11 +182,11 @@ public class Home {
 						 if(userselect != -1) {
 						 String usertalk = usersconnected.getSelectedValue();
 						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
+						 talkingto.append(""); 
+						 Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
 						 }
 		    	  }
-		      		talkingto.append(""); 
-		      		//loadconvo()
-		      		Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+		      		
 		        }
 		      }
 		);
@@ -227,7 +230,7 @@ public class Home {
 		notification= new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
 		notification.setBackground(new Color(211, 211, 211));
-		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 8));
+		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		
 		panel.add(notification);
 		panel.add(talkingto);
@@ -305,8 +308,9 @@ public class Home {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
+    			Home.getApp().getDb().addMessage(u2.getIP(), new Message(msg));
             	textField.setText("");          
-            	display(msg,u2.getPseudo());
+            	loadconvo(u2);
             }
         });
     	
@@ -314,8 +318,9 @@ public class Home {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
             	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
+    			Home.getApp().getDb().addMessage(u2.getIP(), new Message(msg));
             	textField.setText(""); 
-            	display(msg,u2.getPseudo());
+            	loadconvo(u2);
             }
         });
     	
@@ -323,40 +328,19 @@ public class Home {
 
     private void loadconvo(User u2) {
 		ArrayList<Message> history= getApp().getDb().recupHistory(u2.getIP());
-		String messages = "<style type='text/css'>"
-				+ ".message-sent{margin:3px 5px 3px 50px;padding:0 5px 5px 5px;background:#FF8075;color:white;font-size:14pt;}"
-				+ ".message-received{margin:3px 50px 3px 5px;padding:0 5px 5px 5px;background:#eeeeee;color:black;font-size:14pt;}"
-				+ ".date-sent{font-size:11pt;color:white;}"
-				+ ".date-received{font-size:11pt;color:black;}"
-				+ ".user-sent{font-size:11pt;color:#888888;margin:3px 0 0 55px;}"
-				+ ".user-received{font-size:11pt;color:#888888;margin:3px 0 0 10px;}"
-				+ "</style>";
+		String messages="";
 		for(Message msg : history) {
-			String username,content,date;
-			if(msg.getSender().equals(getApp().getMe())) {
-					content = "Vous avez envoye un message :<br/>";
-			}else {
-					content = "Vous avez recu un message :<br/>";
-			}
-			
-			// Format de la date
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			date = dateFormat.format(msg.getTimeString());
 			
 			// Message envoye par moi
 			if(msg.getSender().equals(getApp().getMe())) {
-				username = "<div class='user-sent'>Moi</div>";
-				date = "<span class='date-sent'>" + date + "</span>";
-				content = "<div class='message-sent'>" + date + "<br>" + content + "</div>";
+				messages+=msg.getData()+"  "+msg.getTime()+"  \n";
 			}
 			// Message envoye par l'autre utilisateur
 			else {
-				username = "<div class='user-received'>" + msg.getSender().getPseudo() + "</div>";
-				date = "<span class='date-received'>" + date + "</span>";
-				content = "<div class='message-received'>" + date + "<br>" + content + "</div>";
+				messages+="             "+msg.getData()+"  "+msg.getTime()+"  \n";
+
 			}
 			
-			messages += username + content;
 		}
 
 		// Affichage des messages
@@ -406,6 +390,7 @@ public class Home {
 	
 	public static void displayNotification(String IPfrom) {
 		notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
+		
 	}
 	
 	

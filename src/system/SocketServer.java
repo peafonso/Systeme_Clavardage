@@ -50,8 +50,10 @@ public class SocketServer extends Thread{
 	    			InputStream is = sock.getInputStream();
 	    			is.read(array);
 	    			String data = new String(array);
-	    			Conversations.write_msg(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
-	    			Home.display(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
+	    			Message msg= new Message(data);
+	    			Home.getApp().getDb().addMessage(sock.getInetAddress().getHostAddress(), msg);
+	    			//Conversations.write_msg(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
+	    			//Home.display(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
 	    			is.close();
 	    			link.close();
 	    		}	

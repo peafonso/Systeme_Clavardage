@@ -4,6 +4,8 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import Interface.Home;
+
 public class SocketClient extends Thread {
 
 public static void SendMessage(String msg, String clientIP, int clientPort)  {
