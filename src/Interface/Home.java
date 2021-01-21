@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,6 +32,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.SystemColor;
 
 import javax.swing.SwingConstants;
@@ -48,6 +50,8 @@ import system.SocketServer;
 import system.UDPListener;
 
 import java.awt.Font;
+import java.awt.Graphics2D;
+
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -151,7 +155,7 @@ public class Home {
         
         panel = new JPanel();
         panel.setBackground(new Color(211, 211, 211));
-        panel.setBounds(151, 137, 820, 430);
+        panel.setBounds(151, 137, 820, 472);
         panel.setLayout(null);
 
         frame.getContentPane().add(panel);
@@ -193,33 +197,32 @@ public class Home {
         textField = new JTextField();
         textField.setBackground(Color.WHITE);
         textField.setFont(new Font("Bahnschrift", Font.PLAIN, 11));
-		textField.setBounds(80, 373, 453, 33);
+		textField.setBounds(80, 407, 453, 33);
 		textField.setColumns(10);
 		
 		//Bouton Send
     	btnSend = new JButton("send");
     	btnSend.setBackground(SystemColor.activeCaption);
     	btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-    	btnSend.setBounds(558, 371, 76, 38);
-    	
-    	textArea = new JEditorPane();
-		textArea.setBackground(SystemColor.controlHighlight);
-		textArea.setBounds(70, 59, 654, 290);
-		textArea.setEditable(false);
+    	btnSend.setBounds(558, 403, 76, 38);
 	
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(60, 53, 664, 296);
-		scrollPane.setViewportView(textArea);
+		scrollPane.setBounds(60, 96, 664, 296);
 		panel.add(scrollPane);
+		
+		textArea = new JEditorPane();
+		scrollPane.setViewportView(textArea);
+		textArea.setBackground(SystemColor.controlHighlight);
+		textArea.setEditable(false);
 		
 		JLabel lblTalkingwith = new JLabel("Talking with");
 		lblTalkingwith.setFont(new Font("Bahnschrift", Font.BOLD, 20));
-		lblTalkingwith.setBounds(60, 11, 126, 31);
+		lblTalkingwith.setBounds(60, 57, 126, 31);
 		talkingto = new JTextArea();
 		talkingto.setBackground(new Color(211, 211, 211));
 		talkingto.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		talkingto.setBounds(177, 12, 76, 25);
+		talkingto.setBounds(176, 58, 76, 25);
 
 		notification= new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
@@ -232,6 +235,20 @@ public class Home {
 		
 		panel.add(btnSend);
 		panel.add(textField);
+		
+    	ImageIcon profil_pic = new ImageIcon();
+    	profil_pic = createImageIcon("/images/profil_picture.png");
+		
+		JTextArea txtrB = new JTextArea();
+		txtrB.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		txtrB.setBackground(new Color(211, 211, 211));
+		txtrB.setBounds(104, 31, 76, 25);
+		panel.add(txtrB);
+		
+		JLabel lblNewLabel=new JLabel();
+		lblNewLabel.setBounds(49, 28, 48, 28);
+		lblNewLabel.setIcon(new ImageIcon(profil_pic.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
+		panel.add(lblNewLabel);
 		
 		//panel.add(scrolltextArea);
 		//panel.add(textArea);
@@ -275,6 +292,8 @@ public class Home {
 
         return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
     }
+    
+
     
     //ouverture d'une communication
     public void Chats (User u2) {
