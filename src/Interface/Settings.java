@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
@@ -82,11 +83,12 @@ public class Settings extends JFrame {
 		btnNewButton.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
 		btnNewButton.setBounds(277, 116, 89, 23);
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String pseudo=textField.getText();
-				if(pseudo.length()>8) {
+				if(pseudo.length()>12) {
 					JTextPane txtlongpseudo = new JTextPane();
-					txtlongpseudo.setText("Only 8 caracters are allowed");
+					txtlongpseudo.setText("Only 12 caracters are allowed");
 					txtlongpseudo.setForeground(new Color(255, 51, 51));
 					txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
 					txtlongpseudo.setBackground(SystemColor.menu);
@@ -116,6 +118,8 @@ public class Settings extends JFrame {
 					//connexion
 					if (app.getcSystem().ChangePseudo(pseudo, 4445)) {
 						app.getMe().setPseudo(pseudo);
+						Home.pseudoModif();
+
 						dispose(); //ferme la fenetre
 					} else {
 						JTextPane txtpnPseudonymAlreadyIn = new JTextPane();

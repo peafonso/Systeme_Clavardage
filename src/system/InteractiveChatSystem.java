@@ -90,6 +90,7 @@ public class InteractiveChatSystem {
 			//Si réponse positive then renvoi vrai
 		    System.out.println("pseudo ok");
 	    	getApp().getMe().setPseudo(newPseudo);
+	    	
 		}
 			
 		return disponible;

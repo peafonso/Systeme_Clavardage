@@ -171,10 +171,10 @@ public class AppInterface {
 		public void actionPerformed(ActionEvent arg0) {
 			String pseudo=textField.getText();
 			
-			if(pseudo.length()>8) {
+			if(pseudo.length()>12) {
 				JTextPane txtlongpseudo = new JTextPane();
 				txtlongpseudo.setBackground(new Color(102, 153, 153));
-				txtlongpseudo.setText("Only 8 caracters are allowed");
+				txtlongpseudo.setText("Only 12 caracters are allowed");
 				txtlongpseudo.setForeground(new Color(255, 51, 51));
 				txtlongpseudo.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 11));
 				txtlongpseudo.setBounds(88, 231, 203, 20);

@@ -75,11 +75,12 @@ public class Home {
 	private static Application app;
 	private static JFrame frame;
 	private JTextField textField;
-	private JPanel panel;
+	private static JPanel panel;
 	private JButton btnSend;
 	private static JEditorPane textArea;
 	private JScrollPane scrolltextArea;
 	private JTextArea talkingto;
+	private static JTextArea txtrB;
 	private static JTextPane notification;
 	private static JList<String> usersconnected;
 	static UDPListener udpListen = new UDPListener();
@@ -165,7 +166,7 @@ public class Home {
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
         //panel_1.setBounds(1110, 29, 307, 690);
-        panel_1.setBounds(1000, 0, 307, 690);
+        panel_1.setBounds(1110, 46, 307, 690);
 
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
@@ -241,15 +242,16 @@ public class Home {
 		
     	ImageIcon profil_pic = new ImageIcon();
     	profil_pic = createImageIcon("/images/profil_picture.png");
-		
-		JTextArea txtrB = new JTextArea();
-		txtrB.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+    	
+		txtrB = new JTextArea();
+		txtrB.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 20));
 		txtrB.setBackground(new Color(211, 211, 211));
-		txtrB.setBounds(104, 31, 76, 25);
+		txtrB.setBounds(97, 35, 126, 25);
+		txtrB.setText(app.getMe().getPseudo());
 		panel.add(txtrB);
 		
 		JLabel lblNewLabel=new JLabel();
-		lblNewLabel.setBounds(49, 28, 48, 28);
+		lblNewLabel.setBounds(45, 28, 48, 28);
 		lblNewLabel.setIcon(new ImageIcon(profil_pic.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel);
 		
@@ -326,6 +328,7 @@ public class Home {
     	
     }
 
+
     private void loadconvo(User u2) {
 		ArrayList<Message> history= getApp().getDb().recupHistory(u2.getIP());
 		String messages="";
@@ -359,8 +362,11 @@ public class Home {
     	//garder le pointeur du getSelectedValue même si qqn part 
     }
     
-  
-    
+	//pour afficher le pseudo de l'utilisateur
+	public static void pseudoModif() {
+		txtrB.setText(app.getMe().getPseudo());
+	}
+ 
 	//pour afficher les erreurs
 	public static void Error(String error) {
 		JOptionPane.showMessageDialog(null, error, "Erreur", JOptionPane.ERROR_MESSAGE);
