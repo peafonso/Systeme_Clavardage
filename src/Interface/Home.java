@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -158,8 +160,9 @@ public class Home {
         JPanel panel_1 = new JPanel();
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
-        panel_1.setBounds(1110, 29, 307, 690);
-        
+        //panel_1.setBounds(1110, 29, 307, 690);
+        panel_1.setBounds(1000, 0, 307, 690);
+
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
         lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
@@ -175,11 +178,11 @@ public class Home {
 						 if(userselect != -1) {
 						 String usertalk = usersconnected.getSelectedValue();
 						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
+						 talkingto.append(""); 
+						 Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
 						 }
 		    	  }
-		      		talkingto.append(""); 
-		      		//loadconvo()
-		      		Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+		      		
 		        }
 		      }
 		);
@@ -312,6 +315,7 @@ public class Home {
 				+ ".user-sent{font-size:11pt;color:#888888;margin:3px 0 0 55px;}"
 				+ ".user-received{font-size:11pt;color:#888888;margin:3px 0 0 10px;}"
 				+ "</style>";
+		
 		for(Message msg : history) {
 			String username,content,date;
 			if(msg.getSender().equals(getApp().getMe())) {
@@ -386,7 +390,14 @@ public class Home {
 	}
 	
 	public static void displayNotification(String IPfrom) {
-		notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+		  @Override
+		  public void run() {
+				notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
+		  }
+		}, 2*60*1000);
+
 	}
 	
 	
