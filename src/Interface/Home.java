@@ -79,7 +79,7 @@ public class Home {
 	private JButton btnSend;
 	private static JEditorPane textArea;
 	private JScrollPane scrolltextArea;
-	private JTextArea talkingto;
+	private static JTextArea talkingto;
 	private static JTextArea txtrB;
 	private static JTextPane notification;
 	private static JList<String> usersconnected;
@@ -194,7 +194,7 @@ public class Home {
 						 if(userselect != -1) {
 						 String usertalk = usersconnected.getSelectedValue();
 						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
-						 talkingto.append(""); 
+						 getTalkingto().append(""); 
 						 Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
 						 }
 		    	  }
@@ -234,10 +234,10 @@ public class Home {
 		JLabel lblTalkingwith = new JLabel("Talking with");
 		lblTalkingwith.setFont(new Font("Bahnschrift", Font.BOLD, 20));
 		lblTalkingwith.setBounds(60, 57, 126, 31);
-		talkingto = new JTextArea();
-		talkingto.setBackground(new Color(211, 211, 211));
-		talkingto.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 20));
-		talkingto.setBounds(174, 60, 126, 25);
+		setTalkingto(new JTextArea());
+		getTalkingto().setBackground(new Color(211, 211, 211));
+		getTalkingto().setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 20));
+		getTalkingto().setBounds(174, 60, 126, 25);
 
 		notification= new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
@@ -245,7 +245,7 @@ public class Home {
 		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		
 		panel.add(notification);
-		panel.add(talkingto);
+		panel.add(getTalkingto());
 		panel.add(lblTalkingwith);
 		
 		panel.add(btnSend);
@@ -316,7 +316,7 @@ public class Home {
     	System.out.println("talking to"+ u2.getPseudo());
   
     	
-    	talkingto.append(u2.getPseudo()); //pour afficher à qui on parle
+    	getTalkingto().append(u2.getPseudo()); //pour afficher à qui on parle
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
@@ -340,7 +340,7 @@ public class Home {
     }
 
 
-    private void loadconvo(User u2) {
+    public static void loadconvo(User u2) {
 		ArrayList<Message> history= getApp().getDb().recupHistory(u2.getIP());
 		String messages="";
 		for(Message msg : history) {
@@ -411,6 +411,15 @@ public class Home {
 	}
 	
 	
+	public static JTextArea getTalkingto() {
+		return talkingto;
+	}
+
+	public void setTalkingto(JTextArea talkingto) {
+		this.talkingto = talkingto;
+	}
+
+
 	public class windowClosingListener implements WindowListener {
 		
 		public void windowClosing(WindowEvent e) {

@@ -71,15 +71,15 @@ public class DeleteConv extends JFrame {
 		contentPane.add(lblNewLabel);
 		JPanel panel = new JPanel();
 
-		//usersconnected= new JList<String>(app.getFriends().getListPseudo());
+		usersconnected= new JList<String>(app.getFriends().getListPseudo());
 		//si historique vide
-		//if ((usersconnected).getModel().getSize() == 0) {
+		if ((usersconnected).getModel().getSize() == 0) {
 			lblNewLabel_1 = new JLabel("Your history of conversations has been cleared.");
 			lblNewLabel_1.setForeground(new Color(95, 158, 160));
 			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 			lblNewLabel_1.setBounds(42, 202, 244, 23);
 			panel.add(lblNewLabel_1);
-		/*}else {	
+		}else {	
 			usersconnected.setBounds(65, 60, 260, 125);
 			usersconnected.addListSelectionListener(new ListSelectionListener() {
 			      public void valueChanged(ListSelectionEvent evt) {
@@ -96,7 +96,7 @@ public class DeleteConv extends JFrame {
 			);
 			panel.add(usersconnected);
 			//contentPane.add(usersconnected);
-		}*/
+		}
 		
 		
 		btnNewButton = new JButton("okay");
@@ -109,6 +109,8 @@ public class DeleteConv extends JFrame {
 					User userToForget;
 					userToForget=app.getFriends().getUserfromPseudo(userTalk);
 					app.getDb().deleteConvo(userToForget.getIP());
+			    	Home.getTalkingto().setText(userToForget.getPseudo()); //pour afficher à qui on parle
+					Home.loadconvo(userToForget);
 			    	System.out.println("Delete conv with"+ userTalk);
 					dispose(); //ferme la fenetre
 
@@ -126,7 +128,7 @@ public class DeleteConv extends JFrame {
 		contentPane.add(scrollPane);
 		
 		scrollPane.setViewportView(panel);
-		
+				
 
 		
 		setVisible(true);	
