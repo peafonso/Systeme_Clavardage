@@ -137,10 +137,21 @@ public class Home {
         	}
         );
     	
+    	JMenuItem clearConv= new JMenuItem("Clear conversation");
+    	clearConv.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+    	clearConv.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		new DeleteConv(getApp()); 
+        	}
+        	}
+        );
+    	
         mntmNewMenuItem_1.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
         mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
         menuBar.add(mntmNewMenuItem_1);
         mntmNewMenuItem_1.add(mPseudo);
+        mntmNewMenuItem_1.add(clearConv);
         frame.getContentPane().setLayout(null);
         
         //Boutton Deconnexion

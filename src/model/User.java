@@ -52,6 +52,7 @@ public class User {
 		return people;
 	}
 	
+	
 	//SETTEUR & GETTEUR
 
 	public String getIP() {
