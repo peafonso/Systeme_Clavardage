@@ -225,8 +225,8 @@ public class Home {
 		lblTalkingwith.setBounds(60, 57, 126, 31);
 		talkingto = new JTextArea();
 		talkingto.setBackground(new Color(211, 211, 211));
-		talkingto.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		talkingto.setBounds(176, 58, 76, 25);
+		talkingto.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 20));
+		talkingto.setBounds(174, 60, 126, 25);
 
 		notification= new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
