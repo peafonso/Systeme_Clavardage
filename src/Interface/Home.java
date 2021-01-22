@@ -69,6 +69,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import model.User;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 public class Home {
 
@@ -177,16 +182,31 @@ public class Home {
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
         //panel_1.setBounds(1110, 29, 307, 690);
-        panel_1.setBounds(990, 46, 307, 690);
+        panel_1.setBounds(1110, 46, 307, 690);
+        panel_1.setLayout(null);
 
+        JScrollPane scrollPane_1 = new JScrollPane();
+        scrollPane_1.setBounds(41, 45, 224, 619);
+        panel_1.add(scrollPane_1);
+        
+        JPanel panel_2 = new JPanel();
+        panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(95, 158, 160), new Color(95, 158, 160)));
+        panel_2.setBackground(new Color(0, 128, 128));
+        scrollPane_1.setViewportView(panel_2);
+        
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
         lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
-        lblcontacts.setBounds(64, 0, 161, 32);
+        lblcontacts.setBounds(73, 11, 165, 23);
         panel_1.add(lblcontacts);
+        
+    	ImageIcon profil_pic = new ImageIcon();
+    	profil_pic = createImageIcon("/images/profil_picture.png");
         
         usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
         usersconnected.setBounds(0, 646, 272, -599);
+        usersconnected.setBackground(new Color(95, 158, 160));
+        //usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
 		    	  if(evt.getValueIsAdjusting()) {
@@ -203,11 +223,12 @@ public class Home {
 		      }
 		);
     
-        panel_1.add(usersconnected);
+        panel_2.add(usersconnected);
         //Conversations.initialize_hist();
         
         frame.getContentPane().add(panel_1);
         
+
         //TextField pour rédiger son message
         textField = new JTextField();
         textField.setBackground(Color.WHITE);
@@ -251,8 +272,8 @@ public class Home {
 		panel.add(btnSend);
 		panel.add(textField);
 		
-    	ImageIcon profil_pic = new ImageIcon();
-    	profil_pic = createImageIcon("/images/profil_picture.png");
+    	/*ImageIcon profil_pic = new ImageIcon();
+    	profil_pic = createImageIcon("/images/profil_picture.png");*/
     	
 		txtrB = new JTextArea();
 		txtrB.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 20));
