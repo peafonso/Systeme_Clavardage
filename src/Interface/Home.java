@@ -106,6 +106,9 @@ public class Home {
 		frame = new BackgroundJFrame("Home");
 		frame.setBackground(new Color(240, 240, 240));
 		//frame.setBounds(100, 100, 1640, 920);
+    	//centrer la fenetre au milieu de l'ecran
+    	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    	frame.setBounds(100, 100, dim.width,dim.height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addWindowListener(new windowClosingListener());
 
@@ -114,9 +117,7 @@ public class Home {
 		ImageIcon homePicture = new ImageIcon();
 		homePicture=createImageIcon("/images/ACCUEIL_FOND2.jpg");
 		
-    	//centrer la fenetre au milieu de l'ecran
-    	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    	frame.setSize(dim);
+
         frame.setLocation(dim.width/3 - frame.getWidth()/3, dim.height/3 - frame.getHeight()/3);
         
         JMenuBar menuBar = new JMenuBar();
