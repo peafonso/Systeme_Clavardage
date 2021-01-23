@@ -108,7 +108,7 @@ public class Home {
 		//frame.setBounds(100, 100, 1640, 920);
     	//centrer la fenetre au milieu de l'ecran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    	frame.setBounds(100, 100, dim.width,dim.height);
+    	frame.setBounds(0, 0, dim.width,dim.height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addWindowListener(new windowClosingListener());
 
@@ -121,7 +121,7 @@ public class Home {
         frame.setLocation(dim.width/3 - frame.getWidth()/3, dim.height/3 - frame.getHeight()/3);
         
         JMenuBar menuBar = new JMenuBar();
-        menuBar.setMargin(new Insets(1000, 0, 1000, 0));
+        //menuBar.setMargin(new Insets(1000, 0, 1000, 0));
         frame.setJMenuBar(menuBar);
         
         //Bouton Home
@@ -204,7 +204,7 @@ public class Home {
     	ImageIcon profil_pic = new ImageIcon();
     	profil_pic = createImageIcon("/images/profil_picture.png");
         
-        usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
+        /*usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
         usersconnected.setBounds(0, 646, 272, -599);
         usersconnected.setBackground(new Color(95, 158, 160));
         //usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -224,7 +224,7 @@ public class Home {
 		      }
 		);
     
-        panel_2.add(usersconnected);
+        panel_2.add(usersconnected);*/
         //Conversations.initialize_hist();
         
         frame.getContentPane().add(panel_1);
