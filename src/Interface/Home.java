@@ -179,7 +179,7 @@ public class Home {
         panel.setBackground(new Color(211, 211, 211));
         panel.setLayout(null);
         JPanel panel_1 = new JPanel();
-        panel_1.setBounds(990, 46, 307, 690);
+        panel_1.setBounds(990, 46, 307, (int) (dim.height*(0.77)) );//690
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
         panel_1.setLayout(null);
