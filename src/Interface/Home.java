@@ -119,8 +119,9 @@ public class Home {
 		
 
         frame.setLocation(dim.width/3 - frame.getWidth()/3, dim.height/3 - frame.getHeight()/3);
-    	frame.getContentPane().setBounds(0, 0, dim.width,dim.height);
-
+    	//frame.getContentPane().setBounds(0, 0, dim.width,dim.height);
+        frame.pack();
+        
         JMenuBar menuBar = new JMenuBar();
         //menuBar.setMargin(new Insets(1000, 0, 1000, 0));
         frame.setJMenuBar(menuBar);
