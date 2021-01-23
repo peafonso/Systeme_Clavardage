@@ -175,9 +175,11 @@ public class Home {
         );
         
         panel = new JPanel();
+        panel.setBounds(151, 137, 820, 472);
         panel.setBackground(new Color(211, 211, 211));
         panel.setLayout(null);
         JPanel panel_1 = new JPanel();
+        panel_1.setBounds(990, 46, 307, 690);
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
         panel_1.setLayout(null);
@@ -231,6 +233,7 @@ public class Home {
 		getTalkingto().setBackground(new Color(211, 211, 211));
 		getTalkingto().setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 20));
 		getTalkingto().setBounds(174, 60, 126, 25);
+		frame.getContentPane().setLayout(null);
 
 		notification= new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
@@ -258,27 +261,8 @@ public class Home {
 		lblNewLabel.setBounds(45, 28, 48, 28);
 		lblNewLabel.setIcon(new ImageIcon(profil_pic.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel);
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setAutoCreateGaps(true);
-		groupLayout.setAutoCreateContainerGaps(true);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(151)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 820, GroupLayout.PREFERRED_SIZE)
-					.addGap(139)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(137)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 472, GroupLayout.PREFERRED_SIZE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(46)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE))
-		);
-		frame.getContentPane().setLayout(groupLayout);
+		frame.getContentPane().add(panel);
+		frame.getContentPane().add(panel_1);
 		
 		//panel.add(scrolltextArea);
 		//panel.add(textArea);
