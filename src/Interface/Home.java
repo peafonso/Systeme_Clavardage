@@ -158,7 +158,6 @@ public class Home {
         menuBar.add(mntmNewMenuItem_1);
         mntmNewMenuItem_1.add(mPseudo);
         mntmNewMenuItem_1.add(clearConv);
-        frame.getContentPane().setLayout(null);
         
         //Boutton Deconnexion
         JButton btnDeconnexion = new JButton("Disconnect");
@@ -175,15 +174,10 @@ public class Home {
         
         panel = new JPanel();
         panel.setBackground(new Color(211, 211, 211));
-        panel.setBounds(151, 137, 820, 472);
         panel.setLayout(null);
-
-        frame.getContentPane().add(panel);
         JPanel panel_1 = new JPanel();
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
-        //panel_1.setBounds(1110, 29, 307, 690);
-        panel_1.setBounds(1110, 46, 307, 690);
         panel_1.setLayout(null);
 
         JScrollPane scrollPane_1 = new JScrollPane();
@@ -203,31 +197,6 @@ public class Home {
         
     	ImageIcon profil_pic = new ImageIcon();
     	profil_pic = createImageIcon("/images/profil_picture.png");
-        
-        /*usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
-        usersconnected.setBounds(0, 646, 272, -599);
-        usersconnected.setBackground(new Color(95, 158, 160));
-        //usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		usersconnected.addListSelectionListener(new ListSelectionListener() {
-		      public void valueChanged(ListSelectionEvent evt) {
-		    	  if(evt.getValueIsAdjusting()) {
-						 int userselect = usersconnected.getSelectedIndex();
-						 if(userselect != -1) {
-						 String usertalk = usersconnected.getSelectedValue();
-						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
-						 getTalkingto().append(""); 
-						 Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
-						 }
-		    	  }
-		      		
-		        }
-		      }
-		);
-    
-        panel_2.add(usersconnected);*/
-        //Conversations.initialize_hist();
-        
-        frame.getContentPane().add(panel_1);
         
 
         //TextField pour rédiger son message
@@ -287,6 +256,25 @@ public class Home {
 		lblNewLabel.setBounds(45, 28, 48, 28);
 		lblNewLabel.setIcon(new ImageIcon(profil_pic.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel);
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(151)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 820, GroupLayout.PREFERRED_SIZE)
+					.addGap(139)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(137)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 472, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(46)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE))
+		);
+		frame.getContentPane().setLayout(groupLayout);
 		
 		//panel.add(scrolltextArea);
 		//panel.add(textArea);
