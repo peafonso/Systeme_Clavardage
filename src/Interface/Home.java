@@ -188,9 +188,11 @@ public class Home {
         scrollPane_1.setBounds(41, 45, 224, 619);
         panel_1.add(scrollPane_1);
         
+
         JPanel panel_2 = new JPanel();
         panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(95, 158, 160), new Color(95, 158, 160)));
         panel_2.setBackground(new Color(0, 128, 128));
+        panel_2.setBounds(1000, 66, (panel_1.getWidth()-40), (panel_1.getHeight()-40) );//690
         scrollPane_1.setViewportView(panel_2);
         
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
