@@ -119,7 +119,7 @@ public class Home {
 		
 
         frame.setLocation(dim.width/3 - frame.getWidth()/3, dim.height/3 - frame.getHeight()/3);
-    	//frame.getContentPane().setBounds(0, 0, dim.width,dim.height);
+    	frame.getContentPane().setBounds(0, 0, dim.width,dim.height);
         frame.pack();
         
         JMenuBar menuBar = new JMenuBar();
@@ -259,6 +259,8 @@ public class Home {
 		lblNewLabel.setIcon(new ImageIcon(profil_pic.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setAutoCreateGaps(true);
+		groupLayout.setAutoCreateContainerGaps(true);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
