@@ -1,6 +1,7 @@
 package system;
 
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,15 +20,16 @@ public class SocketServer extends Thread{
 	public void run() {
 		try {
     		while(true) {
+    			System.out.println("jairecuqqchose");
     			ServerSocket link = new ServerSocket(2000);
     			Socket sock=link.accept();
-    			byte[] array = new byte[100000000];
-    			OutputStream out= sock.getOutputStream();
-    			out.flush();
-    			InputStream is = sock.getInputStream();
-    			is.read(array);
-    			String data = new String(array);
-    			System.out.println("received "+data);
+    			Home.displayNotification(sock.getInetAddress().getHostAddress());
+    			ObjectInputStream is = new ObjectInputStream(sock.getInputStream());
+    			String data = (String) is.readObject();
+    			Message msg= new Message(data);
+    			System.out.println(data);
+    			Home.getApp().getDb().addMessage(sock.getInetAddress().getHostAddress(), msg);
+    			//Home.display(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
     			is.close();
     			link.close();
     		}
@@ -51,8 +53,8 @@ public class SocketServer extends Thread{
 	    			is.read(array);
 	    			String data = new String(array);
 	    			Message msg= new Message(data);
+	    			System.out.println(data);
 	    			Home.getApp().getDb().addMessage(sock.getInetAddress().getHostAddress(), msg);
-	    			//Conversations.write_msg(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
 	    			//Home.display(data,Home.getApp().getFriends().getPseudofromIP(sock.getInetAddress().getHostAddress()));
 	    			is.close();
 	    			link.close();

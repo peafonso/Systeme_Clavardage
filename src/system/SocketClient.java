@@ -1,5 +1,6 @@
 package system;
 
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -12,7 +13,7 @@ public static void SendMessage(String msg, String clientIP, int clientPort)  {
     new Thread(() -> {
         try {
             Socket s = new Socket(clientIP, 2000);
-            OutputStream os = s.getOutputStream();
+            ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
             byte[] dataBytes = msg.getBytes();
             System.out.println("envoi "+msg);
             os.write(dataBytes);
