@@ -47,8 +47,10 @@ import historique.Conversations;
 import system.Conversation;
 import system.InteractiveChatSystem;
 import system.Message;
+import system.Runner;
 import system.SocketClient;
 import system.SocketServer;
+import system.TCPChat;
 import system.UDPListener;
 
 import java.awt.Font;
@@ -89,15 +91,13 @@ public class Home {
 	private static JTextPane notification;
 	private static JList<String> usersconnected;
 	static UDPListener udpListen = new UDPListener();
-	static SocketServer sockserver;
-
+	private Runner tcpListen;
 
 	/**
 	 * Create the application.
 	 */
 	public Home(Application app) {
 		setApp(app);
-		sockserver= new SocketServer(getApp().getMe().getPort());
 		initialize();
 	}
 
@@ -302,8 +302,8 @@ public class Home {
 		frame.setVisible(true);
 		udpListen.start();
 	 	miseAJourContact();
-	 	sockserver.start();
-		
+	 	tcpListen= new Runner(getApp());
+
 	}
 	
 
@@ -343,14 +343,13 @@ public class Home {
     //ouverture d'une communication
     public void Chats (User u2) {
     	System.out.println("talking to"+ u2.getPseudo());
-  
+    	TCPChat chat=new TCPChat(getApp(),u2);
     	
     	getTalkingto().setText(u2.getPseudo()); //pour afficher à qui on parle
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
-            	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
-    			Home.getApp().getDb().addMessage(u2.getIP(), new Message(msg));
+            	chat.SendMessage(msg);
             	textField.setText("");          
             	loadconvo(u2);
             }
@@ -359,8 +358,7 @@ public class Home {
     	textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
-            	SocketClient.SendMessage(msg,u2.getIP(),u2.getPort());
-    			Home.getApp().getDb().addMessage(u2.getIP(), new Message(msg));
+            	chat.SendMessage(msg);
             	textField.setText(""); 
             	loadconvo(u2);
             }
