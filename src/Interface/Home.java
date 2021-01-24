@@ -185,7 +185,7 @@ public class Home {
         panel_1.setLayout(null);
 
         JScrollPane scrollPane_1 = new JScrollPane();
-        scrollPane_1.setBounds(41, 45, 224, (panel.getHeight()-10));
+        scrollPane_1.setBounds(41, 45, 224, (panel.getHeight()-5));
         panel_1.add(scrollPane_1);
         
 
@@ -203,28 +203,6 @@ public class Home {
         
     	ImageIcon profil_pic = new ImageIcon();
     	profil_pic = createImageIcon("/images/profil_picture.png");
-        
-        usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
-        usersconnected.setBounds(0, 646, 272, -599);
-        usersconnected.setBackground(new Color(95, 158, 160));
-        //usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		usersconnected.addListSelectionListener(new ListSelectionListener() {
-		      public void valueChanged(ListSelectionEvent evt) {
-		    	  if(evt.getValueIsAdjusting()) {
-						 int userselect = usersconnected.getSelectedIndex();
-						 if(userselect != -1) {
-						 String usertalk = usersconnected.getSelectedValue();
-						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
-						 getTalkingto().append(""); 
-						 Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
-						 }
-		    	  }
-		      		
-		        }
-		      }
-		);
-    
-        panel_2.add(usersconnected);
         frame.getContentPane().add(panel_1);
         
 
