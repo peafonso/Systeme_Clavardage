@@ -68,7 +68,7 @@ public class Message implements Serializable {
 		User sender= User.toUser(paramsg[0].split(":")[1]);
 		User receiver= User.toUser(paramsg[1].split(":")[1]);
 		String[] fulldate=paramsg[2].split(":");
-		String date= (fulldate[1]+fulldate[2]);
+		String date= (fulldate[1]+":"+fulldate[2]);
  		typemsg type=toTypemsg(paramsg[3].split(":")[1]);
 		String [] tabdata=paramsg[4].split(":");
 		String data="";

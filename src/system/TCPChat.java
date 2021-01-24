@@ -62,10 +62,16 @@ public class TCPChat extends Thread{
     	Message msg= new Message(getApp().getMe(),getThem(),".",typemsg.FINMSG);
     	try {
             getOut().writeObject(msg.toString());
-			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	finally {
+    		try {
+    			socket.close();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    	}
     }
 
     public void run() {
@@ -85,8 +91,10 @@ public class TCPChat extends Thread{
 
     				}
     			}
-    			Home.displayNotification(socket.getInetAddress().getHostAddress());
-    			getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
+    			else {
+    				Home.displayNotification(socket.getInetAddress().getHostAddress());
+    				getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
+    			}
     			
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
