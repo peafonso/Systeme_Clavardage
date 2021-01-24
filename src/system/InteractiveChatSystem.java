@@ -182,8 +182,14 @@ public class InteractiveChatSystem {
         case DECONNEXION:
     	    System.out.println(msgrecu);
     	    User usertodisconnect= User.toUser(msgrecu);
-			getApp().getFriends().deleteContact(getApp().getFriends().getUserfromPseudo(usertodisconnect.getPseudo()));
-			Home.miseAJourContact();
+    	    //Si c'est moi meme qui recoit
+    	    if(usertodisconnect.getIP().equals(getApp().getMe().getIP())) {
+    		    System.out.println("JE MAUTORISE");
+    	    }
+    	    else {
+    	    	getApp().getFriends().deleteContact(getApp().getFriends().getUserfromPseudo(usertodisconnect.getPseudo()));
+    	    	Home.miseAJourContact();
+    	    }
         	;
 		default:
 			break;
