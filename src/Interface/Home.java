@@ -269,6 +269,31 @@ public class Home {
 		//panel.add(scrolltextArea);
 		//panel.add(textArea);
 		
+		usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
+        usersconnected.setBounds(0, 646, 272, -599);
+        usersconnected.setBackground(new Color(95, 158, 160));
+        //usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		usersconnected.addListSelectionListener(new ListSelectionListener() {
+		      public void valueChanged(ListSelectionEvent evt) {
+		    	  if(evt.getValueIsAdjusting()) {
+						 int userselect = usersconnected.getSelectedIndex();
+						 if(userselect != -1) {
+						 String usertalk = usersconnected.getSelectedValue();
+						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
+						 getTalkingto().append(""); 
+						 Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+						 }
+		    	  }
+
+		        }
+		      }
+		);
+
+        panel_2.add(usersconnected);
+
+        frame.getContentPane().add(panel_1);
+
+
 		
 		frame.setVisible(true);
 		udpListen.start();
