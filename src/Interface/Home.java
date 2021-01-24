@@ -89,6 +89,7 @@ public class Home {
 	private static JTextPane notification;
 	private static JList<String> usersconnected;
 	static UDPListener udpListen = new UDPListener();
+	static SocketServer sockserver;
 
 
 	/**
@@ -96,6 +97,7 @@ public class Home {
 	 */
 	public Home(Application app) {
 		setApp(app);
+		sockserver= new SocketServer(getApp().getMe().getPort());
 		initialize();
 	}
 
@@ -299,7 +301,7 @@ public class Home {
 		frame.setVisible(true);
 		udpListen.start();
 	 	miseAJourContact();
-	 	SocketServer.Receive(getApp().getMe().getPort());
+	 	sockserver.start();
 		
 	}
 	
