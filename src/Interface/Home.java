@@ -199,7 +199,7 @@ public class Home {
         
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
-        lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 14));
+        lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
         lblcontacts.setBounds(87, 11, 133, 23);
         panel_1.add(lblcontacts);
         
