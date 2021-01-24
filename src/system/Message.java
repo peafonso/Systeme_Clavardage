@@ -48,9 +48,9 @@ public class Message implements Serializable {
 
 	@Override
 	public String toString() {
-		String smsg= "Sender: "+this.getSender()+" \n"+"Receiver:  "+this.getReceiver()+"  \n"
-	+"Time:  "+ this.getTime()+" \n"+"Type:  "+this.getType()+" \n"+
-	"Data:  "+this.getData()+" \n";
+		String smsg= "Sender: "+this.getSender()+"\n"+"Receiver:  "+this.getReceiver()+"\n"
+	+"Time:  "+ this.getTime()+"\n"+"Type:  "+this.getType()+"\n"+
+	"Data:  "+this.getData()+"\n";
 		return smsg;	
 	}
 	
