@@ -59,7 +59,7 @@ public class TCPChat extends Thread{
     }
     
     public void close() {
-    	Message msg= new Message(getApp().getMe(),getThem(),".",typemsg.FINMSG);
+    	Message msg= new Message(getApp().getMe(),getThem(),"",typemsg.FINMSG);
     	try {
             getOut().writeObject(msg.toString());
 		} catch (IOException e) {

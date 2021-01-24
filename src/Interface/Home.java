@@ -448,9 +448,16 @@ public class Home {
 
 	
 	
-	public static void display (String msg, String friend) {
-		//textArea.append(Conversations.read_msg(friend));
-		//textArea.append("\n"+msg);
+	public static void display (User friend) {
+		 String pseudotalk = usersconnected.getSelectedValue();
+		 User usertalk= getApp().getFriends().getUserfromPseudo(pseudotalk);
+		 if (usertalk.equals(friend)) {
+			 loadconvo(friend);
+		 }
+		 else {
+			 //don't know if we need to do something there
+		 }
+
 	}
 	
 	public static void displayNotification(String IPfrom) {

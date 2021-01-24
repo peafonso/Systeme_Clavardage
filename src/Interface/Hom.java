@@ -167,7 +167,7 @@ public class Hom {
     			
     			JTextArea textArea = new JTextArea();
     			textArea.setBackground(SystemColor.controlHighlight);
-    			textArea.setBounds(58, 53, 591, 296);
+    			textArea.setBounds(91, 53, 591, 296);
     			panel.add(textArea);
     			
     			JLabel lblNewLabel_1 = new JLabel("Talking with");
@@ -184,6 +184,11 @@ public class Hom {
     			JTextPane textPane = new JTextPane();
     			textPane.setBounds(420, 22, 279, 20);
     			panel.add(textPane);
+    			
+    			JButton btnNewButton_1 = new JButton("x\r\n");
+    			btnNewButton_1.setBackground(Color.RED);
+    			btnNewButton_1.setBounds(687, 48, 37, 34);
+    			panel.add(btnNewButton_1);
 		
         /*usersconnected= new JList<String>(app.getFriends().getListPseudo());
         panel_1.add(usersconnected);
