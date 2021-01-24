@@ -179,7 +179,7 @@ public class Home {
         panel.setBackground(new Color(211, 211, 211));
         panel.setLayout(null);
         JPanel panel_1 = new JPanel();
-        panel_1.setBounds(990, 46, 307, (int) (dim.height*(0.77)) );//690
+        panel_1.setBounds(990, 88, 307, 552 );//690
         panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel_1.setBackground(new Color(95, 158, 160));
         panel_1.setLayout(null);
@@ -192,7 +192,7 @@ public class Home {
         JPanel panel_2 = new JPanel();
         panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(95, 158, 160), new Color(95, 158, 160)));
         panel_2.setBackground(new Color(0, 128, 128));
-        panel_2.setBounds(1000, 66, (panel_1.getWidth()-40), (panel_1.getHeight()-40) );//690
+        //panel_2.setBounds(1000, 66, (panel_1.getWidth()-40), (panel_1.getHeight()-40) );//690
         scrollPane_1.setViewportView(panel_2);
         
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
@@ -203,6 +203,31 @@ public class Home {
         
     	ImageIcon profil_pic = new ImageIcon();
     	profil_pic = createImageIcon("/images/profil_picture.png");
+        
+        usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
+        usersconnected.setBounds(0, 646, 272, -599);
+        usersconnected.setBackground(new Color(95, 158, 160));
+        //usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		usersconnected.addListSelectionListener(new ListSelectionListener() {
+		      public void valueChanged(ListSelectionEvent evt) {
+		    	  if(evt.getValueIsAdjusting()) {
+						 int userselect = usersconnected.getSelectedIndex();
+						 if(userselect != -1) {
+						 String usertalk = usersconnected.getSelectedValue();
+						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
+						 getTalkingto().append(""); 
+						 Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+						 }
+		    	  }
+		      		
+		        }
+		      }
+		);
+    
+        panel_2.add(usersconnected);
+        //Conversations.initialize_hist();
+        
+        frame.getContentPane().add(panel_1);
         
 
         //TextField pour rédiger son message
