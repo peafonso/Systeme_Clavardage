@@ -13,11 +13,11 @@ public class Runner extends Thread {
     
 	public Runner(Application app) {
         this.app=app;
-        start();
     }
 
-    public void run(Application app) {
+    public void run() {
         ServerSocket server;
+        System.out.println("letsgo");
         try {
             server = new ServerSocket(2000); 
             System.out.println("Socket d'ecoute cree");

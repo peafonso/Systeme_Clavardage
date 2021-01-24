@@ -303,6 +303,8 @@ public class Home {
 		udpListen.start();
 	 	miseAJourContact();
 	 	tcpListen= new Runner(getApp());
+	 	tcpListen.start();
+	 	System.out.println("salut");
 
 	}
 	
