@@ -185,7 +185,7 @@ public class Home {
         panel_1.setLayout(null);
 
         JScrollPane scrollPane_1 = new JScrollPane();
-        scrollPane_1.setBounds(41, 45, 224, 619);
+        scrollPane_1.setBounds(41, 45, 224, (panel.getHeight()-10));
         panel_1.add(scrollPane_1);
         
 
@@ -225,8 +225,6 @@ public class Home {
 		);
     
         panel_2.add(usersconnected);
-        //Conversations.initialize_hist();
-        
         frame.getContentPane().add(panel_1);
         
 
