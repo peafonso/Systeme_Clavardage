@@ -1,31 +1,34 @@
 package system;
 
 import java.io.InputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
-//1 char= 1 octet
-//Max message 100*10^6 octets
-public class Runner implements Runnable {
 
+import control.Application;
+
+public class Runner extends Thread {
+	private Application app;
 	private Socket link;
     byte[] array = new byte[100000000];
     
-	public Runner(Socket link) {
-        this.link = link;
+	public Runner(Application app) {
+        this.app=app;
+        start();
     }
 
-    @Override
-    public void run() {
-        System.out.println("Thread started");
+    public void run(Application app) {
+        ServerSocket server;
         try {
-            InputStream is = link.getInputStream();
-            is.read(array);
-            String data = new String(array);
-            System.out.println("Received: "+data);
-            
-            System.out.println("Finishing thread");
-            is.close();
-            link.close();
-        } catch (Exception e) {
+            server = new ServerSocket(2000); 
+            System.out.println("Socket d'ecoute cree");
+            while(true) { 
+                System.out.println("Attente Session de clavardage");
+                Socket link = server.accept(); 
+                TCPChat chat = new TCPChat(app,link);
+                
+            }
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

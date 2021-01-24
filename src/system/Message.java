@@ -48,24 +48,23 @@ public class Message implements Serializable {
 
 	@Override
 	public String toString() {
-	    DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
 		String smsg= "Sender: "+this.getSender()+" \n"+"Receiver:  "+this.getReceiver()+"  \n"
-	+"Time:  "+ shortDateFormat.format(this.getTime())+" \n"+"Type:  "+this.getType()+" \n"+
+	+"Time:  "+ this.getTime()+" \n"+"Type:  "+this.getType()+" \n"+
 	"Data:  "+this.getData()+" \n";
 		return smsg;	
 	}
 	
-	public Message toMesssage(String smsg) {
+	public static Message toMessage(String smsg) {
 		String[] paramsg=smsg.split("\n");
 		User sender= User.toUser(paramsg[0].split(":")[1]);
 		User receiver= User.toUser(paramsg[1].split(":")[1]);
-		typemsg type=toTypemsg(paramsg[3].split(":")[1]);
+		String date= (paramsg[2].split(":")[1]);
 		String [] tabdata=paramsg[4].split(":");
 		String data="";
 		for (int i=1;i<tabdata.length;i++) {
 			data+=tabdata[i];
 		}
-		return new Message(sender,receiver,data);
+		return new Message(sender,receiver,data,date);
 	
 	}
 	
