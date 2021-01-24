@@ -199,8 +199,8 @@ public class Home {
         
         JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
         lblcontacts.setBackground(new Color(192, 192, 192));
-        lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
-        lblcontacts.setBounds(73, 11, 165, 23);
+        lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 14));
+        lblcontacts.setBounds(87, 11, 133, 23);
         panel_1.add(lblcontacts);
         
     	ImageIcon profil_pic = new ImageIcon();
@@ -275,6 +275,7 @@ public class Home {
 		usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
         usersconnected.setBounds(0, 646, 272, -599);
         usersconnected.setBackground(new Color(95, 158, 160));
+        usersconnected.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         //usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
 		      public void valueChanged(ListSelectionEvent evt) {
