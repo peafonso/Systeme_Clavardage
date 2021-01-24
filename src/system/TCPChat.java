@@ -82,27 +82,30 @@ public class TCPChat extends Thread{
                 data = (String) getIn().readObject();
                 msg = Message.toMessage(data);
     			System.out.println("jai recu"+data);
-    			if(msg.getType()==typemsg.FINMSG) {
-    				try {
-    					socket.close();
-    				}
-    				catch(IOException e){
-    					e.printStackTrace();
-
-    				}
-    			}
-    			else {
-    				Home.displayNotification(socket.getInetAddress().getHostAddress());
-    				getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
-    			}
-    			
-            } catch (ClassNotFoundException e) {
+            }
+            catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-				e.printStackTrace();
-			}
-        }
+            	break;
+            }
+    		
+            if(msg.getType()==typemsg.FINMSG) {
+    			try {
+    				socket.close();
+    			}
+    			catch(IOException e){
+   					break;
+   				}
+   				break;
+   			}
+            else {
+    			Home.displayNotification(socket.getInetAddress().getHostAddress());
+    			getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
+   			}
+    			
+        } 
     }
+    
 
 	public Application getApp() {
 		return app;
