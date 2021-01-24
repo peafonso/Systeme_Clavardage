@@ -304,7 +304,6 @@ public class Home {
 	 	miseAJourContact();
 	 	tcpListen= new Runner(getApp());
 	 	tcpListen.start();
-	 	System.out.println("salut");
 
 	}
 	
@@ -380,7 +379,7 @@ public class Home {
 			}
 			// Message envoye par l'autre utilisateur
 			else {
-				messages+="             "+msg.getData()+"  "+msg.getTime()+"  \n";
+				messages+="                                        "+msg.getData()+"  "+msg.getTime()+"  \n";
 
 			}
 			

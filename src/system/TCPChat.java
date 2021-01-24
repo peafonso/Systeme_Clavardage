@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import Interface.Home;
 import control.Application;
 import model.User;
+import system.Message.typemsg;
 
 public class TCPChat extends Thread{
 	private Application app;
@@ -56,6 +57,16 @@ public class TCPChat extends Thread{
         }
 
     }
+    
+    public void close() {
+    	Message msg= new Message(getApp().getMe(),getThem(),".",typemsg.FINMSG);
+    	try {
+            getOut().writeObject(msg.toString());
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 
     public void run() {
         String data = null;
@@ -64,8 +75,17 @@ public class TCPChat extends Thread{
             try {
                 data = (String) getIn().readObject();
                 msg = Message.toMessage(data);
-    			Home.displayNotification(socket.getInetAddress().getHostAddress());
     			System.out.println("jai recu"+data);
+    			if(msg.getType()==typemsg.FINMSG) {
+    				try {
+    					socket.close();
+    				}
+    				catch(IOException e){
+    					e.printStackTrace();
+
+    				}
+    			}
+    			Home.displayNotification(socket.getInetAddress().getHostAddress());
     			getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
     			
             } catch (ClassNotFoundException e) {

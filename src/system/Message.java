@@ -11,7 +11,7 @@ import model.User;
 //classe message pour toutes les communications tcp en clavardage
 
 public class Message implements Serializable {
-	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG, CHANGEMENTPSEUDO};
+	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG, FINMSG, CHANGEMENTPSEUDO};
 	private User sender;
 	private User receiver;
 	private String data;
@@ -31,12 +31,21 @@ public class Message implements Serializable {
 		this.setType(typemsg.ENVOIMSG);
 	}
 	
-	public Message(User from, User to, String msg, String date) {
+	public Message(User from, User to, String msg, String date, typemsg type) {
 		this.setSender(from);
 		this.setReceiver(to);
 		this.setData(msg);
 		this.setTimeString(date);
-		this.setType(typemsg.ENVOIMSG);
+		this.setType(type);
+	}
+	
+	public Message(User from, User to, String msg, typemsg type) {
+		this.setSender(from);
+		this.setReceiver(to);
+		this.setData(msg);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		this.setTime(dateFormat.format(new Date()));
+		this.setType(type);
 	}
 	
 	public Message(String msg) {
@@ -59,16 +68,17 @@ public class Message implements Serializable {
 		User sender= User.toUser(paramsg[0].split(":")[1]);
 		User receiver= User.toUser(paramsg[1].split(":")[1]);
 		String date= (paramsg[2].split(":")[1]);
+ 		typemsg type=toTypemsg(paramsg[3].split(":")[1]);
 		String [] tabdata=paramsg[4].split(":");
 		String data="";
 		for (int i=1;i<tabdata.length;i++) {
 			data+=tabdata[i];
 		}
-		return new Message(sender,receiver,data,date);
+		return new Message(sender,receiver,data,date,type);
 	
 	}
 	
-	public typemsg toTypemsg(String s) {
+	public static typemsg toTypemsg(String s) {
 		if (s.equals("DECONNEXION")){
 			return typemsg.DECONNEXION;
 		}
