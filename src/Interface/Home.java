@@ -84,6 +84,7 @@ public class Home {
 	private JTextField textField;
 	private static JPanel panel;
 	private JButton btnSend;
+	private JButton btnstop ;
 	private static JEditorPane textArea;
 	private JScrollPane scrolltextArea;
 	private static JTextArea talkingto;
@@ -220,7 +221,12 @@ public class Home {
     	btnSend.setBackground(SystemColor.activeCaption);
     	btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
     	btnSend.setBounds(558, 403, 76, 38);
-	
+    	
+    	//bouton stop session
+    	btnstop = new JButton("x");
+		btnstop.setBackground(Color.RED);
+		btnstop.setBounds(687, 48, 37, 34);
+		panel.add(btnstop);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(60, 96, 664, 296);
@@ -365,9 +371,23 @@ public class Home {
             }
         });
     	
+    	btnstop.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		chat.close();
+        		clearMessagesArea();
+        	}
+        	}
+        );
+    	
     }
 
 
+    public static void clearMessagesArea() {
+		textArea.setText("");
+
+    }
+    
     public static void loadconvo(User u2) {
 		ArrayList<Message> history= getApp().getDb().recupHistory(u2.getIP());
 		String messages="";
@@ -379,7 +399,7 @@ public class Home {
 			}
 			// Message envoye par l'autre utilisateur
 			else {
-				messages+="                                        "+msg.getData()+"  "+msg.getTime()+"  \n";
+				messages+="                                                "+msg.getData()+"  "+msg.getTime()+"  \n";
 
 			}
 			

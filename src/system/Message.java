@@ -67,7 +67,8 @@ public class Message implements Serializable {
 		String[] paramsg=smsg.split("\n");
 		User sender= User.toUser(paramsg[0].split(":")[1]);
 		User receiver= User.toUser(paramsg[1].split(":")[1]);
-		String date= (paramsg[2].split(":")[1]);
+		String[] fulldate=paramsg[2].split(":");
+		String date= (fulldate[1]+fulldate[2]);
  		typemsg type=toTypemsg(paramsg[3].split(":")[1]);
 		String [] tabdata=paramsg[4].split(":");
 		String data="";
@@ -79,12 +80,10 @@ public class Message implements Serializable {
 	}
 	
 	public static typemsg toTypemsg(String s) {
-		if (s.equals("DECONNEXION")){
-			return typemsg.DECONNEXION;
+		if (s.equals("FINMSG")){
+			return typemsg.FINMSG;
 		}
-		else if (s.equals("CONNEXION")){
-			return typemsg.CONNEXION;
-		}
+		
 		else {
 			return typemsg.ENVOIMSG;
 		}

@@ -17,7 +17,6 @@ public class Runner extends Thread {
 
     public void run() {
         ServerSocket server;
-        System.out.println("letsgo");
         try {
             server = new ServerSocket(2000); 
             System.out.println("Socket d'ecoute cree");
