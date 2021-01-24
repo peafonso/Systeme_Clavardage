@@ -344,7 +344,7 @@ public class Home {
     	System.out.println("talking to"+ u2.getPseudo());
   
     	
-    	getTalkingto().append(u2.getPseudo()); //pour afficher à qui on parle
+    	getTalkingto().setText(u2.getPseudo()); //pour afficher à qui on parle
     	btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String msg=textField.getText();
