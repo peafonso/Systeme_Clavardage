@@ -84,7 +84,7 @@ public class Home {
 	private JTextField textField;
 	private static JPanel panel;
 	private JButton btnSend;
-	private JButton btnstop ;
+	private JButton btnstop;
 	private static JEditorPane textArea;
 	private JScrollPane scrolltextArea;
 	private static JTextArea talkingto;
@@ -108,135 +108,125 @@ public class Home {
 	private void initialize() {
 		frame = new BackgroundJFrame("Home");
 		frame.setBackground(new Color(240, 240, 240));
-		//frame.setBounds(100, 100, 1640, 920);
-    	//centrer la fenetre au milieu de l'ecran
-    	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    	frame.setBounds(0, 0, dim.width,dim.height);
+		// frame.setBounds(100, 100, 1640, 920);
+		// centrer la fenetre au milieu de l'ecran
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setBounds(0, 0, dim.width, dim.height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addWindowListener(new windowClosingListener());
 
-
-		//frame.setSize(1600,900);
+		// frame.setSize(1600,900);
 		ImageIcon homePicture = new ImageIcon();
-		homePicture=createImageIcon("/images/ACCUEIL_FOND2.jpg");
-		
+		homePicture = createImageIcon("/images/ACCUEIL_FOND2.jpg");
 
-        frame.setLocation(dim.width/3 - frame.getWidth()/3, dim.height/3 - frame.getHeight()/3);
-    	frame.getContentPane().setBounds(0, 0, dim.width,dim.height);
-        frame.pack();
-        
-        JMenuBar menuBar = new JMenuBar();
-        //menuBar.setMargin(new Insets(1000, 0, 1000, 0));
-        frame.setJMenuBar(menuBar);
-        
-        //Bouton Home
-        JButton btnNewButton = new JButton("Home");
-        btnNewButton.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-        btnNewButton.setBackground(new Color(153, 153, 153));
-        menuBar.add(btnNewButton);
-        
-        
-        //Bouton Settings
-        JMenu mntmNewMenuItem_1 = new JMenu("Settings");
-    	JMenuItem mPseudo= new JMenuItem("Change Pseudo");
-    	mPseudo.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-    	mPseudo.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e)
-        	{
-        		new Settings(getApp()); 
-        	}
-        	}
-        );
-    	
-    	JMenuItem clearConv= new JMenuItem("Clear conversation");
-    	clearConv.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-    	clearConv.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e)
-        	{
-        		new DeleteConv(getApp()); 
-        	}
-        	}
-        );
-    	
-        mntmNewMenuItem_1.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-        mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
-        menuBar.add(mntmNewMenuItem_1);
-        mntmNewMenuItem_1.add(mPseudo);
-        mntmNewMenuItem_1.add(clearConv);
-        
-        //Boutton Deconnexion
-        JButton btnDeconnexion = new JButton("Disconnect");
-        btnDeconnexion.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-        btnDeconnexion.setBackground(new Color(153, 153, 153));
-        menuBar.add(btnDeconnexion);
-        btnDeconnexion.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e)
-        	{
-        		new Disconnect(getApp());
-        	}
-        	}
-        );
-        
-        panel = new JPanel();
-        panel.setBounds(151, 137, 820, 472);
-        panel.setBackground(new Color(211, 211, 211));
-        panel.setLayout(null);
-        JPanel panel_1 = new JPanel();
-        panel_1.setBounds(990, 88, 307, 552 );//690
-        panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-        panel_1.setBackground(new Color(95, 158, 160));
-        panel_1.setLayout(null);
+		frame.setLocation(dim.width / 3 - frame.getWidth() / 3, dim.height / 3 - frame.getHeight() / 3);
+		frame.getContentPane().setBounds(0, 0, dim.width, dim.height);
+		frame.pack();
 
-        JScrollPane scrollPane_1 = new JScrollPane();
-        scrollPane_1.setBounds(41, 45, 224, (panel.getHeight()-5));
-        panel_1.add(scrollPane_1);
-        
+		JMenuBar menuBar = new JMenuBar();
+		// menuBar.setMargin(new Insets(1000, 0, 1000, 0));
+		frame.setJMenuBar(menuBar);
 
-        JPanel panel_2 = new JPanel();
-        panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(95, 158, 160), new Color(95, 158, 160)));
-        panel_2.setBackground(new Color(0, 128, 128));
-        //panel_2.setBounds(1000, 66, (panel_1.getWidth()-40), (panel_1.getHeight()-40) );//690
-        scrollPane_1.setViewportView(panel_2);
-        
-        JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
-        lblcontacts.setBackground(new Color(192, 192, 192));
-        lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
-        lblcontacts.setBounds(87, 11, 133, 23);
-        panel_1.add(lblcontacts);
-        
-    	ImageIcon profil_pic = new ImageIcon();
-    	profil_pic = createImageIcon("/images/profil_picture.png");
-        frame.getContentPane().add(panel_1);
-        
+		// Bouton Home
+		JButton btnNewButton = new JButton("Home");
+		btnNewButton.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		btnNewButton.setBackground(new Color(153, 153, 153));
+		menuBar.add(btnNewButton);
 
-        //TextField pour rédiger son message
-        textField = new JTextField();
-        textField.setBackground(Color.WHITE);
-        textField.setFont(new Font("Bahnschrift", Font.PLAIN, 11));
+		// Bouton Settings
+		JMenu mntmNewMenuItem_1 = new JMenu("Settings");
+		JMenuItem mPseudo = new JMenuItem("Change Pseudo");
+		mPseudo.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		mPseudo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Settings(getApp());
+			}
+		});
+
+		JMenuItem clearConv = new JMenuItem("Clear conversation");
+		clearConv.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		clearConv.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new DeleteConv(getApp());
+			}
+		});
+
+		mntmNewMenuItem_1.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
+		menuBar.add(mntmNewMenuItem_1);
+		mntmNewMenuItem_1.add(mPseudo);
+		mntmNewMenuItem_1.add(clearConv);
+
+		// Boutton Deconnexion
+		JButton btnDeconnexion = new JButton("Disconnect");
+		btnDeconnexion.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		btnDeconnexion.setBackground(new Color(153, 153, 153));
+		menuBar.add(btnDeconnexion);
+		btnDeconnexion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Disconnect(getApp());
+			}
+		});
+
+		panel = new JPanel();
+		panel.setBounds(151, 137, 820, 472);
+		panel.setBackground(new Color(211, 211, 211));
+		panel.setLayout(null);
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(990, 88, 307, 552);// 690
+		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_1.setBackground(new Color(95, 158, 160));
+		panel_1.setLayout(null);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(41, 45, 224, (panel.getHeight() - 5));
+		panel_1.add(scrollPane_1);
+
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(95, 158, 160), new Color(95, 158, 160)));
+		panel_2.setBackground(new Color(0, 128, 128));
+		// panel_2.setBounds(1000, 66, (panel_1.getWidth()-40), (panel_1.getHeight()-40)
+		// );//690
+		scrollPane_1.setViewportView(panel_2);
+
+		JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
+		lblcontacts.setBackground(new Color(192, 192, 192));
+		lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
+		lblcontacts.setBounds(87, 11, 133, 23);
+		panel_1.add(lblcontacts);
+
+		ImageIcon profil_pic = new ImageIcon();
+		profil_pic = createImageIcon("/images/profil_picture.png");
+		frame.getContentPane().add(panel_1);
+
+		// TextField pour rédiger son message
+		textField = new JTextField();
+		textField.setBackground(Color.WHITE);
+		textField.setFont(new Font("Bahnschrift", Font.PLAIN, 11));
 		textField.setBounds(80, 407, 453, 33);
 		textField.setColumns(10);
-		
-		//Bouton Send
-    	btnSend = new JButton("send");
-    	btnSend.setBackground(SystemColor.activeCaption);
-    	btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-    	btnSend.setBounds(558, 403, 76, 38);
-    	
-    	//bouton stop session
-    	btnstop = new JButton("x");
+
+		// Bouton Send
+		btnSend = new JButton("send");
+		btnSend.setBackground(SystemColor.activeCaption);
+		btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		btnSend.setBounds(558, 403, 76, 38);
+
+		// bouton stop session
+		btnstop = new JButton("x");
 		btnstop.setBackground(Color.RED);
 		btnstop.setBounds(687, 48, 37, 34);
 		panel.add(btnstop);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(60, 96, 664, 296);
 		panel.add(scrollPane);
-		
+
 		textArea = new JEditorPane();
 		scrollPane.setViewportView(textArea);
 		textArea.setBackground(SystemColor.controlHighlight);
 		textArea.setEditable(false);
-		
+
 		JLabel lblTalkingwith = new JLabel("Talking with");
 		lblTalkingwith.setFont(new Font("Bahnschrift", Font.BOLD, 20));
 		lblTalkingwith.setBounds(60, 57, 126, 31);
@@ -246,192 +236,182 @@ public class Home {
 		getTalkingto().setBounds(174, 60, 126, 25);
 		frame.getContentPane().setLayout(null);
 
-		notification= new JTextPane();
+		notification = new JTextPane();
 		notification.setBounds(420, 22, 279, 20);
 		notification.setBackground(new Color(211, 211, 211));
 		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-		
+
 		panel.add(notification);
 		panel.add(getTalkingto());
 		panel.add(lblTalkingwith);
-		
+
 		panel.add(btnSend);
 		panel.add(textField);
-		
-    	/*ImageIcon profil_pic = new ImageIcon();
-    	profil_pic = createImageIcon("/images/profil_picture.png");*/
-    	
+
+		/*
+		 * ImageIcon profil_pic = new ImageIcon(); profil_pic =
+		 * createImageIcon("/images/profil_picture.png");
+		 */
+
 		txtrB = new JTextArea();
 		txtrB.setFont(new Font("Bahnschrift", Font.BOLD | Font.ITALIC, 20));
 		txtrB.setBackground(new Color(211, 211, 211));
 		txtrB.setBounds(97, 35, 126, 25);
 		txtrB.setText(app.getMe().getPseudo());
 		panel.add(txtrB);
-		
-		JLabel lblNewLabel=new JLabel();
+
+		JLabel lblNewLabel = new JLabel();
 		lblNewLabel.setBounds(45, 28, 48, 28);
 		lblNewLabel.setIcon(new ImageIcon(profil_pic.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel);
 		frame.getContentPane().add(panel);
 		frame.getContentPane().add(panel_1);
-		
-		//panel.add(scrolltextArea);
-		//panel.add(textArea);
-		
-		usersconnected= new JList<String>(getApp().getFriends().getListPseudo());
-        usersconnected.setBounds(0, 646, 272, -599);
-        usersconnected.setBackground(new Color(95, 158, 160));
-        usersconnected.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-        //usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+
+		// panel.add(scrolltextArea);
+		// panel.add(textArea);
+
+		usersconnected = new JList<String>(getApp().getFriends().getListPseudo());
+		usersconnected.setBounds(0, 646, 272, -599);
+		usersconnected.setBackground(new Color(95, 158, 160));
+		usersconnected.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		// usersconnected.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		usersconnected.addListSelectionListener(new ListSelectionListener() {
-		      public void valueChanged(ListSelectionEvent evt) {
-		    	  if(evt.getValueIsAdjusting()) {
-						 int userselect = usersconnected.getSelectedIndex();
-						 if(userselect != -1) {
-						 String usertalk = usersconnected.getSelectedValue();
-						 loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
-						 getTalkingto().append(""); 
-						 Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
-						 }
-		    	  }
+			public void valueChanged(ListSelectionEvent evt) {
+				if (evt.getValueIsAdjusting()) {
+					int userselect = usersconnected.getSelectedIndex();
+					if (userselect != -1) {
+						String usertalk = usersconnected.getSelectedValue();
+						loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
+						getTalkingto().append("");
+						Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+					}
+				}
 
-		        }
-		      }
-		);
+			}
+		});
 
-        panel_2.add(usersconnected);
+		panel_2.add(usersconnected);
 
-        frame.getContentPane().add(panel_1);
+		frame.getContentPane().add(panel_1);
 
-
-		
 		frame.setVisible(true);
 		udpListen.start();
-	 	miseAJourContact();
-	 	tcpListen= new Runner(getApp());
-	 	tcpListen.start();
+		miseAJourContact();
+		tcpListen = new Runner(getApp());
+		tcpListen.start();
 
 	}
-	
-
 
 	/** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imageURL = Interface.class.getResource(path);
+	protected static ImageIcon createImageIcon(String path) {
+		java.net.URL imageURL = Interface.class.getResource(path);
 
-        if (imageURL == null) {
-            System.err.println("Resource not found: "
-                               + path);
-            return null;
-        } else {
-            return new ImageIcon(imageURL);
-        }
-    }
-	
-    public static ImageIcon scaleImage(ImageIcon icon, int w, int h){
-        int nw = icon.getIconWidth();
-        int nh = icon.getIconHeight();
+		if (imageURL == null) {
+			System.err.println("Resource not found: " + path);
+			return null;
+		} else {
+			return new ImageIcon(imageURL);
+		}
+	}
 
-        if(icon.getIconWidth() > w){
-          nw = w;
-          nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
-        }
+	public static ImageIcon scaleImage(ImageIcon icon, int w, int h) {
+		int nw = icon.getIconWidth();
+		int nh = icon.getIconHeight();
 
-        if(nh > h){
-          nh = h;
-          nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
-        }
+		if (icon.getIconWidth() > w) {
+			nw = w;
+			nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
+		}
 
-        return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
-    }
-    
+		if (nh > h) {
+			nh = h;
+			nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
+		}
 
-    
-    //ouverture d'une communication
-    public void Chats (User u2) {
-    	System.out.println("talking to"+ u2.getPseudo());
-    	TCPChat chat=new TCPChat(getApp(),u2);
-    	
-    	getTalkingto().setText(u2.getPseudo()); //pour afficher à qui on parle
-    	btnSend.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	String msg=textField.getText();
-            	chat.SendMessage(msg);
-            	textField.setText("");          
-            	loadconvo(u2);
-            }
-        });
-    	
-    	textField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	String msg=textField.getText();
-            	chat.SendMessage(msg);
-            	textField.setText(""); 
-            	loadconvo(u2);
-            }
-        });
-    	
-    	btnstop.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e)
-        	{
-        		chat.close();
-        		clearMessagesArea();
-        	}
-        	}
-        );
-    	
-    }
+		return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
+	}
 
+	// ouverture d'une communication
+	public void Chats(User u2) {
+		System.out.println("talking to" + u2.getPseudo());
+		TCPChat chat = new TCPChat(getApp(), u2);
 
-    public static void clearMessagesArea() {
+		getTalkingto().setText(u2.getPseudo()); // pour afficher à qui on parle
+		btnSend.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				String msg = textField.getText();
+				chat.SendMessage(msg);
+				textField.setText("");
+				loadconvo(u2);
+			}
+		});
+
+		textField.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				String msg = textField.getText();
+				chat.SendMessage(msg);
+				textField.setText("");
+				loadconvo(u2);
+			}
+		});
+
+		btnstop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chat.close();
+				clearMessagesArea();
+				getTalkingto().setText(""); 
+			}
+		});
+
+	}
+
+	public static void clearMessagesArea() {
 		textArea.setText("");
 
-    }
-    
-    public static void loadconvo(User u2) {
-		ArrayList<Message> history= getApp().getDb().recupHistory(u2.getIP());
-		String messages="";
-		for(Message msg : history) {
-			
+	}
+
+	public static void loadconvo(User u2) {
+		ArrayList<Message> history = getApp().getDb().recupHistory(u2.getIP());
+		String messages = "";
+		for (Message msg : history) {
+
 			// Message envoye par moi
-			if(msg.getSender().equals(getApp().getMe())) {
-				messages+=msg.getData()+"  "+msg.getTime()+"  \n";
+			if (msg.getSender().equals(getApp().getMe())) {
+				messages += msg.getData() + "  " + msg.getTime() + "  \n";
 			}
 			// Message envoye par l'autre utilisateur
 			else {
-				messages+="                                                "+msg.getData()+"  "+msg.getTime()+"  \n";
+				messages += "                                                " + msg.getData() + "  " + msg.getTime()
+						+ "  \n";
 
 			}
-			
+
 		}
 
 		// Affichage des messages
 		textArea.setText(messages);
-		
+
 		// Scroll a la fin des messages
 		textArea.setCaretPosition(textArea.getDocument().getLength());
-		
+
 	}
-		
-		
-	
 
 	public static void miseAJourContact() {
-    	usersconnected.setListData(getApp().getFriends().getListPseudo());
-    	//garder le pointeur du getSelectedValue même si qqn part 
-    }
-    
-	//pour afficher le pseudo de l'utilisateur
+		usersconnected.setListData(getApp().getFriends().getListPseudo());
+		// garder le pointeur du getSelectedValue même si qqn part
+	}
+
+	// pour afficher le pseudo de l'utilisateur
 	public static void pseudoModif() {
 		txtrB.setText(app.getMe().getPseudo());
 	}
- 
-	//pour afficher les erreurs
+
+	// pour afficher les erreurs
 	public static void Error(String error) {
 		JOptionPane.showMessageDialog(null, error, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
-	//fermer la page home
+	// fermer la page home
 	public static void dispose() {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		UDPListener.setOuvert(false);
@@ -446,26 +426,22 @@ public class Home {
 		Home.app = app;
 	}
 
-	
-	
-	public static void display (User friend) {
-		 String pseudotalk = usersconnected.getSelectedValue();
-		 User usertalk= getApp().getFriends().getUserfromPseudo(pseudotalk);
-		 if (usertalk.equals(friend)) {
-			 loadconvo(friend);
-		 }
-		 else {
-			 //don't know if we need to do something there
-		 }
+	public static void display(String friend) {
+		String pseudotalk = usersconnected.getSelectedValue();
+		User usertalk = getApp().getFriends().getUserfromPseudo(pseudotalk);
+		if (usertalk.getIP().equals(friend)) {
+			loadconvo(usertalk);
+		} else {
+			// don't know if we need to do something there
+		}
 
 	}
-	
+
 	public static void displayNotification(String IPfrom) {
-		notification.setText("vous avez reçu un message de "+getApp().getFriends().getPseudofromIP(IPfrom));
-		
+		notification.setText("vous avez reçu un message de " + getApp().getFriends().getPseudofromIP(IPfrom));
+
 	}
-	
-	
+
 	public static JTextArea getTalkingto() {
 		return talkingto;
 	}
@@ -474,21 +450,31 @@ public class Home {
 		this.talkingto = talkingto;
 	}
 
-
 	public class windowClosingListener implements WindowListener {
-		
+
 		public void windowClosing(WindowEvent e) {
 			UDPListener.setOuvert(false);
 			app.getcSystem().Deconnexion();
-	        //Conversations.delete_historique();
+			// Conversations.delete_historique();
 		}
-		
-		public void windowOpened(WindowEvent arg0) {}
-		public void windowClosed(WindowEvent arg0) {}
-		public void windowIconified(WindowEvent arg0) {}
-		public void windowDeiconified(WindowEvent arg0) {}
-		public void windowActivated(WindowEvent arg0) {}
-		public void windowDeactivated(WindowEvent arg0) {}
+
+		public void windowOpened(WindowEvent arg0) {
+		}
+
+		public void windowClosed(WindowEvent arg0) {
+		}
+
+		public void windowIconified(WindowEvent arg0) {
+		}
+
+		public void windowDeiconified(WindowEvent arg0) {
+		}
+
+		public void windowActivated(WindowEvent arg0) {
+		}
+
+		public void windowDeactivated(WindowEvent arg0) {
+		}
 
 	}
 }

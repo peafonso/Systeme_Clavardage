@@ -100,6 +100,7 @@ public class TCPChat extends Thread{
    			}
             else {
     			Home.displayNotification(socket.getInetAddress().getHostAddress());
+    			Home.display(socket.getInetAddress().getHostAddress());
     			getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
    			}
     			
