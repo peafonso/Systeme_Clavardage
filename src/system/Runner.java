@@ -19,9 +19,8 @@ public class Runner extends Thread {
         ServerSocket server;
         try {
             server = new ServerSocket(2000); 
-            System.out.println("Socket d'ecoute cree");
+            System.out.println("listening on port 2000 ready to have conversation");
             while(true) { 
-                System.out.println("Attente Session de clavardage");
                 Socket link = server.accept(); 
                 TCPChat chat = new TCPChat(app,link);
                 

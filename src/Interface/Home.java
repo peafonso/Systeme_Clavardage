@@ -334,12 +334,12 @@ public class Home {
 	// ouverture d'une communication
 	public void Chats(User u2) {
 		System.out.println("talking to" + u2.getPseudo());
-		TCPChat chat = new TCPChat(getApp(), u2);
 
 		getTalkingto().setText(u2.getPseudo()); // pour afficher à qui on parle
 		btnSend.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				String msg = textField.getText();
+				TCPChat chat = new TCPChat(getApp(), u2);
 				chat.SendMessage(msg);
 				textField.setText("");
 				loadconvo(u2);
@@ -349,6 +349,7 @@ public class Home {
 		textField.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				String msg = textField.getText();
+				TCPChat chat = new TCPChat(getApp(), u2);
 				chat.SendMessage(msg);
 				textField.setText("");
 				loadconvo(u2);
@@ -357,7 +358,7 @@ public class Home {
 
 		btnstop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				chat.close();
+				//chat.close();
 				clearMessagesArea();
 				getTalkingto().setText(""); 
 			}
@@ -375,11 +376,9 @@ public class Home {
 		String messages = "";
 		for (Message msg : history) {
 
-			// Message envoye par moi
 			if (msg.getSender().equals(getApp().getMe())) {
 				messages += msg.getData() + "  " + msg.getTime() + "  \n";
 			}
-			// Message envoye par l'autre utilisateur
 			else {
 				messages += "                                                " + msg.getData() + "  " + msg.getTime()
 						+ "  \n";
@@ -388,10 +387,8 @@ public class Home {
 
 		}
 
-		// Affichage des messages
+		//on affiche et on scrolle jusqu'en bas
 		textArea.setText(messages);
-
-		// Scroll a la fin des messages
 		textArea.setCaretPosition(textArea.getDocument().getLength());
 
 	}
@@ -426,6 +423,7 @@ public class Home {
 		Home.app = app;
 	}
 
+	//TO REDO
 	public static void display(String friend) {
 		String pseudotalk = usersconnected.getSelectedValue();
 		User usertalk = getApp().getFriends().getUserfromPseudo(pseudotalk);
