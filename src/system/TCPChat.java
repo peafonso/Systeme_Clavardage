@@ -18,7 +18,7 @@ public class TCPChat extends Thread{
     private ObjectOutputStream out;
     private ObjectInputStream in;
     
-    //constructeur a utiliser lorsque quelqu'un veut clavarder avec nous
+    //constructeur a utiliser lorsque quelqu'un veut clavarder avec nous (réception)
     public TCPChat (Application app, Socket sock) {
     	setApp(app);
     	setSocket(sock);
@@ -31,7 +31,7 @@ public class TCPChat extends Thread{
     	start();
     }
     
-    //constructeur a utiliser lorsqu'on veut clavarder avec quelqu'un
+    //constructeur a utiliser lorsqu'on veut clavarder avec quelqu'un (envoi)
     public TCPChat (Application app, User u2) {
     	setApp(app);
     	setThem(u2);
@@ -44,7 +44,6 @@ public class TCPChat extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	//start();
     }
 
     public void SendMessage(String data) {
@@ -59,22 +58,6 @@ public class TCPChat extends Thread{
 
     }
     
-    public void close() {
-    	Message msg= new Message(getApp().getMe(),getThem(),"",typemsg.FINMSG);
-    	try {
-            getOut().writeObject(msg.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	finally {
-    		try {
-    			socket.close();
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
-    	}
-    }
-
     public void run() {
         String data = null;
         Message msg = null;
@@ -101,7 +84,7 @@ public class TCPChat extends Thread{
    			}
             else {
     			Home.displayNotification(socket.getInetAddress().getHostAddress());
-    			Home.display(socket.getInetAddress().getHostAddress());
+    			Home.display(msg.getSender().getPseudo());
     			getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
     			try {
 					socket.close();

@@ -84,7 +84,6 @@ public class Home {
 	private JTextField textField;
 	private static JPanel panel;
 	private JButton btnSend;
-	private JButton btnstop;
 	private static JEditorPane textArea;
 	private JScrollPane scrolltextArea;
 	private static JTextArea talkingto;
@@ -131,7 +130,7 @@ public class Home {
 		JButton btnNewButton = new JButton("Home");
 		btnNewButton.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
 		btnNewButton.setBackground(new Color(153, 153, 153));
-		menuBar.add(btnNewButton);
+		//menuBar.add(btnNewButton);
 
 		// Bouton Settings
 		JMenu mntmNewMenuItem_1 = new JMenu("Settings");
@@ -211,12 +210,6 @@ public class Home {
 		btnSend.setBackground(SystemColor.activeCaption);
 		btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
 		btnSend.setBounds(558, 403, 76, 38);
-
-		// bouton stop session
-		btnstop = new JButton("x");
-		btnstop.setBackground(Color.RED);
-		btnstop.setBounds(687, 48, 37, 34);
-		panel.add(btnstop);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(60, 96, 664, 296);
@@ -356,14 +349,6 @@ public class Home {
 			}
 		});
 
-		btnstop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//chat.close();
-				clearMessagesArea();
-				getTalkingto().setText(""); 
-			}
-		});
-
 	}
 
 	public static void clearMessagesArea() {
@@ -425,10 +410,8 @@ public class Home {
 
 	//TO REDO
 	public static void display(String friend) {
-		String pseudotalk = usersconnected.getSelectedValue();
-		User usertalk = getApp().getFriends().getUserfromPseudo(pseudotalk);
-		if (usertalk.getIP().equals(friend)) {
-			loadconvo(usertalk);
+		if (getTalkingto().equals(friend)) {
+			loadconvo(getApp().getFriends().getUserfromPseudo(friend));
 		} else {
 			// don't know if we need to do something there
 		}
