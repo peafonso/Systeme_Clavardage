@@ -28,7 +28,7 @@ public class TCPChat extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	start();
+    	//start();
     }
     
     //constructeur a utiliser lorsqu'on veut clavarder avec quelqu'un
@@ -44,7 +44,7 @@ public class TCPChat extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	start();
+    	//start();
     }
 
     public void SendMessage(String data) {
