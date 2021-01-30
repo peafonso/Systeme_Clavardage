@@ -137,6 +137,7 @@ public class InteractiveChatSystem {
      				getApp().getFriends().addContact(usertoadd); //on ajoute dans le tableau
      				getApp().getDb().createTableConvo(usertoadd.getIP()); //on ajoute dans la bd
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
+    	    		Home.displayNotifUsers(usertoadd.getPseudo()," just connect \n");
          		    System.out.println("j'ajoute" +usertoadd+ "et je maj");
         			Home.miseAJourContact();
 
@@ -188,8 +189,8 @@ public class InteractiveChatSystem {
     	    }
     	    else {
     	    	getApp().getFriends().deleteContact(getApp().getFriends().getUserfromPseudo(usertodisconnect.getPseudo()));
+	    		Home.displayNotifUsers(usertodisconnect.getPseudo()," just disconnect \n");
     	    	if (Home.getUsertalking().getIP().equals(usertodisconnect.getIP())) {
-    	    		Home.displayDisconnection(usertodisconnect.getPseudo());
     	    		Home.getTalkingto().setText("");
     	    		Home.clearMessagesArea();
     	    	}

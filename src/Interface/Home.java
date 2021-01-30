@@ -90,6 +90,7 @@ public class Home {
 	private static User usertalking;
 	private static JTextArea txtrB;
 	private static JTextPane notification;
+	private static JEditorPane notifPane;
 	private static JList<String> usersconnected;
 	static UDPListener udpListen = new UDPListener();
 	private Runner tcpListen;
@@ -230,12 +231,17 @@ public class Home {
 		getTalkingto().setBounds(174, 60, 126, 25);
 		frame.getContentPane().setLayout(null);
 
-		notification = new JTextPane();
-		notification.setBounds(420, 22, 279, 20);
-		notification.setBackground(new Color(211, 211, 211));
-		notification.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-
-		panel.add(notification);
+		
+		//Panneau des notifications (d'arrivées et de départs des contacts + des messages recus)
+		JScrollPane scrollnotif = new JScrollPane();
+		scrollnotif.setBounds(336, 0, 378, 49);
+		panel.add(scrollnotif);
+		
+		notifPane = new JEditorPane();
+		scrollnotif.setViewportView(notifPane);
+		notifPane.setBackground(SystemColor.controlHighlight);
+		notifPane.setEditable(false);
+		
 		panel.add(getTalkingto());
 		panel.add(lblTalkingwith);
 
@@ -288,12 +294,13 @@ public class Home {
 		panel_2.add(usersconnected);
 
 		frame.getContentPane().add(panel_1);
-
 		frame.setVisible(true);
+		
+		//On lance un runner udp et tcp pour les connexion et déconnexion et messages
 		udpListen.start();
-		miseAJourContact();
 		tcpListen = new Runner(getApp());
 		tcpListen.start();
+		miseAJourContact();
 
 	}
 
@@ -414,15 +421,31 @@ public class Home {
 		}
 	}
 
+	//Pour l'arrivée des messages entrants 
 	public static void displayNotification(String todisplay,String IPfrom) {
-		notification.setText(getApp().getFriends().getPseudofromIP(IPfrom)+todisplay);
+		String notifs="";
+		notifs+=notifPane.getText();
+		notifs+=getApp().getFriends().getPseudofromIP(IPfrom)+todisplay+"\n";
+		
+		//on affiche et on scrolle jusqu'en bas
+		notifPane.setText(notifs);
+		notifPane.setCaretPosition(notifPane.getDocument().getLength());
+		
 
 	}
 	
-	public static void displayDisconnection(String pseudo) {
-		notification.setText(pseudo +" just disconnect");
-
+	//Pour les connexions et déconnexions des contacts
+	public static void displayNotifUsers(String pseudo, String todisplay ) {
+		String notifs="";
+		notifs+=notifPane.getText();
+		notifs+=pseudo + todisplay;
+		
+		//on affiche et on scrolle jusqu'en bas
+		notifPane.setText(notifs);
+		notifPane.setCaretPosition(notifPane.getDocument().getLength());
+		
 	}
+	
 	public static User getUsertalking() {
 		return usertalking;
 	}
