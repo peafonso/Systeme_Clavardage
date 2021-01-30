@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 import Interface.Home;
 import control.Application;
 import model.User;
-import system.Message.typemsg;
 
 public class TCPChat extends Thread{
 	private Application app;

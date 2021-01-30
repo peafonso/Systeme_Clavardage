@@ -371,11 +371,10 @@ public class Home {
 		for (Message msg : history) {
 
 			if (msg.getSender().equals(getApp().getMe())) {
-				messages += msg.getData() + "  " + msg.getTime() + "  \n";
+				messages += "me: "+ msg.getData() + "  " + msg.getTime() + "  \n";
 			}
 			else {
-				messages += "                                                " + msg.getData() + "  " + msg.getTime()
-						+ "  \n";
+				messages += "them:" + msg.getData() + "  " + msg.getTime()+ "  \n";
 
 			}
 

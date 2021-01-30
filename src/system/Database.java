@@ -78,7 +78,8 @@ public class Database {
         String sqlconvo= "CREATE TABLE IF NOT EXISTS `" +getNomTable(ip2)+"`(\n"
         		+ "	id integer PRIMARY KEY,\n"
                 + "	time text NOT NULL, \n"
-        		+ " message text NOT NULL"
+        		+ " message text NOT NULL, \n"
+                + " sender integer NOT NULL"
                 + ");"; 
         
         try (Connection conn = DriverManager.getConnection(url);
@@ -97,20 +98,25 @@ public class Database {
 	public ArrayList<Message> recupHistory(String ip2) {
         ArrayList<Message> historique = new ArrayList<Message>();
 		String nomtable= getNomTable(ip2);
-		String sql = "SELECT id, time, message FROM `"+nomtable+"`";
+		String sql = "SELECT id, time, message, sender FROM `"+nomtable+"`";
 	        
 	    try (Connection conn = this.connect();
 			 Statement stmt  = conn.createStatement();
 	         ResultSet rs    = stmt.executeQuery(sql)){
-	    	System.out.println("\nTABLE `"+nomtable+"` (id, time, message)\n");
 
 	    	// loop through the result set
 	    	while (rs.next()) {
 	    		Message msg= new Message();
 	    		msg.setData(rs.getString("message"));
 	    		msg.setTimeString(rs.getString("time"));
-	    		msg.setSender(getApp().getMe());
-	    		msg.setReceiver(getApp().getFriends().getUserfromIP(ip2));
+	    		if (rs.getInt("sender")==0) {
+	    			msg.setSender(getApp().getMe());
+		    		msg.setReceiver(getApp().getFriends().getUserfromIP(ip2));
+	    		}
+	    		else {
+	    			msg.setSender(getApp().getMe());
+		    		msg.setReceiver(getApp().getFriends().getUserfromIP(ip2));
+	    		}
 	    		historique.add(msg);
 	         	}
 	        } catch (SQLException e) {
@@ -127,11 +133,20 @@ public class Database {
      */
 	public void addMessage(String ip2, Message msg) {
 		String nomtable= getNomTable(ip2);
-		String sql = "INSERT INTO `"+nomtable+"`(id,time,message) VALUES(?,?,?)";
+		String sql = "INSERT INTO `"+nomtable+"`(id,time,message,sender) VALUES(?,?,?,?)";
 
 		try (Connection conn =  this.connect() ; PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(2, msg.getTimeString());
 	        pstmt.setString(3, msg.getData());
+	        // 0 -> j'ai envoyé le message
+	        if (msg.getSender().equals(getApp().getMe())) {
+	        	pstmt.setInt(4, 0);
+	        }
+	        // 1 -> j'ai reçu le message
+	        else {
+	        	pstmt.setInt(4, 1);
+
+	        }
 	    	System.out.println("on ajoute le msg");
 
 	        pstmt.executeUpdate();
