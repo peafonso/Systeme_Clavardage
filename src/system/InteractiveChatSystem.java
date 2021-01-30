@@ -188,6 +188,11 @@ public class InteractiveChatSystem {
     	    }
     	    else {
     	    	getApp().getFriends().deleteContact(getApp().getFriends().getUserfromPseudo(usertodisconnect.getPseudo()));
+    	    	if (Home.getUsertalking().getIP().equals(usertodisconnect.getIP())) {
+    	    		Home.displayDisconnection(usertodisconnect.getPseudo());
+    	    		Home.getTalkingto().setText("");
+    	    		Home.clearMessagesArea();
+    	    	}
     	    	Home.miseAJourContact();
     	    }
         	;

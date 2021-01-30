@@ -83,7 +83,7 @@ public class TCPChat extends Thread{
    				//break;
    			}
             else {
-    			Home.displayNotification(socket.getInetAddress().getHostAddress());
+    			Home.displayNotification(" send you a message ",socket.getInetAddress().getHostAddress());
     			Home.display(msg.getSender().getPseudo());
     			getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
     			try {

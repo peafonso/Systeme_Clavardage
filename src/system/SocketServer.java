@@ -23,7 +23,7 @@ public class SocketServer extends Thread{
     			System.out.println("jairecuqqchose");
     			ServerSocket link = new ServerSocket(2000);
     			Socket sock=link.accept();
-    			Home.displayNotification(sock.getInetAddress().getHostAddress());
+    			Home.displayNotification(" send you a message ",sock.getInetAddress().getHostAddress());
     			ObjectInputStream is = new ObjectInputStream(sock.getInputStream());
     			String data = (String) is.readObject();
     			Message msg= new Message(data);
@@ -45,7 +45,7 @@ public class SocketServer extends Thread{
 	    			System.out.println("jairecuqqchose");
 	    			ServerSocket link = new ServerSocket(2000);
 	    			Socket sock=link.accept();
-	    			Home.displayNotification(sock.getInetAddress().getHostAddress());
+	    			Home.displayNotification(" send you a message ",sock.getInetAddress().getHostAddress());
 	    			byte[] array = new byte[100000000];
 	    			OutputStream out= sock.getOutputStream();
 	    			out.flush();

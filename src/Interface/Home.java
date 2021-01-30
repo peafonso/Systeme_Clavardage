@@ -87,6 +87,7 @@ public class Home {
 	private static JEditorPane textArea;
 	private JScrollPane scrolltextArea;
 	private static JTextArea talkingto;
+	private static User usertalking;
 	private static JTextArea txtrB;
 	private static JTextPane notification;
 	private static JList<String> usersconnected;
@@ -276,7 +277,8 @@ public class Home {
 						String usertalk = usersconnected.getSelectedValue();
 						loadconvo(getApp().getFriends().getUserfromPseudo(usertalk));
 						getTalkingto().append("");
-						Chats(getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue()));
+						usertalking=getApp().getFriends().getUserfromPseudo(usersconnected.getSelectedValue());
+						Chats(usertalking);
 					}
 				}
 
@@ -388,11 +390,6 @@ public class Home {
 		txtrB.setText(app.getMe().getPseudo());
 	}
 
-	// pour afficher les erreurs
-	public static void Error(String error) {
-		JOptionPane.showMessageDialog(null, error, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
-
 	// fermer la page home
 	public static void dispose() {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -408,19 +405,26 @@ public class Home {
 		Home.app = app;
 	}
 
-	//TO REDO
+	//pour afficher les messages entrants si on est sur la bonne conv
 	public static void display(String friend) {
-		if (getTalkingto().equals(friend)) {
-			loadconvo(getApp().getFriends().getUserfromPseudo(friend));
-		} else {
-			// don't know if we need to do something there
+		System.out.println("receiving smthing from ");
+		if (usertalking.getPseudo().equals(friend)) {
+			System.out.println("printing it");
+			loadconvo(usertalking);
 		}
-
 	}
 
-	public static void displayNotification(String IPfrom) {
-		notification.setText("vous avez reçu un message de " + getApp().getFriends().getPseudofromIP(IPfrom));
+	public static void displayNotification(String todisplay,String IPfrom) {
+		notification.setText(getApp().getFriends().getPseudofromIP(IPfrom)+todisplay);
 
+	}
+	
+	public static void displayDisconnection(String pseudo) {
+		notification.setText(pseudo +" just disconnect");
+
+	}
+	public static User getUsertalking() {
+		return usertalking;
 	}
 
 	public static JTextArea getTalkingto() {
