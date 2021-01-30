@@ -189,7 +189,7 @@ public class Home {
 		// );//690
 		scrollPane_1.setViewportView(panel_2);
 
-		JLabel lblcontacts = new JLabel("USERS CONNECTED\r\n");
+		JLabel lblcontacts = new JLabel("CONTACTS\r\n");
 		lblcontacts.setBackground(new Color(192, 192, 192));
 		lblcontacts.setFont(new Font("Bahnschrift", Font.BOLD, 18));
 		lblcontacts.setBounds(87, 11, 133, 23);
@@ -432,15 +432,15 @@ public class Home {
 	}
 
 	public void setTalkingto(JTextArea talkingto) {
-		this.talkingto = talkingto;
+		Home.talkingto = talkingto;
 	}
 
 	public class windowClosingListener implements WindowListener {
 
 		public void windowClosing(WindowEvent e) {
 			UDPListener.setOuvert(false);
+			Runner.setOuvert(false);
 			app.getcSystem().Deconnexion();
-			// Conversations.delete_historique();
 		}
 
 		public void windowOpened(WindowEvent arg0) {

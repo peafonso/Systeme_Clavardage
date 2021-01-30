@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import control.Application;
+import system.Runner;
 import system.UDPListener;
 
 import javax.swing.JButton;
@@ -49,6 +50,7 @@ public class Disconnect extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				UDPListener.setOuvert(false);
+				Runner.setOuvert(false);
 				app.getcSystem().Deconnexion();;
 				dispose();
 				Home.dispose();

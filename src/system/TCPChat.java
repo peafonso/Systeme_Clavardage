@@ -61,40 +61,27 @@ public class TCPChat extends Thread{
     public void run() {
         String data = null;
         Message msg = null;
-       // while(true) {
-            try {
-                data = (String) getIn().readObject();
-                msg = Message.toMessage(data);
-    			System.out.println("jai recu"+data);
-            }
-            catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-            	//break;
-            }
-    		
-            if(msg.getType()==typemsg.FINMSG) {
-    			try {
-    				socket.close();
-    			}
-    			catch(IOException e){
-   					//break;
-   				}
-   				//break;
-   			}
-            else {
-    			Home.displayNotification(" send you a message ",socket.getInetAddress().getHostAddress());
-    			Home.display(msg.getSender().getPseudo());
-    			getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
-    			try {
-					socket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-   			}
-    			
-      //  } 
-    }
+        try {
+        	data = (String) getIn().readObject();
+        	msg = Message.toMessage(data);
+        	System.out.println("jai recu"+data);
+        }
+        catch (ClassNotFoundException e) {
+        	e.printStackTrace();
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+        
+        getApp().getDb().addMessage(socket.getInetAddress().getHostAddress(), msg);
+    	Home.displayNotification(" send you a message ",socket.getInetAddress().getHostAddress());
+    	Home.display(msg.getSender().getPseudo());
+    	try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+   	}
+   
     
 
 	public Application getApp() {
