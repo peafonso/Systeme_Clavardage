@@ -110,13 +110,10 @@ public class Database {
 	    		msg.setData(rs.getString("message"));
 	    		msg.setTimeString(rs.getString("time"));
 	    		if (rs.getInt("sender")==0) {
-	    			System.out.println("sender it's me");
 	    			msg.setSender(getApp().getMe());
 		    		msg.setReceiver(getApp().getFriends().getUserfromIP(ip2));
 	    		}
 	    		else {
-	    			System.out.println("sender it's NOOT me");
-
 	    			msg.setSender(getApp().getFriends().getUserfromIP(ip2));
 		    		msg.setReceiver(getApp().getMe());
 	    		}

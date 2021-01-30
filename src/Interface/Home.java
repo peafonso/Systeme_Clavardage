@@ -374,7 +374,7 @@ public class Home {
 				messages += "me: "+ msg.getData() + "  " + msg.getTime() + "  \n";
 			}
 			else {
-				messages += "them:" + msg.getData() + "  " + msg.getTime()+ "  \n";
+				messages += "                                                                      "+u2.getPseudo()+":" + msg.getData() + "  " + msg.getTime()+ "  \n";
 
 			}
 
