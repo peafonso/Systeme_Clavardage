@@ -1,6 +1,6 @@
 package model;
 
-import system.UDPListener;
+import network.UDPListener;
 
 /**
  * Classe représentant un user de l'application, associée à ces 3 attributs :

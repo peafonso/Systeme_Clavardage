@@ -1,11 +1,11 @@
-package system;
+package model;
 
 import java.io.IOException;
 
-import model.User;
-
 import Interface.Home;
 import control.Application;
+import network.UDPListener;
+import network.UDPTalk;
 
 /**
  * Classe InteractiveChatSystem permettant à l'user de gérer connection, déconnexion et 

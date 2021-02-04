@@ -2,27 +2,11 @@ package Interface;
 
 import control.*;
 import model.*;
-import system.*;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.GridLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-
-
-import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.BoxLayout;
-
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -34,20 +18,20 @@ import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
-import java.awt.SystemColor;
 import java.awt.Font;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.Canvas;
-import java.awt.ScrollPane;
-import javax.swing.JPasswordField;
-import java.awt.Label;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.LayoutStyle.ComponentPlacement;
+
+/**
+ * Classe AppInterface correspondant à la première fenêtre de Connexion du système
+ * 
+ * app : instance de la classe Application associée
+ * frame : panel de contenu principal de la frame
+ * panel : panel de contenu principal de la frame
+ * textfield : zone de texte pour pouvoir rentrer le pseudo choisi par l'user
+ * 
+ */
 
 public class AppInterface {
 	
@@ -57,7 +41,21 @@ public class AppInterface {
 	private JTextField textField;
 
 	/**
-	 * Launch the application.
+	 * Constructeur de la page AppInterface
+	 * Création de l'application et du user associé 
+	 *
+	 */
+	public AppInterface() {
+		User u1= new User();
+		app= new Application(u1);
+		app.setcSystem(new InteractiveChatSystem(app));
+		app.setDb(new Database(app));
+		initialize();
+	}
+
+	
+	/**
+	 * Lancement de la première fenêtre de connexion de l'application
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -72,22 +70,12 @@ public class AppInterface {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public AppInterface() {
-		User u1= new User();
-		app= new Application(u1);
-		app.setcSystem(new InteractiveChatSystem(app));
-		app.setDb(new Database(app));
-		initialize();
-	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialisation des composants de la frame
 	 */
 	private void initialize() {
-		frame = new BackgroundJFrame("connexion");
+		frame = new BackgroundJFrame("Connexion");
 		frame.setForeground(new Color(26, 104, 104));
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBackground(new Color(26, 104, 104));
@@ -109,7 +97,7 @@ public class AppInterface {
 		
 		
     	ImageIcon fond_conn = new ImageIcon();
-    	fond_conn = createImageIcon("/images/LOGONetwork.png");
+    	fond_conn = BackgroundJFrame.createImageIcon("/images/LOGONetwork.png");
 		JLabel label = new JLabel(fond_conn);
 		label.setBounds(78, 7, 213, 213);
 		
@@ -161,7 +149,11 @@ public class AppInterface {
 	}
 	
 	
-	//--Action Listener sur le boutton et touche entrée pour tester le pseudo et se connecter
+	/**
+	 * Action Listener sur le bouton et la touche entrée pour tester
+	 *   l'unicité du pseudo et permettre la connexion de 'luser
+	 *
+	 */
 	public class Connect implements ActionListener {
 		
 		@Override
@@ -232,20 +224,12 @@ public class AppInterface {
 		}
 	}
 	
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imageURL = Interface.class.getResource(path);
 
-        if (imageURL == null) {
-            System.err.println("Resource not found: "
-                               + path);
-            return null;
-        } else {
-            return new ImageIcon(imageURL);
-        }
-    }
-
-    
+    /**
+     * Méthode permettant l'ouverture de la fenêtre principale Home
+     *  une fois le pseudo vérifié et la connexion réussie 
+     *  
+     */
     private void openHome () {
     	frame.setVisible(false);
 		new Home(app);

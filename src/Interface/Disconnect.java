@@ -1,37 +1,48 @@
 package Interface;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import control.Application;
-import system.Runner;
-import system.UDPListener;
+import network.TCPRunner;
+import network.UDPListener;
 
+import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTable;
-import javax.swing.JLabel;
+
+/**
+ * Classe Disconnect héritant de JFrame
+ * représentant la page de demande de déconnexion
+ * 
+ * app : instance de la classe Application associée
+ * contentPane : panel de contenu principal de la frame
+ * 
+ */
 
 public class Disconnect extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private Application app;
 	private JPanel contentPane;
 
 	/**
-	 * Create the frame.
+	 * Constructeur de la page Disconnect 
+	 * @param app Application associée
 	 */
 	public Disconnect(Application app) {
 		this.app=app;
 		initialize();
 	}
-		
+	
+
+	/**
+	 * Initialisation des composants de la frame
+	 */
 	public void initialize() {
 		setTitle("Disconnect");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,7 +61,7 @@ public class Disconnect extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				UDPListener.setOuvert(false);
-				Runner.setOuvert(false);
+				TCPRunner.setOuvert(false);
 				app.getcSystem().Deconnexion();;
 				dispose();
 				Home.dispose();

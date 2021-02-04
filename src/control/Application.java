@@ -1,9 +1,9 @@
 package control;
 
 import model.Contacts;
+import model.Database;
+import model.InteractiveChatSystem;
 import model.User;
-import system.Database;
-import system.InteractiveChatSystem;
 
 /**
  *  Classe de l'application, rassemblant l'instance des arguments nécessaires à l'utilisation 

@@ -1,47 +1,52 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Interface.AppInterface.Connect;
 import control.Application;
-import system.InteractiveChatSystem;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 
-//Fenetre de changement de pseudo
+/**
+ * Classe Settings héritant de JFrame
+ * représentant la page de changement de pseudo de l'user
+ * 
+ * app : instance de la classe Application associée
+ * contentPane : panel de contenu principal de la frame
+ * textField : zone de texte pour pouvoir rentrer le nouveau pseudo
+ * 
+ */
+
 public class Settings extends JFrame {
 
+
+	private static final long serialVersionUID = 1L;
 	private Application app;
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextPane textPane;
-
+	
 	/**
-	 * Create the frame.
+	 * Constructeur de la page Settings 
+	 * @param app Application associée
 	 */
 	public Settings(Application app) {
 		this.app=app;
 		initialize();
 	}
 	
+	/**
+	 * Initialisation des composants de la frame
+	 */
 	public void initialize() {
 		setTitle("Settings");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -89,7 +94,11 @@ public class Settings extends JFrame {
 		setVisible(true);
 	}
 	
-	//--Action Listener sur le boutton et touche entrée pour tester le pseudo et le changer
+	/**
+	 * Action Listener sur le bouton et la touche entrée pour tester
+	 *   l'unicité du pseudo renseignée sur le textField 
+	 *
+	 */
 	public class Connect implements ActionListener {
 		
 		@Override

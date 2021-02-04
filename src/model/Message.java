@@ -1,12 +1,10 @@
-package system;
+package model;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import model.User;
 
 /**
  * Classe message pour toutes les communications tcp en clavardage

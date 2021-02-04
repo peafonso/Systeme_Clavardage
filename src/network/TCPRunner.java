@@ -1,4 +1,4 @@
-package system;
+package network;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,7 +14,7 @@ import control.Application;
  * 
  */
 
-public class Runner extends Thread {
+public class TCPRunner extends Thread {
 	private Application app;
 	private Socket link;
     byte[] array = new byte[100000000];
@@ -25,7 +25,7 @@ public class Runner extends Thread {
 	 * (permettant l'ouverture du socket)
 	 * @param app Application associée
 	 */
-	public Runner(Application app) {
+	public TCPRunner(Application app) {
         this.app=app;
 		setOuvert(true);
 
@@ -59,7 +59,7 @@ public class Runner extends Thread {
 	}
 
 	public static void setOuvert(boolean ouvert) {
-			Runner.ouvert = ouvert;
+		TCPRunner.ouvert = ouvert;
 	}
 
 }

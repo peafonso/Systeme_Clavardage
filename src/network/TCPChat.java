@@ -1,4 +1,4 @@
-package system;
+package network;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 
 import Interface.Home;
 import control.Application;
+import model.Message;
 import model.User;
 
 public class TCPChat extends Thread{

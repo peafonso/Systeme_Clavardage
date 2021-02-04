@@ -1,22 +1,13 @@
 package Interface;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,50 +15,49 @@ import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.Cursor;
 
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-
-import java.awt.Insets;
-import java.awt.RenderingHints;
 import java.awt.SystemColor;
-
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import control.Application;
-import system.*;
-
 import java.awt.Font;
-import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.CardLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.ListModel;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
+
+import model.Message;
 import model.User;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
+import network.TCPChat;
+import network.TCPRunner;
+import network.UDPListener;
+
+/**
+ * Classe Home correspondant à la fenêtre principale (main) de l'application 
+ * 
+ * app : instance de la classe Application associée
+ * frame : panel de contenu principal de la frame
+ * panel : panel de contenu principal de la frame
+ * textfield : zone de texte pour pouvoir rentrer le pseudo choisi par l'user
+ * btnSend :
+ * textArea :
+ * talkingto :
+ * usertalking :
+ * txtrB :
+ * usersconnected :
+ * 
+ * udpListen :
+ * tcpListen :
+ * 
+ */
 
 public class Home {
 
@@ -77,18 +67,17 @@ public class Home {
 	private static JPanel panel;
 	private JButton btnSend;
 	private static JEditorPane textArea;
-	private JScrollPane scrolltextArea;
 	private static JTextArea talkingto;
 	private static User usertalking;
 	private static JTextArea txtrB;
-	private static JTextPane notification;
 	private static JEditorPane notifPane;
 	private static JList<String> usersconnected;
 	static UDPListener udpListen = new UDPListener();
-	private Runner tcpListen;
+	private TCPRunner tcpListen;
 
 	/**
-	 * Create the application.
+	 * Constructeur de la page Home 
+	 * @param app Application associée
 	 */
 	public Home(Application app) {
 		setApp(app);
@@ -96,7 +85,7 @@ public class Home {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialisation des composants de la frame
 	 */
 	private void initialize() {
 		frame = new BackgroundJFrame("Home");
@@ -109,8 +98,8 @@ public class Home {
 		frame.addWindowListener(new windowClosingListener());
 
 		// frame.setSize(1600,900);
-		ImageIcon homePicture = new ImageIcon();
-		homePicture = createImageIcon("/images/ACCUEIL_FOND2.jpg");
+		//ImageIcon homePicture = new ImageIcon();
+		//homePicture = createImageIcon("/images/ACCUEIL_FOND2.jpg");
 
 		frame.setLocation(dim.width / 3 - frame.getWidth() / 3, dim.height / 3 - frame.getHeight() / 3);
 		frame.getContentPane().setBounds(0, 0, dim.width, dim.height);
@@ -290,15 +279,19 @@ public class Home {
 		
 		//On lance un runner udp et tcp pour les connexion et déconnexion et messages
 		udpListen.start();
-		tcpListen = new Runner(getApp());
+		tcpListen = new TCPRunner(getApp());
 		tcpListen.start();
 		miseAJourContact();
 
 	}
 
-	/** Returns an ImageIcon, or null if the path was invalid. */
+	/**
+     * Récupération d'une image par son path 
+     * @param path chemin d'accès à l'image
+     * @return ImageIcon correspondant au chemin , ou null si path invalide
+     */	
 	protected static ImageIcon createImageIcon(String path) {
-		java.net.URL imageURL = Interface.class.getResource(path);
+		java.net.URL imageURL = Home.class.getResource(path);
 
 		if (imageURL == null) {
 			System.err.println("Resource not found: " + path);
@@ -308,6 +301,13 @@ public class Home {
 		}
 	}
 
+	/**
+	 * Redimensionner une image
+	 * @param icon image à modifier
+	 * @param w largeur voulue 
+	 * @param h hauteur voulue
+	 * @return image redimensionnée 
+	 */
 	public static ImageIcon scaleImage(ImageIcon icon, int w, int h) {
 		int nw = icon.getIconWidth();
 		int nh = icon.getIconHeight();
@@ -325,7 +325,10 @@ public class Home {
 		return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
 	}
 
-	// ouverture d'une communication
+	/**
+	 * Ouverture d'une conversation (lancé lorsqu'on appuie sur le pseudo d'un des users connectés)
+	 * @param u2 user en clavardage
+	 */
 	public void Chats(User u2) {
 		System.out.println("talking to" + u2.getPseudo());
 
@@ -351,12 +354,19 @@ public class Home {
 		});
 
 	}
-
+	
+	/**
+	 * Remets à vide la zone de lecture des messages
+	 */
 	public static void clearMessagesArea() {
 		textArea.setText("");
 
 	}
-
+	
+	/**
+	 * Charge une conversation (historique) sur la zone de lecture 
+	 * @param u2 user en clavardage
+	 */
 	public static void loadconvo(User u2) {
 		ArrayList<Message> history = getApp().getDb().recupHistory(u2.getIP());
 		String messages = "";
@@ -378,32 +388,26 @@ public class Home {
 
 	}
 
+	/**
+	 * Mise à jour de la liste de contacts associée après les différentes connexions,
+	 *  déconnexions ou changement de pseudo
+	 */
 	public static void miseAJourContact() {
 		usersconnected.setListData(getApp().getFriends().getListPseudo());
 		// garder le pointeur du getSelectedValue même si qqn part
 	}
 
-	// pour afficher le pseudo de l'utilisateur
+	/**
+	 * Affichage de notre pseudo
+	 */
 	public static void pseudoModif() {
 		txtrB.setText(app.getMe().getPseudo());
 	}
 
-	// fermer la page home
-	public static void dispose() {
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		UDPListener.setOuvert(false);
-		frame.dispose();
-	}
-
-	public static Application getApp() {
-		return app;
-	}
-
-	public static void setApp(Application app) {
-		Home.app = app;
-	}
-
-	//pour afficher les messages entrants si on est sur la bonne conv
+	/**
+	 * Affichage des messages entrants si la zone de lecture correspond à cette conversation
+	 * @param friend pseudo de l'user qui nous envoie un message
+	 */
 	public static void display(String friend) {
 		System.out.println("receiving smthing from ");
 		if (usertalking.getPseudo().equals(friend)) {
@@ -412,8 +416,12 @@ public class Home {
 		}
 	}
 
-	//Pour l'arrivée des messages entrants 
-	public static void displayNotification(String todisplay,String IPfrom) {
+	/**
+	 * Affichage des notifications d'arrivées des messages entrants 
+	 * @param todisplay phrase à notifier à l'user
+	 * @param IPfrom adresse ip de l'expéditeur du message
+	 */
+	public static void displayNotification(String todisplay, String IPfrom) {
 		String notifs="";
 		notifs+=notifPane.getText();
 		notifs+=getApp().getFriends().getPseudofromIP(IPfrom)+todisplay+"\n";
@@ -425,7 +433,11 @@ public class Home {
 
 	}
 	
-	//Pour les connexions et déconnexions des contacts
+	/**
+	 * Affichage des notifications des connexions et déconnexions des users
+	 * @param pseudo pseudo de l'user se connectant/se déconnectant
+	 * @param todisplay phrase à notifier à l'user
+	 */
 	public static void displayNotifUsers(String pseudo, String todisplay ) {
 		String notifs="";
 		notifs+=notifPane.getText();
@@ -436,24 +448,16 @@ public class Home {
 		notifPane.setCaretPosition(notifPane.getDocument().getLength());
 		
 	}
-	
-	public static User getUsertalking() {
-		return usertalking;
-	}
 
-	public static JTextArea getTalkingto() {
-		return talkingto;
-	}
-
-	public void setTalkingto(JTextArea talkingto) {
-		Home.talkingto = talkingto;
-	}
-
+	/**
+	 * Window Listener permettant la déconnexion de l'user et l'arrêt des sockets d'écoute
+	 *
+	 */
 	public class windowClosingListener implements WindowListener {
 
 		public void windowClosing(WindowEvent e) {
 			UDPListener.setOuvert(false);
-			Runner.setOuvert(false);
+			TCPRunner.setOuvert(false);
 			app.getcSystem().Deconnexion();
 		}
 
@@ -475,5 +479,37 @@ public class Home {
 		public void windowDeactivated(WindowEvent arg0) {
 		}
 
+	}
+	
+	/**
+	 * Fermeture de la page Home
+	 */
+	public static void dispose() {
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		UDPListener.setOuvert(false);
+		frame.dispose();
+	}
+
+	
+	//-------------------- GETTEURS & SETTEURS -----------------------------//
+	
+	public static User getUsertalking() {
+		return usertalking;
+	}
+
+	public static JTextArea getTalkingto() {
+		return talkingto;
+	}
+
+	public void setTalkingto(JTextArea talkingto) {
+		Home.talkingto = talkingto;
+	}
+	
+	public static Application getApp() {
+		return app;
+	}
+
+	public static void setApp(Application app) {
+		Home.app = app;
 	}
 }

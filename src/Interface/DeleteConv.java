@@ -1,9 +1,6 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,49 +9,50 @@ import javax.swing.event.ListSelectionListener;
 
 import control.Application;
 import model.User;
-import system.InteractiveChatSystem;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.JButton;
-import java.awt.SystemColor;
 import javax.swing.JScrollPane;
-import javax.swing.JEditorPane;
 import javax.swing.JList;
-import javax.swing.SwingConstants;
 
-//Fenetre de changement de pseudo
+/**
+ * Classe DeleteConv héritant de JFrame représentant la page permettant
+ *  la suppression d'historique de conversation (uniquement possible
+ *  avec les users connectés)
+ *  
+ * app : instance de la classe Application associée
+ * contentPane : panel de contenu principal de la frame
+ * scrollPane : scroll du contentPane (pour scroller dans les users connectés)
+ * usersconnected : liste des users connectés correspondant à l'user du système
+ * btnNewButton : bouton de validation de suppression d'hisorique
+ * usertalk : user correspondant à l'historique de conversation à supprimer
+ * 
+ */
+
 public class DeleteConv extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private Application app;
 	private JPanel contentPane;
-	private JTextPane textPane;
 	private JScrollPane scrollPane ;
-	private JTextField txtYourHistoryOf;
 	private JList<String> usersconnected;
 	private JButton btnNewButton;
 	private String userTalk;
-	private JEditorPane editorPane;
-	private JLabel lblNewLabel_1;
 
 	/**
-	 * Create the frame.
+	 * Constructeur de la page DeleteConv 
+	 * @param app Application associée
 	 */
 	public DeleteConv(Application app) {
 		this.app=app;
 		initialize();
 	}
 	
+	/**
+	 * Initialisation des composants de la frame
+	 */
 	public void initialize() {
 		setTitle("Delete Conversations");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,7 +72,7 @@ public class DeleteConv extends JFrame {
 		usersconnected= new JList<String>(app.getFriends().getListPseudo());
 		//si historique vide
 		if ((usersconnected).getModel().getSize() == 0) {
-			lblNewLabel_1 = new JLabel("Your history of conversations has been cleared.");
+			JLabel lblNewLabel_1 = new JLabel("Your history of conversations has been cleared.");
 			lblNewLabel_1.setForeground(new Color(95, 158, 160));
 			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 			lblNewLabel_1.setBounds(42, 202, 244, 23);

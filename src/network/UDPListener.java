@@ -1,4 +1,4 @@
-package system;
+package network;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -8,6 +8,8 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Enumeration;
+
+import model.InteractiveChatSystem;
 
 /**
  * Classe UDPListener pour être à l'écoute des envois udp 
