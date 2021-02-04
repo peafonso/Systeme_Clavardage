@@ -43,15 +43,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import control.Application;
-import historique.Conversations;
-import system.Conversation;
-import system.InteractiveChatSystem;
-import system.Message;
-import system.Runner;
-import system.SocketClient;
-import system.SocketServer;
-import system.TCPChat;
-import system.UDPListener;
+import system.*;
 
 import java.awt.Font;
 import java.awt.Graphics2D;

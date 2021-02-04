@@ -9,24 +9,38 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Enumeration;
 
+/**
+ * Classe UDPListener pour être à l'écoute des envois udp 
+ * ouvert : booléen permettant de gérer la fermeture du socket
+ *
+ */
+
 public class UDPListener extends Thread{
 	
 	private DatagramSocket serverSocket;
 	private DatagramPacket receivePacket;
 	private static boolean ouvert;
 
+	/**
+	 * Constructeur UDPListener
+	 * (permettant l'ouverture du socket)
+	 */
 	public UDPListener() {
 		setOuvert(true);
 	}
 	
+	/**
+	 * Réception de broadcast UDP correspondant à la connexion
+	 *  
+	 * @param serverPort port utilisé pour l'écoute
+	 * @return réponse fictive "ok_pseudo_IP_4445" si on est le premier à se connecter sur 
+	 *  système ou réponse réelles des autres users 
+	 */
 	public String receiveUDP(int serverPort) {  
 		try {
-			
 	        serverSocket = new DatagramSocket(serverPort);
 	        serverSocket.setSoTimeout(2000);
 	        String sentence="";
-	        //1 char= 1 octet
-	       	//Max message 100*10^6 octets
 	        byte[] array = new byte[100000000];
 
 	        System.out.printf("Listening on udp:%s:%d%n",
@@ -56,13 +70,14 @@ public class UDPListener extends Thread{
 	
 
 	
-	
+	/**
+	 * Ecoute UDP 
+	 * @param port Port utilisé pour l'écoute
+	 */
 	public void listenUDP(int port) {
 		try {
 	        serverSocket = new DatagramSocket(port);
 			while (true) {
-		        //1 char= 1 octet
-		       	//Max message 100*10^6 octets
 		        byte[] array = new byte[100000000];
 		        
 		        System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), port);     
@@ -80,16 +95,17 @@ public class UDPListener extends Thread{
         serverSocket.close();
 	}
 	
-	//pour etre a l'ecoute des arrivees et departs sur le systeme continuellement port 4445
+	/**
+	 * Méthode run permettant d'être a l'ecoute des arrivees et departs sur le
+	 *  systeme continuellement sur le port 4445
+	 */
 	public void run() {
 		try {
 	        serverSocket = new DatagramSocket(4445);
 			while (ouvert) {
-		        //1 char= 1 octet
-		       	//Max message 100*10^6 octets
 		        byte[] array = new byte[100000000];
 		        
-		        System.out.printf("Listening on udp:%s:%d%n", UDPListener.getCurrentIp().getHostAddress(), 4445);     
+		        System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), 4445);     
 		        receivePacket = new DatagramPacket(array, array.length);
 		        serverSocket.receive(receivePacket);
 		        String sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
@@ -106,7 +122,10 @@ public class UDPListener extends Thread{
 	}
 	
 	
-	//Recupere l'adresse IP de l'hote (si plusieurs disponibles, prend la première)
+	/**
+	 * Recuperation de l'adresse IP de l'hote 
+	 * @return l'adresse ip correspondante 
+	 */
 	 public static InetAddress getCurrentIp() { 
 		 try { 
 			 Enumeration networkInterfaces = NetworkInterface .getNetworkInterfaces();
@@ -126,7 +145,10 @@ public class UDPListener extends Thread{
 		 } 
 	return null;
 	} 
-	
+	 
+
+	 //-------------------- GETTEURS & SETTEURS -----------------------------//
+
 	public boolean isOuvert() {
 		return ouvert;
 	}

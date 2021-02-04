@@ -17,7 +17,12 @@ public class TCPChat extends Thread{
     private ObjectOutputStream out;
     private ObjectInputStream in;
     
-    //constructeur a utiliser lorsque quelqu'un veut clavarder avec nous (réception)
+    /**
+     * Constructeur a utiliser lorsque quelqu'un veut clavarder avec nous 
+     * 
+     * @param app Application associée
+     * @param sock socket instancié par l'user qui nous contacte
+     */
     public TCPChat (Application app, Socket sock) {
     	setApp(app);
     	setSocket(sock);
@@ -30,7 +35,12 @@ public class TCPChat extends Thread{
     	start();
     }
     
-    //constructeur a utiliser lorsqu'on veut clavarder avec quelqu'un (envoi)
+    /**
+     * Constructeur a utiliser lorsqu'on veut clavarder avec quelqu'un (envoi)
+     * 
+     * @param app Application associée
+     * @param u2 user avec qui on veut clavarder
+     */
     public TCPChat (Application app, User u2) {
     	setApp(app);
     	setThem(u2);
@@ -45,6 +55,10 @@ public class TCPChat extends Thread{
 		}
     }
 
+    /**
+     * Envoi d'un message
+     * @param data texte brut du message à envoyer
+     */
     public void SendMessage(String data) {
         Message msg = new Message(getApp().getMe(),getThem(), data);
         try {
@@ -57,6 +71,9 @@ public class TCPChat extends Thread{
 
     }
     
+    /**
+     * Méthode run permettant de réceptionner les messages 
+     */
     public void run() {
         String data = null;
         Message msg = null;
@@ -82,6 +99,7 @@ public class TCPChat extends Thread{
    	}
    
     
+	//-------------------- GETTEURS & SETTEURS -----------------------------//
 
 	public Application getApp() {
 		return app;

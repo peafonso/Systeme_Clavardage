@@ -8,18 +8,24 @@ import java.util.Date;
 
 import model.User;
 
-//classe message pour toutes les communications tcp en clavardage
+/**
+ * Classe message pour toutes les communications tcp en clavardage
+ * sender : user qui envoie le message
+ * receiver : user qui reçoit le message
+ * data : le message envoyé
+ * time : horodatage (en string)
+ * 
+ */
 
 public class Message implements Serializable {
-	enum typemsg {DECONNEXION, CONNEXION, ENVOIMSG, FINMSG, CHANGEMENTPSEUDO};
 	private User sender;
 	private User receiver;
 	private String data;
-	private String time; //variable pour l'horodatage
-	private typemsg type;
+	private String time; 
 	
+	//-------------------- ENSEMBLE DE CONSTRUCTEURS -----------------------------//
+
 	public Message() {
-		
 	}
 	
 	public Message(User from, User to, String msg) {
@@ -28,24 +34,13 @@ public class Message implements Serializable {
 		this.setData(msg);
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		this.setTime(dateFormat.format(new Date()));
-		this.setType(typemsg.ENVOIMSG);
 	}
 	
-	public Message(User from, User to, String msg, String date, typemsg type) {
+	public Message(User from, User to, String msg, String date) {
 		this.setSender(from);
 		this.setReceiver(to);
 		this.setData(msg);
 		this.setTimeString(date);
-		this.setType(type);
-	}
-	
-	public Message(User from, User to, String msg, typemsg type) {
-		this.setSender(from);
-		this.setReceiver(to);
-		this.setData(msg);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		this.setTime(dateFormat.format(new Date()));
-		this.setType(type);
 	}
 	
 	public Message(String msg) {
@@ -55,39 +50,40 @@ public class Message implements Serializable {
 
 	}
 
+	/**
+	 * Retranscrition des informations du message
+	 * @return infos du message sous une chaine de caractères
+	 */
 	@Override
 	public String toString() {
 		String smsg= "Sender: "+this.getSender()+"\n"+"Receiver:  "+this.getReceiver()+"\n"
-	+"Time:  "+ this.getTime()+"\n"+"Type:  "+this.getType()+"\n"+
-	"Data:  "+this.getData()+"\n";
+	+"Time:  "+ this.getTime()+"\n"+ "Data:  "+this.getData()+"\n";
 		return smsg;	
 	}
 	
+	/**
+	 * Retranscription d'un message d'après ces informations
+	 * @param smsg infos du message sous une chaine de caractères
+	 * @return
+	 */
 	public static Message toMessage(String smsg) {
 		String[] paramsg=smsg.split("\n");
 		User sender= User.toUser(paramsg[0].split(":")[1]);
 		User receiver= User.toUser(paramsg[1].split(":")[1]);
 		String[] fulldate=paramsg[2].split(":");
 		String date= (fulldate[1]+":"+fulldate[2]);
- 		typemsg type=toTypemsg(paramsg[3].split(":")[1]);
-		String [] tabdata=paramsg[4].split(":");
+ 		//typemsg type=toTypemsg(paramsg[3].split(":")[1]);
+		String [] tabdata=paramsg[3].split(":");
 		String data="";
 		for (int i=1;i<tabdata.length;i++) {
 			data+=tabdata[i];
 		}
-		return new Message(sender,receiver,data,date,type);
+		return new Message(sender,receiver,data,date);
 	
 	}
 	
-	public static typemsg toTypemsg(String s) {
-		if (s.equals("FINMSG")){
-			return typemsg.FINMSG;
-		}
-		
-		else {
-			return typemsg.ENVOIMSG;
-		}
-	}
+	
+	//-------------------- GETTEURS & SETTEURS -----------------------------//
 
 	public String getData() {
 		return data;
@@ -127,15 +123,8 @@ public class Message implements Serializable {
 	
 	public void setTimeString (String date) {
 		this.time = date;
-
 	}
 
-	public typemsg getType() {
-		return type;
-	}
 
-	public void setType(typemsg type) {
-		this.type = type;
-	}
 
 }

@@ -1,10 +1,18 @@
 package system;
 
-import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import control.Application;
+
+/**
+ * Classe Runner TCP, à l'écoute d'un lancement de conversation avec d'autre users 
+ * 
+ * app : application associée
+ * link : socket d'écoute des conversations tcp 
+ * ouvert : booléen permettant de gérer la fermeture du socket
+ * 
+ */
 
 public class Runner extends Thread {
 	private Application app;
@@ -12,28 +20,40 @@ public class Runner extends Thread {
     byte[] array = new byte[100000000];
 	private static boolean ouvert;
     
+	/**
+	 * Constructeur Runner
+	 * (permettant l'ouverture du socket)
+	 * @param app Application associée
+	 */
 	public Runner(Application app) {
         this.app=app;
 		setOuvert(true);
 
     }
 
+	/**
+	 * Méthode run permettant d'écouter les demandes de clavardage
+	 */
     public void run() {
         ServerSocket server;
         try {
             server = new ServerSocket(2000); 
             System.out.println("listening on port 2000 ready to have conversation");
             while(ouvert) { 
-                Socket link = server.accept(); 
+                link = server.accept(); 
                 TCPChat chat = new TCPChat(app,link);
                 
             }
+            //link.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
     }
     
+    
+	//-------------------- GETTEURS & SETTEURS -----------------------------//
+
     public boolean isOuvert() {
 		return ouvert;
 	}

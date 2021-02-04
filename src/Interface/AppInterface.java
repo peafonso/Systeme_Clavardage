@@ -1,5 +1,8 @@
 package Interface;
 
+import control.*;
+import model.*;
+import system.*;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,12 +11,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
-import control.Application;
-import model.User;
-import system.Database;
-import system.InteractiveChatSystem;
-import system.SocketClient;
-import system.SocketServer;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
@@ -94,11 +91,12 @@ public class AppInterface {
 		frame.setForeground(new Color(26, 104, 104));
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBackground(new Color(26, 104, 104));
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Tt.class.getResource("/images/ACCUEIL_FOND.png")));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(AppInterface.class.getResource("/images/ACCUEIL_FOND.png")));
 		frame.getContentPane().setForeground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 885, 579);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+
 		
     	//centrer la fenetre au milieu de l'ecran
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

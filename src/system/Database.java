@@ -1,6 +1,5 @@
 package system;
 
-import system.Message;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -13,50 +12,62 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Classe représentant la base de données permettant l'historique des conversations 
+ * app : instance de la classe Application 
+ *
+ * 	Une table est crée pour chaque conversation du nom de l'adresse ip de la personne avec qui
+ * on discute. On mets dedans l'ensemble des messages 
+ * 
+ */
+
 public class Database {
 	
 	private static Application app;
 	// SQLite connection string
     String url = "jdbc:sqlite:C://sqlite/db/test.db";
     
-	//creation d'une table pour chaque conversation du nom de la personne à qui on parle
-	//on met dedans tous les messages pour l'historique
-    
+	/**
+	 * Constructeur de Database : association de l'application et création de la base de données
+	 * @param app Application associée
+	 */
     public Database(Application app) {
     	this.setApp(app);
-    	createNewDatabase(); //on crée la base de données
+    	createNewDatabase(); 
     	
     }
-    /**
-	* Connect to a sample database
+    
+   /**
+	* Création de la base de données 
+	* (si elle est déjà existante, les messages de création s'affichent mais rien ne se passe
+	* au niveau de l'ancien fichier)
 	*
-	* @param fileName the database file name
 	*/
-	 public void createNewDatabase() {
-	    	try {
-				Class.forName("org.sqlite.JDBC");
-			} catch (ClassNotFoundException e1) {
-				e1.printStackTrace();
-			}
-	    	
-	        try (Connection conn = DriverManager.getConnection(url)) {
-	            if (conn != null) {
-	                DatabaseMetaData meta = conn.getMetaData();
-	                System.out.println("The driver name is " + meta.getDriverName());
-	                System.out.println("A new database has been created.");
-	            }
+	public void createNewDatabase() {
+	   	try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+	   	
+	   	try (Connection conn = DriverManager.getConnection(url)) {
+	   		if (conn != null) {
+	   			DatabaseMetaData meta = conn.getMetaData();
+	   			System.out.println("The driver name is " + meta.getDriverName());
+	   			System.out.println("A new database has been created.");
+	   		}
 
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	        }
-	 }
+	   	} catch (SQLException e) {	
+	   		System.out.println(e.getMessage());
+	   	}
+	}
 	
-	 /**
-	  * Connect to the test.db database
-	  * @return the Connection object
-	  *  */
-	 private Connection connect() {
-        Connection conn = null;
+	/**
+	 * Connection à la base de données	
+	 * @return l'objet de connection
+	 */
+	private Connection connect() {
+		Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
@@ -67,11 +78,16 @@ public class Database {
 	 
 	 
 	/** 
-     * Create a new table conversation ip2 (nom Chatwith_IP2, id num du message 
-     * 1 était le plus ancien, time horodatage du message, message -> texte envoyé) 
+	 * Création d'une table de conversation 
+	 * name : Chatwith_IP2 (avec ip2 adresse ip de l'user avec qui on discute)
+	 * id : numéros des messages (1 étant le plus ancien)
+	 * time : horodatage des message
+	 * message : textes envoyés par les participants de la conversation
+	 * sender : 0 -> on a envoyé le message 1 -> on a reçu le message
      * 
-     * Si on lance createTableConvo avec un correspondant avec lequel on a déjà conversé on 
-     * ne recrée pas une nouvelle table (IF NOT EXISTS)
+     * (Si on lance createTableConvo avec un correspondant avec lequel on a déjà conversé on 
+     * ne recrée pas une nouvelle table (IF NOT EXISTS))
+     * @param ip2 adresse ip de la personne avec qui on communique 
      *
      */
 	public void createTableConvo(String ip2) {
@@ -92,7 +108,9 @@ public class Database {
 	}
 	
 	/**
-     * Recupérer historique par rapport à l'ip de notre correspondant
+     * Recupération de l'historique d'une conversation
+     * @param ip2 adresse ip de la personne avec qui on communique
+     * @return liste des messages envoyés correspondant à l'historique de la conversation
      *
      */
 	public ArrayList<Message> recupHistory(String ip2) {
@@ -128,7 +146,9 @@ public class Database {
 
 
 	/**
-     * Ajouter des messages à l'historique 
+     * Ajout de message dans l'historique (representé par la table Chatwith_ip2)
+     * @param ip2 adresse ip de la personne avec qui on communique
+     * @param msg message à ajouter dans la table
      *
      */
 	public void addMessage(String ip2, Message msg) {
@@ -157,7 +177,9 @@ public class Database {
 	}
 	
 	/**
-     * Récupérer le nom de la table correspondant à la conversation choisie
+     * Récupérer nom de table de conversation
+     * @param ip2 adresse ip de la personne avec qui on communique
+     * @return nom de la table correspondante
      *
      */
 	public String getNomTable(String ip2) {
@@ -166,7 +188,8 @@ public class Database {
 	
 	
 	/**
-     * On suprime la conversation 
+     * Suppression de table de conversation
+     * @param ip2 adresse ip de la personne avec qui on communique
      *
      */
 	public void deleteConvo(String ip2) {
@@ -183,13 +206,15 @@ public class Database {
 	}
 
 	    
-	   
-		public static Application getApp() {
-			return app;
-		}
-		public void setApp(Application app) {
-			Database.app = app;
-		}
+	//-------------------- GETTEURS & SETTEURS -----------------------------//
+
+	public static Application getApp() {
+		return app;
+	}
+	
+	public void setApp(Application app) {
+		Database.app = app;
+	}
 		
 }
 

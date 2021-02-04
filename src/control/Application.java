@@ -5,24 +5,37 @@ import model.User;
 import system.Database;
 import system.InteractiveChatSystem;
 
-//a remplir (main app)
+/**
+ *  Classe de l'application, rassemblant l'instance des arguments nécessaires à l'utilisation 
+ *  
+ *  me : instance de la classe User représentant le user connecté sur le sytème
+ *  friend : instance de la classe Contacts représentant la liste des contacts associé à l'user connecté
+ *  cSystem : instance de la classe InteractiveChatSystem permettant à l'user de gérer connection,
+ *           déconnexion et changement de pseudo
+ *  db : instance de la classe Database représentant la base de données de l'user (permettant la gestion
+ *       de l'historique des conversations)
+ *  
+ */
+
 public class Application {
+	
 	private User me;
 	private Contacts friends;
 	private InteractiveChatSystem cSystem;
 	private Database db;
 
+	/**
+	 * Constructeur de l'application 
+	 * @param u1 utilisateur de l'application
+	 * */
 	public Application(User u1) {
-		//on crée notre liste de contacts
 		this.setMe(u1);
 		setFriends(new Contacts());
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-	}
-
+	//-------------------- GETTEURS & SETTEURS -----------------------------//
+	
 	public User getMe() {
 		return me;
 	}

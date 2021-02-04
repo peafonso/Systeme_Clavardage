@@ -1,6 +1,5 @@
 package system;
 import java.io.IOException;
-
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -11,12 +10,26 @@ import java.util.List;
 import java.util.Objects;
 import java.net.NetworkInterface;
 
-public class UDPTalk {
+/**
+ * Classe UDPTalk permettant l'envoi en udp
+ *
+ */
 
+public class UDPTalk {
+	
+	/**
+	 * Constructeur UDPTalk
+	 */
 	public UDPTalk() {
-		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Envoi d'un message en broadcast
+	 * 
+	 * @param broadcastMessage message à envoyer 
+	 * @param port port à utiliser
+	 * @throws IOException
+	 */
     public static void broadcast(String broadcastMessage, int port) throws IOException {
 		for (InetAddress  addrbroadcast : listAllBroadcastAddresses()) {
     		DatagramSocket socket = new DatagramSocket();
@@ -30,8 +43,13 @@ public class UDPTalk {
     }
     
     
-    //liste des adresses de broadcast
-    static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
+    /**
+     * Récupération des adresses de broadcast
+     * 
+     * @return la liste des adresses
+     * @throws SocketException
+     */
+    public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
         List<InetAddress> broadcastList = new ArrayList<>();
         Enumeration<NetworkInterface> interfaces 
           = NetworkInterface.getNetworkInterfaces();
@@ -50,6 +68,14 @@ public class UDPTalk {
         return broadcastList;
     }
     
+    /**
+     * Envoi d'un message en udp
+     * 
+     * @param msg message à envoyer
+     * @param port port à utiliser
+     * @param laddr adresse à laquelle envoyer 
+     * @throws SocketException
+     */
     public static void sendUDP(String msg, int port, String laddr) throws SocketException {
 
     	DatagramSocket socket = new DatagramSocket();

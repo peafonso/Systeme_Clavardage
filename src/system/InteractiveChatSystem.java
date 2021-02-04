@@ -3,23 +3,39 @@ package system;
 import java.io.IOException;
 
 import model.User;
-import system.Message.typemsg;
 
 import Interface.Home;
 import control.Application;
 
+/**
+ * Classe InteractiveChatSystem permettant à l'user de gérer connection, déconnexion et 
+ *   changement de pseudo
+ * 
+ * app: instance de la classe Application 
+ *
+ */
 public class InteractiveChatSystem {
-
 	private static Application app;
-	//private static Home home;
 
+	/*type des messages à envoyer ou recevoir en udp broadcast correspondant aux différentes
+	  situations à gérer par l'user*/
+	enum typemsg {DECONNEXION, CONNEXION, CHANGEMENTPSEUDO};
+	
+	/**
+	 * Constructeur 
+	 * @param app Application associée
+	 */
 	public InteractiveChatSystem(Application app) {
 		this.setApp(app);
 	}
 
 	
-	//appel fonction Envoi message Broadcast à la liste des contacts pour vérification du pseudo
-	//if pseudoOk return true else return false
+
+	/**
+	 * Connexion de l'user
+	 * @param newPseudo pseudo de l'user tentant de se connecter
+	 * @return un booléen correspondant à la validation de l'unicité de son pseudo
+	 */
 	public boolean Connexion(String newPseudo) {
 		boolean disponible=true;
 		//envoi broadcast
@@ -59,7 +75,12 @@ public class InteractiveChatSystem {
 		return disponible;
 	}		
 
-	
+	/**
+	 * Changement de pseudo
+	 * @param newPseudo nouveau pseudo à tester de l'user 
+	 * @param port port sur lequel on lance le broadcast du changement de pseudo
+	 * @return un booléen correspondant à la validation de l'unicité de son pseudo
+	 */
 	public boolean ChangePseudo(String newPseudo, int port) {
 		boolean disponible=true;
 		//envoi broadcast
@@ -96,7 +117,9 @@ public class InteractiveChatSystem {
 	
 	
 	
-	
+	/**
+	 * Déconnexion de l'user sur le port 4445
+	 */
 	public void Deconnexion() {
 		int port=4445;
 		try {
@@ -107,10 +130,12 @@ public class InteractiveChatSystem {
 		}
 	}
 	
-	
+	/**
+	 * Réception d'un message en broadcast udp
+	 * @param msgrecu message reçu
+	 */
 	public static void ReceptionMsg (String msgrecu) {
 		String[] splitmessage=msgrecu.split("_");
-		
 		typemsg type= typemsg.valueOf(splitmessage[0]);
 
 		switch (type) {
@@ -176,8 +201,7 @@ public class InteractiveChatSystem {
     	    	}	
     	    }
     	    ;
-        case ENVOIMSG:
-        	break;
+
         case DECONNEXION:
     	    System.out.println(msgrecu);
     	    User usertodisconnect= User.toUser(msgrecu);
@@ -202,17 +226,15 @@ public class InteractiveChatSystem {
 	}
 
 
+	//-------------------- GETTEURS & SETTEURS -----------------------------//
 
 	public static Application getApp() {
 		return app;
 	}
 
-
 	public void setApp(Application app) {
 		InteractiveChatSystem.app = app;
 	}
-
-
 
 
 }
