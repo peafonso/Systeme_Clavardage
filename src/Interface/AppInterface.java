@@ -91,7 +91,6 @@ public class AppInterface {
 		frame.setForeground(new Color(26, 104, 104));
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBackground(new Color(26, 104, 104));
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(AppInterface.class.getResource("/images/ACCUEIL_FOND.png")));
 		frame.getContentPane().setForeground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 885, 579);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
