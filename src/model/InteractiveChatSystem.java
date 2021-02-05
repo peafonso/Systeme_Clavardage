@@ -168,7 +168,7 @@ public class InteractiveChatSystem {
      	    		System.out.println("Pb envoi UDP OK");
      	    	}    	    
      	    }
-     	    ;
+     	    break;
      	    
         case CHANGEMENTPSEUDO:
     	    System.out.println(msgrecu);
@@ -200,7 +200,7 @@ public class InteractiveChatSystem {
     	    		}    	    
     	    	}	
     	    }
-    	    ;
+    	    break;
 
         case DECONNEXION:
     	    System.out.println(msgrecu);
@@ -218,7 +218,7 @@ public class InteractiveChatSystem {
     	    	}
     	    	Home.miseAJourContact();
     	    }
-        	;
+        	break;
 		default:
 			break;
         
