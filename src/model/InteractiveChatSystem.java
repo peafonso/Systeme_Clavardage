@@ -109,9 +109,6 @@ public class InteractiveChatSystem {
 			//Si réponse positive then renvoi vrai
 		    System.out.println("pseudo ok");
 	    	getApp().getMe().setPseudo(newPseudo);
-	    	if (Home.getTalkingto().getText()!=newPseudo) {
-	    		Home.getTalkingto().setText(newPseudo);
-	    	}
 	    	
 		}
 			
@@ -167,6 +164,7 @@ public class InteractiveChatSystem {
          		    System.out.println("j'ajoute" +usertoadd+ "et je maj");
         			Home.miseAJourContact();
 
+
      	    	}catch (Exception e) {
      	    		System.out.println("Pb envoi UDP OK");
      	    	}    	    
@@ -201,6 +199,9 @@ public class InteractiveChatSystem {
     	    			UDPTalk.sendUDP(envoiok, usertocompare.getPort(), usertocompare.getIP());
         	    		Home.displayNotifUsers(oldpseudo," just changed his pseudo to "+usertocompare.getPseudo()+"\n");
         	    		Home.miseAJourContact();
+            	    	if (Home.getTalkingto().getText()!=usertocompare.getPseudo()) {
+            	    		Home.getTalkingto().setText(usertocompare.getPseudo());
+            	    	}
     	    		}catch (Exception e) {
     	    			System.out.println("Pb envoi UDP OK");
     	    		}    	    
