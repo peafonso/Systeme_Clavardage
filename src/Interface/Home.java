@@ -331,7 +331,6 @@ public class Home {
 	 */
 	public void Chats(User u2) {
 		System.out.println("talking to" + u2.getPseudo());
-
 		getTalkingto().setText(u2.getPseudo()); // pour afficher à qui on parle
 		btnSend.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -410,7 +409,7 @@ public class Home {
 	 */
 	public static void display(String friend) {
 		System.out.println("receiving smthing from ");
-		if (usertalking.getPseudo().equals(friend)) {
+		if (getTalkingto().getText().equals(friend)) {
 			System.out.println("printing it");
 			loadconvo(usertalking);
 		}
