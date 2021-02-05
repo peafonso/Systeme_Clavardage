@@ -219,6 +219,11 @@ public class InteractiveChatSystem {
     	    else {
     	    	getApp().getFriends().deleteContact(getApp().getFriends().getUserfromPseudo(usertodisconnect.getPseudo()));
 	    		Home.displayNotifUsers(usertodisconnect.getPseudo()," just disconnect \n");
+	    		if (Home.getTalkingto().getText().equals(usertodisconnect.getPseudo())) {
+	    			System.out.println("triste il est parti");
+	    			Home.getTalkingto().setText("");
+	    			Home.clearMessagesArea();
+	    		}
     	    	Home.miseAJourContact();
     	    }
         	break;
