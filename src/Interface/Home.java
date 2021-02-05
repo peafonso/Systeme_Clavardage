@@ -434,7 +434,7 @@ public class Home {
 	}
 	
 	/**
-	 * Affichage des notifications des connexions et déconnexions des users
+	 * Affichage des notifications des connexions, déconnexions et changement de pseudos des users
 	 * @param pseudo pseudo de l'user se connectant/se déconnectant
 	 * @param todisplay phrase à notifier à l'user
 	 */
