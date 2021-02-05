@@ -109,7 +109,7 @@ public class InteractiveChatSystem {
 			//Si réponse positive then renvoi vrai
 		    System.out.println("pseudo ok");
 	    	getApp().getMe().setPseudo(newPseudo);
-	    	if (Home.getTalkingto().getText()==newPseudo) {
+	    	if (Home.getTalkingto().getText()!=newPseudo) {
 	    		Home.getTalkingto().setText(newPseudo);
 	    	}
 	    	
