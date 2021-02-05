@@ -47,15 +47,15 @@ import network.UDPListener;
  * frame : panel de contenu principal de la frame
  * panel : panel de contenu principal de la frame
  * textfield : zone de texte pour pouvoir rentrer le pseudo choisi par l'user
- * btnSend :
- * textArea :
- * talkingto :
- * usertalking :
- * txtrB :
- * usersconnected :
+ * btnSend : bouton permettant l'envoi de messages
+ * textArea : zone de lecture de la conversation
+ * talkingto : pseudo de l'user avec qui on clavarde
+ * usertalking : user avec qui on clavarde
+ * txtrB : notre pseudo
+ * usersconnected : liste des users connectés sur le réseau
  * 
- * udpListen :
- * tcpListen :
+ * udpListen : instance de UDPListener permettant l'écoute des envois udp 
+ * tcpListen : instance de TCPRunner permettant l'écoute de conversation 
  * 
  */
 
