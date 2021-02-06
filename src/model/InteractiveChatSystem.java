@@ -51,7 +51,10 @@ public class InteractiveChatSystem {
 		getApp().getMe().setPseudo(newPseudo);
 		//Écoute tant qu'il y a une réponse
 	    System.out.println("Attente de reception");
-		String response= socketReception.receiveUDP(port);
+	    String response= "";
+	    while(!(response.equals("ok_pseudo_IP_4445"))) {
+	    	System.out.println("i'm receiving!");
+		response=socketReception.receiveUDP(port);
 	    System.out.println("On a reçu: "+ response);
 		User usertoadd= User.toUser(response);
 		String[] parametersuser=response.split("_");
@@ -72,6 +75,7 @@ public class InteractiveChatSystem {
 		    }
 	    	getApp().getMe().setPseudo(newPseudo);
 		}
+	    }
 		return disponible;
 	}		
 
