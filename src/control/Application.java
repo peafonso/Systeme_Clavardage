@@ -19,6 +19,9 @@ import model.User;
 
 public class Application {
 	
+	//nombre de sessions maximales simultannées
+	public static int maxConnection;
+	public Exception tooMuchSessions;
 	private User me;
 	private Contacts friends;
 	private InteractiveChatSystem cSystem;
@@ -30,6 +33,11 @@ public class Application {
 	 * */
 	public Application(User u1) {
 		this.setMe(u1);
+		if (!(maxConnection>49)) {
+			maxConnection++;
+		}else {
+			
+		}
 		setFriends(new Contacts());
 	}
 	
