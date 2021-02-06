@@ -52,6 +52,7 @@ public class InteractiveChatSystem {
 		//Écoute tant qu'il y a une réponse
 	    System.out.println("Attente de reception");
 		String response= socketReception.receiveUDP(port);
+		
 	    System.out.println("On a reçu: "+ response);
 		User usertoadd= User.toUser(response);
 		String[] parametersuser=response.split("_");

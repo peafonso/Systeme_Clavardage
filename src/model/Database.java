@@ -25,6 +25,7 @@ public class Database {
 	
 	private static Application app;
 	// SQLite connection string
+	//créer un dossier
     String url = "jdbc:sqlite:./sqlite/test.db";
     
 	/**
