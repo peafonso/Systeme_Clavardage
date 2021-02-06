@@ -104,6 +104,8 @@ public class UDPRunner extends Thread {
 	        	serverSocket.close();
 
 	        }
+        	serverSocket.close();
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();

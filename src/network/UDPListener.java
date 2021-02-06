@@ -120,7 +120,6 @@ public class UDPListener extends Thread{
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-        serverSocket.close();
 	}
 	
 	
