@@ -72,6 +72,8 @@ public class UDPRunner extends Thread {
 	        		}
 	        		catch(SocketTimeoutException e){
 	        			sentence="ok_pseudo_IP_4445";
+	    	        	serverSocket.close();
+
 	        		}
 
 	        	}
@@ -99,6 +101,8 @@ public class UDPRunner extends Thread {
 	        		}
 	        		catch (SocketTimeoutException e ) {
 	        			//nothing to do
+	    	        	serverSocket.close();
+
 	        		}
 	        	}
 	        	serverSocket.close();
