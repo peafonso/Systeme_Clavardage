@@ -13,10 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Classe reprï¿½sentant la base de donnï¿½es permettant l'historique des conversations 
+ * Classe représentant la base de données permettant l'historique des conversations 
  * app : instance de la classe Application 
  *
- * 	Une table est crï¿½e pour chaque conversation du nom de l'adresse ip de la personne avec qui
+ * 	Une table est crée pour chaque conversation du nom de l'adresse ip de la personne avec qui
  * on discute. On mets dedans l'ensemble des messages 
  * 
  */
@@ -28,8 +28,8 @@ public class Database {
     String url = "jdbc:sqlite:./sqlite/test.db";
     
 	/**
-	 * Constructeur de Database : association de l'application et crï¿½ation de la base de donnï¿½es
-	 * @param app Application associï¿½e
+	 * Constructeur de Database : association de l'application et création de la base de données
+	 * @param app Application associée
 	 */
     public Database(Application app) {
     	this.setApp(app);
@@ -38,8 +38,8 @@ public class Database {
     }
     
    /**
-	* Crï¿½ation de la base de donnï¿½es 
-	* (si elle est dï¿½jï¿½ existante, les messages de crï¿½ation s'affichent mais rien ne se passe
+	* Création de la base de données 
+	* (si elle est déjà existante, les messages de création s'affichent mais rien ne se passe
 	* au niveau de l'ancien fichier)
 	*
 	*/
@@ -63,7 +63,7 @@ public class Database {
 	}
 	
 	/**
-	 * Connection ï¿½ la base de donnï¿½es	
+	 * Connection à la base de données	
 	 * @return l'objet de connection
 	 */
 	private Connection connect() {
@@ -78,15 +78,15 @@ public class Database {
 	 
 	 
 	/** 
-	 * Crï¿½ation d'une table de conversation 
+	 * Création d'une table de conversation 
 	 * name : Chatwith_IP2 (avec ip2 adresse ip de l'user avec qui on discute)
-	 * id : numï¿½ros des messages (1 ï¿½tant le plus ancien)
+	 * id : numéros des messages (1 étant le plus ancien)
 	 * time : horodatage des message
-	 * message : textes envoyï¿½s par les participants de la conversation
-	 * sender : 0 -> on a envoyï¿½ le message 1 -> on a reï¿½u le message
+	 * message : textes envoyés par les participants de la conversation
+	 * sender : 0 -> on a envoyé le message 1 -> on a reçu le message
      * 
-     * (Si on lance createTableConvo avec un correspondant avec lequel on a dï¿½jï¿½ conversï¿½ on 
-     * ne recrï¿½e pas une nouvelle table (IF NOT EXISTS))
+     * (Si on lance createTableConvo avec un correspondant avec lequel on a déjà conversé on 
+     * ne recrée pas une nouvelle table (IF NOT EXISTS))
      * @param ip2 adresse ip de la personne avec qui on communique 
      *
      */
@@ -108,9 +108,9 @@ public class Database {
 	}
 	
 	/**
-     * Recupï¿½ration de l'historique d'une conversation
+     * Recupération de l'historique d'une conversation
      * @param ip2 adresse ip de la personne avec qui on communique
-     * @return liste des messages envoyï¿½s correspondant ï¿½ l'historique de la conversation
+     * @return liste des messages envoyés correspondant à l'historique de la conversation
      *
      */
 	public ArrayList<Message> recupHistory(String ip2) {
@@ -146,9 +146,9 @@ public class Database {
 
 
 	/**
-     * Ajout de message dans l'historique (representï¿½ par la table Chatwith_ip2)
+     * Ajout de message dans l'historique (representée par la table Chatwith_ip2)
      * @param ip2 adresse ip de la personne avec qui on communique
-     * @param msg message ï¿½ ajouter dans la table
+     * @param msg message à ajouter dans la table
      *
      */
 	public void addMessage(String ip2, Message msg) {
@@ -177,7 +177,7 @@ public class Database {
 	}
 	
 	/**
-     * Rï¿½cupï¿½rer nom de table de conversation
+     * Récupérer nom de table de conversation
      * @param ip2 adresse ip de la personne avec qui on communique
      * @return nom de la table correspondante
      *
