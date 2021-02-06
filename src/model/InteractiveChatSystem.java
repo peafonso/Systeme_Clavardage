@@ -5,6 +5,7 @@ import java.io.IOException;
 import Interface.Home;
 import control.Application;
 import network.UDPListener;
+import network.UDPRunner;
 import network.UDPTalk;
 
 /**
@@ -34,49 +35,28 @@ public class InteractiveChatSystem {
 	/**
 	 * Connexion de l'user
 	 * @param newPseudo pseudo de l'user tentant de se connecter
+	 * @param CONNEXION 
 	 * @return un booléen correspondant à la validation de l'unicité de son pseudo
 	 */
 	public boolean Connexion(String newPseudo) {
-		boolean disponible=true;
 		//envoi broadcast
-		UDPListener socketReception = new UDPListener();
+		UDPRunner udprunner= new UDPRunner(getApp());
+		udprunner.setCas(1);
 		int port = 4445;
 		try {
 		    System.out.println("Tentative de connexion");
+		    udprunner.start();
 			UDPTalk.broadcast(("CONNEXION_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
+			Thread.sleep(2000); //on attends les réponses 
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans Connexion");
 		}
-		
-		getApp().getMe().setPseudo(newPseudo);
-		//Écoute tant qu'il y a une réponse
-	    System.out.println("Attente de reception");
-	    String response= "";
-	    while(!(response.equals("ok_pseudo_IP_4445"))) {
-	    	System.out.println("i'm receiving!");
-		response=socketReception.receiveUDP(port);
-	    System.out.println("On a reçu: "+ response);
-		User usertoadd= User.toUser(response);
-		String[] parametersuser=response.split("_");
-		String validate= parametersuser[0];
-		//Si réponse négative then renvoi faux
-		if (validate.equals("notOk")) {
-		    System.out.println("pseudo Not ok");
-			disponible=false;
-		}else {
-			//Si réponse positive then renvoi vrai
-		    System.out.println("pseudo ok");
-		    if(!(usertoadd.getIP().equals("IP"))) {
-		    	//si on est le 1er du réseau on ajoute personne 
-			    System.out.println("on ajoute "+usertoadd);
-		    	getApp().getFriends().addContact(usertoadd);
- 				getApp().getDb().createTableConvo(usertoadd.getIP()); //on ajoute dans la bd
-
-		    }
-	    	getApp().getMe().setPseudo(newPseudo);
+		finally {
+			getApp().getMe().setPseudo(newPseudo);
+			udprunner.interrupt();
+			UDPRunner.setOuvert(false);
 		}
-	    }
-		return disponible;
+		return UDPRunner.isDisponible();
 	}		
 
 	/**
@@ -86,37 +66,23 @@ public class InteractiveChatSystem {
 	 * @return un booléen correspondant à la validation de l'unicité de son pseudo
 	 */
 	public boolean ChangePseudo(String newPseudo, int port) {
-		boolean disponible=true;
-		//envoi broadcast
-		UDPListener socketReception = new UDPListener();
-		
+		UDPRunner udprunner = new UDPRunner(getApp());
+		udprunner.setCas(2);
 		try {
+			udprunner.start();
 		    System.out.println("Tentative de changement de pseudo en broadcast");
-			UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+getApp().getMe().getPort()), port);
+		    UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+getApp().getMe().getPort()), port);
+			Thread.sleep(2000); //on attends les réponses 
 		}catch (Exception e) {
 			System.out.println("Erreur broadcast dans ChangePseudo");
 		}
-		
-		getApp().getMe().setPseudo(newPseudo);
-		//Écoute tant qu'il y a une réponse
-	    System.out.println("Attente de reception");
-		String response= socketReception.receiveUDP(getApp().getMe().getPort());
-	    System.out.println("On a reçu: "+ response);
-		User usertoadd= User.toUser(response);
-		String[] parametersuser=response.split("_");
-		String validate= parametersuser[0];
-		//Si réponse négative then renvoi faux
-		if (validate.equals("notOk")) {
-		    System.out.println("pseudo Not ok");
-			disponible=false;
-		}else {
-			//Si réponse positive then renvoi vrai
-		    System.out.println("pseudo ok");
-	    	getApp().getMe().setPseudo(newPseudo);
-	    	
+		finally {
+			getApp().getMe().setPseudo(newPseudo);
+			udprunner.interrupt();
+			UDPRunner.setOuvert(false);			
 		}
-			
-		return disponible;
+		return UDPRunner.isDisponible();
+
 	}
 	
 	
