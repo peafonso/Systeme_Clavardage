@@ -38,7 +38,6 @@ import model.Message;
 import model.User;
 import network.TCPChat;
 import network.TCPRunner;
-import network.UDPListener;
 import network.UDPRunner;
 
 /**
@@ -55,7 +54,6 @@ import network.UDPRunner;
  * txtrB : notre pseudo
  * usersconnected : liste des users connectés sur le réseau
  * 
- * udpListen : instance de UDPListener permettant l'écoute des envois udp 
  * tcpListen : instance de TCPRunner permettant l'écoute de conversation 
  * 
  */
@@ -496,7 +494,7 @@ public class Home {
 	 */
 	public static void dispose() {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		UDPListener.setOuvert(false);
+		getApp().getUdplisten().setOuvert(false);
 		frame.dispose();
 	}
 

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import Interface.Home;
 import control.Application;
-import network.UDPListener;
 import network.UDPRunner;
 import network.UDPTalk;
 
@@ -104,6 +103,10 @@ public class InteractiveChatSystem {
 	 */
 	public static void ReceptionMsg (String msgrecu) {
 		String[] splitmessage=msgrecu.split("_");
+		if(splitmessage[0].equals("ok")) {
+			//nothingtodo 
+		}
+		else {
 		typemsg type= typemsg.valueOf(splitmessage[0]);
 
 		switch (type) {
@@ -201,6 +204,7 @@ public class InteractiveChatSystem {
 			break;
         
         }
+		}
 	}
 
 

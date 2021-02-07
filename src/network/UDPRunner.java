@@ -2,15 +2,20 @@ package network;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.Enumeration;
 
 import control.Application;
 import model.InteractiveChatSystem;
 import model.User;
 
 /**
- * Classe UDPRunner pour être à l'écoute lors des demandes de connexions et changements pseudos 
- * cas : integer permettant de savoir quel problème gérer entre la connexion et le changement de pseudo 
+ * Classe UDPRunner pour être à l'écoute lors des demandes de connexions, changements pseudos et autres
+ * cas : integer permettant de savoir quel problème gérer entre la connexion, changement de pseudo et écoute
  * ouvert : booléen permettant de gérer la fermeture du socket
  * disponible : booléen permettant de savoir si le pseudo est disponible (unique) dans le système
  * app : Application associée
@@ -19,7 +24,7 @@ import model.User;
 
 public class UDPRunner extends Thread {
 	
-	private int cas; //1-> connexion 2 -> changement pseudo
+	private int cas; //1-> connexion 2 -> changement pseudo 3 -> écoute udp 
 	private static DatagramSocket serverSocket;
 	private DatagramPacket receivePacket;
 	private boolean disponible;
@@ -38,7 +43,7 @@ public class UDPRunner extends Thread {
 	
 
 	/**
-	 * Réception de broadcast UDP correspondant à la connexion et changement de pseudos
+	 * Réception UDP correspondant à la connexion, changement de pseudos et des arrivées et départ
 	 *   
 	 */
 	public void run() {  
@@ -48,8 +53,9 @@ public class UDPRunner extends Thread {
 	        String sentence="";
 	        byte[] array = new byte[100000000];
 
-	        System.out.printf("Listening on udp:%s:%d%n", UDPListener.getCurrentIp().getHostAddress(), serverPort);
+	        System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), serverPort);
         	while (ouvert) {
+        		//cas de la connexion
         		if (getCas()==1) {
 	        		try {	
 	        	        serverSocket.setSoTimeout(2000);
@@ -85,17 +91,16 @@ public class UDPRunner extends Thread {
 	        		catch(SocketTimeoutException e){
 	        			sentence="ok_pseudo_IP_4445";
         				setDisponible(true);
-	        			System.out.println("cas2");
 	        		}
 	        		catch(Exception e) {
-	        			System.out.println("cas3");
 	        			e.printStackTrace();
 	        		}
 
 	        	}
+        		
+        	//cas du changement de pseudo
 	        else if (getCas()==2) {
 	        		try {			
-	        			System.out.println("go tester");
 	        	        serverSocket.setSoTimeout(2000);
 	        			receivePacket = new DatagramPacket(array, array.length);
 	        			serverSocket.receive(receivePacket);
@@ -123,11 +128,12 @@ public class UDPRunner extends Thread {
 	        			e.printStackTrace();
 	        		}
 	        	}
-
+        		
+        	//cas écoute udp
 	        else if (getCas()==3) {
 	        		serverSocket.close();
 	    	        serverSocket = new DatagramSocket(serverPort); //on le recrée pour qu'il n'est pas le settime out
-			        System.out.printf("Listening on udp:%s:%d%n", UDPListener.getCurrentIp().getHostAddress(), 4445);     
+			        System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), 4445);     
 			        receivePacket = new DatagramPacket(array, array.length);
 			        serverSocket.receive(receivePacket);
 			        String response = new String( receivePacket.getData(), 0, receivePacket.getLength() );
@@ -140,9 +146,33 @@ public class UDPRunner extends Thread {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("im here");
 		}
 	}
+	
+	/**
+	 * Recuperation de l'adresse IP de l'hote 
+	 * @return l'adresse ip correspondante 
+	 */
+	 public static InetAddress getCurrentIp() { 
+		 try { 
+			 Enumeration networkInterfaces = NetworkInterface .getNetworkInterfaces();
+			 while (networkInterfaces.hasMoreElements()) { 
+				 NetworkInterface ni = (NetworkInterface) networkInterfaces .nextElement(); 
+				 Enumeration nias = ni.getInetAddresses(); 
+				 while(nias.hasMoreElements()) { 
+					 InetAddress ia= (InetAddress) nias.nextElement();
+					 if (!ia.isLinkLocalAddress() && !ia.isLoopbackAddress() && ia instanceof Inet4Address) { 
+						 return ia; 
+					 } 
+				 } 
+			 } 
+		 } 
+		 catch (SocketException e) {
+			 System.out.println("unable to get current IP " + e.getMessage());
+		 } 
+	return null;
+	} 
+	 
 	//-------------------- GETTEURS & SETTEURS -----------------------------//
 	
 	public Application getApp() {

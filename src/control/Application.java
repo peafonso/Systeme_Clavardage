@@ -15,6 +15,7 @@ import network.UDPRunner;
  *           déconnexion et changement de pseudo
  *  db : instance de la classe Database représentant la base de données de l'user (permettant la gestion
  *       de l'historique des conversations)
+ * udplisten : instance de la classe UDPRunner permettant d'être à l'écoute en udp
  *  
  */
 

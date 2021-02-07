@@ -6,7 +6,6 @@ import javax.swing.border.EmptyBorder;
 
 import control.Application;
 import network.TCPRunner;
-import network.UDPListener;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -60,7 +59,7 @@ public class Disconnect extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				UDPListener.setOuvert(false);
+				app.getUdplisten().setOuvert(false);
 				TCPRunner.setOuvert(false);
 				app.getcSystem().Deconnexion();;
 				dispose();

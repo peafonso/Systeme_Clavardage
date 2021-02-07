@@ -1,6 +1,6 @@
 package model;
 
-import network.UDPListener;
+import network.UDPRunner;
 
 /**
  * Classe représentant un user de l'application, associée à ces 3 attributs :
@@ -22,7 +22,7 @@ public class User {
 	 * (le pseudo sera determiné par la suite après vérification d'unicité)
 	 */
 	public User() {
-		this.setIP(UDPListener.getCurrentIp().getHostAddress());
+		this.setIP(UDPRunner.getCurrentIp().getHostAddress());
 		this.setPort(1234);
 	}
 	
