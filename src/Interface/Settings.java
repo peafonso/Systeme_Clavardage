@@ -133,7 +133,7 @@ public class Settings extends JFrame {
 				});
 			}
 			else {
-				if (app.getcSystem().ChangePseudo(pseudo, 4445)) {
+				if (app.getcSystem().ChangePseudo(pseudo, 4446)) {
 					app.getMe().setPseudo(pseudo);
 					Home.pseudoModif();
 

@@ -42,7 +42,7 @@ public class InteractiveChatSystem {
 		//envoi broadcast
 		UDPRunner udprunner= new UDPRunner(getApp());
 		udprunner.setCas(1);
-		int port = 4445;
+		int port = 4446;
 		try {
 		    System.out.println("Tentative de connexion");
 		    udprunner.start();
