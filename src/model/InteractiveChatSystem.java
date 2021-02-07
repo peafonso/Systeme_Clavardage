@@ -47,7 +47,6 @@ public class InteractiveChatSystem {
 		int port = 4445;
 		try {
 		    System.out.println("Tentative de connexion");
-			//udplisten.start();
 			UDPTalk.broadcast(("CONNEXION_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
 			Thread.sleep(2000); //on attends les réponses 
 		}catch (Exception e) {
@@ -55,8 +54,7 @@ public class InteractiveChatSystem {
 		}
 		finally {
 			getApp().getMe().setPseudo(newPseudo);
-			udplisten.setOuvert(false);
-			//udplisten.interrupt();
+			udplisten.setCas(3);
 		}
 		return udplisten.isDisponible();
 	}		
@@ -79,8 +77,6 @@ public class InteractiveChatSystem {
 		}
 		finally {
 			getApp().getMe().setPseudo(newPseudo);
-			udplisten.setOuvert(false);			
-			//udplisten.interrupt();
 
 		}
 		return udplisten.isDisponible();
