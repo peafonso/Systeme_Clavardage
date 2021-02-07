@@ -64,6 +64,7 @@ public class UDPRunner extends Thread {
 	        			if (validate.equals("notOk")) {
 	        				System.out.println("pseudo Not ok");
 	        				setDisponible(false);
+	        				setCas(3);
 	        			}else {
 	        				//Si réponse positive then renvoi vrai
 	        				System.out.println("pseudo ok");
@@ -107,6 +108,7 @@ public class UDPRunner extends Thread {
 	        			if (validate.equals("notOk")) {
 	        				System.out.println("pseudo Not ok");
 	        				setDisponible(false);
+	        				setCas(3);
 	        			}else {
 	        				//Si réponse positive then renvoi vrai
 	        				System.out.println("pseudo ok");
