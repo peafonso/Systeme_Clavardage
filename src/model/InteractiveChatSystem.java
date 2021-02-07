@@ -68,7 +68,6 @@ public class InteractiveChatSystem {
 	public boolean ChangePseudo(String newPseudo, int port) {
 		udplisten.setCas(2);
 		try {
-			//udprunner.start();
 		    System.out.println("Tentative de changement de pseudo en broadcast");
 		    UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+getApp().getMe().getPort()), port);
 			Thread.sleep(2000); //on attends les réponses 
@@ -77,6 +76,7 @@ public class InteractiveChatSystem {
 		}
 		finally {
 			getApp().getMe().setPseudo(newPseudo);
+			udplisten.setCas(3);
 
 		}
 		return udplisten.isDisponible();
