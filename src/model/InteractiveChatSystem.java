@@ -53,8 +53,8 @@ public class InteractiveChatSystem {
 		}
 		finally {
 			getApp().getMe().setPseudo(newPseudo);
-			udprunner.interrupt();
 			UDPRunner.setOuvert(false);
+			udprunner.interrupt();
 		}
 		return UDPRunner.isDisponible();
 	}		
@@ -78,8 +78,9 @@ public class InteractiveChatSystem {
 		}
 		finally {
 			getApp().getMe().setPseudo(newPseudo);
-			udprunner.interrupt();
 			UDPRunner.setOuvert(false);			
+			udprunner.interrupt();
+
 		}
 		return UDPRunner.isDisponible();
 

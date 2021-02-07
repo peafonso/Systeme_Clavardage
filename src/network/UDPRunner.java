@@ -7,6 +7,15 @@ import java.net.SocketTimeoutException;
 import control.Application;
 import model.User;
 
+/**
+ * Classe UDPRunner pour être à l'écoute lors des demandes de connexions et changements pseudos 
+ * cas : integer permettant de savoir quel problème gérer entre la connexion et le changement de pseudo 
+ * ouvert : booléen permettant de gérer la fermeture du socket
+ * disponible : booléen permettant de savoir si le pseudo est disponible (unique) dans le système
+ * app : Application associée
+ * 
+ */
+
 public class UDPRunner extends Thread {
 	
 	private int cas; //1-> connexion 2 -> changement pseudo
@@ -17,7 +26,7 @@ public class UDPRunner extends Thread {
 	private Application app;
 
 	/**
-	 * Constructeur UDPListener
+	 * Constructeur UDPRunner
 	 * (permettant l'ouverture du socket)
 	 */
 	public UDPRunner(Application app) {
@@ -27,7 +36,7 @@ public class UDPRunner extends Thread {
 	}
 	
 	/**
-	 * Réception de broadcast UDP correspondant à la connexion
+	 * Réception de broadcast UDP correspondant à la connexion et changement de pseudos
 	 *   
 	 */
 	public void run() {  
@@ -72,8 +81,15 @@ public class UDPRunner extends Thread {
 	        		}
 	        		catch(SocketTimeoutException e){
 	        			sentence="ok_pseudo_IP_4445";
+        				setDisponible(true);
+	        			System.out.println("cas2");
 	    	        	serverSocket.close();
-
+	    	        	setOuvert(false);
+	        		}
+	        		catch(Exception e) {
+	        			e.printStackTrace();
+	    	        	serverSocket.close();
+	    	        	setOuvert(false);
 	        		}
 
 	        	}
@@ -100,15 +116,15 @@ public class UDPRunner extends Thread {
 	        			}
 	        		}
 	        		catch (SocketTimeoutException e ) {
-	        			//nothing to do
 	    	        	serverSocket.close();
+        				setDisponible(true);
+	    	        	setOuvert(false);
 
 	        		}
 	        	}
 	        	serverSocket.close();
 
 	        }
-        	serverSocket.close();
 
 		}
 		catch (Exception e) {
