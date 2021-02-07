@@ -153,7 +153,7 @@ public class InteractiveChatSystem {
     	    		String envoiko= "notOk"+getApp().getMe().toString();
     	    		try {
     	    			System.out.println("envoiko "+ usertocompare.getIP());
-    	    			UDPTalk.sendUDP(envoiko, usertocompare.getPort(), usertocompare.getIP());
+    	    			UDPTalk.sendUDP(envoiko, 4445, usertocompare.getIP());
     	    		}catch (Exception e) {
     	    			System.out.println("Pb envoi UDP KO");
     	    		}
@@ -164,7 +164,7 @@ public class InteractiveChatSystem {
     	    			System.out.println("envoiok "+ usertocompare.getIP());
     	    			String oldpseudo=getApp().getFriends().getUserfromIP(usertocompare.getIP()).getPseudo();
     	    			getApp().getFriends().getUserfromIP(usertocompare.getIP()).setPseudo(usertocompare.getPseudo());
-    	    			UDPTalk.sendUDP(envoiok, usertocompare.getPort(), usertocompare.getIP());
+    	    			UDPTalk.sendUDP(envoiok, 4445, usertocompare.getIP());
         	    		Home.displayNotifUsers(oldpseudo," just changed his pseudo to "+usertocompare.getPseudo()+"\n");
         	    		Home.miseAJourContact();
             	    	if (Home.getTalkingto().getText()!=usertocompare.getPseudo()) {
