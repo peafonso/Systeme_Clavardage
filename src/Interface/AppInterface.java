@@ -2,6 +2,8 @@ package Interface;
 
 import control.*;
 import model.*;
+import network.UDPRunner;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -48,6 +50,7 @@ public class AppInterface {
 	public AppInterface() {
 		User u1= new User();
 		app= new Application(u1);
+		app.setUdplisten(new UDPRunner(app));
 		app.setcSystem(new InteractiveChatSystem(app));
 		app.setDb(new Database(app));
 		initialize();
@@ -145,7 +148,6 @@ public class AppInterface {
 		panel.add(textField);
 		panel.add(btnNewButton);
 		
-
 	}
 	
 	

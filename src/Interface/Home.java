@@ -39,6 +39,7 @@ import model.User;
 import network.TCPChat;
 import network.TCPRunner;
 import network.UDPListener;
+import network.UDPRunner;
 
 /**
  * Classe Home correspondant à la fenêtre principale (main) de l'application 
@@ -72,7 +73,6 @@ public class Home {
 	private static JTextArea txtrB;
 	private static JEditorPane notifPane;
 	private static JList<String> usersconnected;
-	static UDPListener udpListen = new UDPListener();
 	private TCPRunner tcpListen;
 
 	/**
@@ -310,7 +310,7 @@ public class Home {
 		frame.setVisible(true);
 		
 		//On lance un runner udp et tcp pour les connexion et déconnexion et messages
-		udpListen.start();
+		getApp().getUdplisten().setCas(3);
 		tcpListen = new TCPRunner(getApp());
 		tcpListen.start();
 		miseAJourContact();
@@ -466,7 +466,7 @@ public class Home {
 	public class windowClosingListener implements WindowListener {
 
 		public void windowClosing(WindowEvent e) {
-			UDPListener.setOuvert(false);
+			getApp().getUdplisten().setOuvert(false);
 			TCPRunner.setOuvert(false);
 			app.getcSystem().Deconnexion();
 		}

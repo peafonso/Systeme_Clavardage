@@ -5,6 +5,7 @@ import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 
 import control.Application;
+import model.InteractiveChatSystem;
 import model.User;
 
 /**
@@ -21,8 +22,8 @@ public class UDPRunner extends Thread {
 	private int cas; //1-> connexion 2 -> changement pseudo
 	private static DatagramSocket serverSocket;
 	private DatagramPacket receivePacket;
-	private static boolean disponible;
-	private static boolean ouvert;
+	private boolean disponible;
+	private boolean ouvert;
 	private Application app;
 
 	/**
@@ -43,14 +44,14 @@ public class UDPRunner extends Thread {
 		int serverPort=4445;
 		try {
 	        serverSocket = new DatagramSocket(serverPort);
-	        serverSocket.setSoTimeout(2000);
 	        String sentence="";
 	        byte[] array = new byte[100000000];
 
 	        System.out.printf("Listening on udp:%s:%d%n", UDPListener.getCurrentIp().getHostAddress(), serverPort);
         	if (getCas()==1) {
 	        	while (ouvert) {
-	        		try {			
+	        		try {	
+	        	        serverSocket.setSoTimeout(2000);
 	        			receivePacket = new DatagramPacket(array, array.length);
 	        			serverSocket.receive(receivePacket);
 	        			sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
@@ -133,6 +134,17 @@ public class UDPRunner extends Thread {
 	        	serverSocket.close();
 
 	        }
+	        else if (getCas()==3) {
+	        	while (ouvert) {			        
+			        System.out.printf("Listening on udp:%s:%d%n", UDPListener.getCurrentIp().getHostAddress(), 4445);     
+			        receivePacket = new DatagramPacket(array, array.length);
+			        serverSocket.receive(receivePacket);
+			        String response = new String( receivePacket.getData(), 0, receivePacket.getLength() );
+			        System.out.println("on va dans receptionmsg\n");
+			        InteractiveChatSystem.ReceptionMsg(response);
+			        
+				}
+	        }
 
 		}
 		catch (Exception e) {
@@ -151,24 +163,24 @@ public class UDPRunner extends Thread {
 		this.app = app;
 	}
 
-	public static void closeSocket() {
+	public void closeSocket() {
 		serverSocket.close();
 	}
 	
-	public static boolean isDisponible() {
+	public boolean isDisponible() {
 		return disponible;
 	}
 
-	public static void setDisponible(boolean disponible) {
-		UDPRunner.disponible = disponible;
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
 	}
 	
 	public boolean isOuvert() {
 		return ouvert;
 	}
 
-	public static void setOuvert(boolean ouvert) {
-		UDPRunner.ouvert = ouvert;
+	public void setOuvert(boolean ouvert) {
+		this.ouvert = ouvert;
 	}
 
 	public int getCas() {

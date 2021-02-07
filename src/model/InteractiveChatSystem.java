@@ -17,6 +17,7 @@ import network.UDPTalk;
  */
 public class InteractiveChatSystem {
 	private static Application app;
+	private UDPRunner udplisten;
 
 	/*type des messages à envoyer ou recevoir en udp broadcast correspondant aux différentes
 	  situations à gérer par l'user*/
@@ -28,6 +29,7 @@ public class InteractiveChatSystem {
 	 */
 	public InteractiveChatSystem(Application app) {
 		this.setApp(app);
+		setUdplisten(getApp().getUdplisten());
 	}
 
 	
@@ -40,12 +42,12 @@ public class InteractiveChatSystem {
 	 */
 	public boolean Connexion(String newPseudo) {
 		//envoi broadcast
-		UDPRunner udprunner= new UDPRunner(getApp());
-		udprunner.setCas(1);
+		udplisten.setCas(1);
+		udplisten.start();
 		int port = 4445;
 		try {
 		    System.out.println("Tentative de connexion");
-		    udprunner.start();
+			//udplisten.start();
 			UDPTalk.broadcast(("CONNEXION_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
 			Thread.sleep(2000); //on attends les réponses 
 		}catch (Exception e) {
@@ -53,10 +55,10 @@ public class InteractiveChatSystem {
 		}
 		finally {
 			getApp().getMe().setPseudo(newPseudo);
-			UDPRunner.setOuvert(false);
-			udprunner.interrupt();
+			udplisten.setOuvert(false);
+			//udplisten.interrupt();
 		}
-		return UDPRunner.isDisponible();
+		return udplisten.isDisponible();
 	}		
 
 	/**
@@ -66,10 +68,9 @@ public class InteractiveChatSystem {
 	 * @return un booléen correspondant à la validation de l'unicité de son pseudo
 	 */
 	public boolean ChangePseudo(String newPseudo, int port) {
-		UDPRunner udprunner = new UDPRunner(getApp());
-		udprunner.setCas(2);
+		udplisten.setCas(2);
 		try {
-			udprunner.start();
+			//udprunner.start();
 		    System.out.println("Tentative de changement de pseudo en broadcast");
 		    UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+getApp().getMe().getPort()), port);
 			Thread.sleep(2000); //on attends les réponses 
@@ -78,11 +79,11 @@ public class InteractiveChatSystem {
 		}
 		finally {
 			getApp().getMe().setPseudo(newPseudo);
-			UDPRunner.setOuvert(false);			
-			udprunner.interrupt();
+			udplisten.setOuvert(false);			
+			//udplisten.interrupt();
 
 		}
-		return UDPRunner.isDisponible();
+		return udplisten.isDisponible();
 
 	}
 	
@@ -213,6 +214,18 @@ public class InteractiveChatSystem {
 
 	public void setApp(Application app) {
 		InteractiveChatSystem.app = app;
+	}
+
+
+
+	public UDPRunner getUdplisten() {
+		return udplisten;
+	}
+
+
+
+	public void setUdplisten(UDPRunner udplisten) {
+		this.udplisten = udplisten;
 	}
 
 

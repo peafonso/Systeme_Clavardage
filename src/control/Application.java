@@ -4,6 +4,7 @@ import model.Contacts;
 import model.Database;
 import model.InteractiveChatSystem;
 import model.User;
+import network.UDPRunner;
 
 /**
  *  Classe de l'application, rassemblant l'instance des arguments nécessaires à l'utilisation 
@@ -26,6 +27,7 @@ public class Application {
 	private Contacts friends;
 	private InteractiveChatSystem cSystem;
 	private Database db;
+	private UDPRunner udplisten;
 
 	/**
 	 * Constructeur de l'application 
@@ -74,6 +76,16 @@ public class Application {
 
 	public void setDb(Database db) {
 		this.db = db;
+	}
+
+
+	public UDPRunner getUdplisten() {
+		return udplisten;
+	}
+
+
+	public void setUdplisten(UDPRunner udplisten) {
+		this.udplisten = udplisten;
 	}
 
 
