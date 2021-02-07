@@ -40,7 +40,7 @@ public class UDPRunner extends Thread {
 	 *   
 	 */
 	public void run() {  
-		int serverPort=4445;
+		int serverPort=4446;
 		try {
 	        serverSocket = new DatagramSocket(serverPort);
 	        serverSocket.setSoTimeout(2000);
@@ -87,6 +87,7 @@ public class UDPRunner extends Thread {
 	    	        	setOuvert(false);
 	        		}
 	        		catch(Exception e) {
+	        			System.out.println("cas3");
 	        			e.printStackTrace();
 	    	        	serverSocket.close();
 	    	        	setOuvert(false);
@@ -98,6 +99,7 @@ public class UDPRunner extends Thread {
 	        else if (getCas()==2) {
 	        	while (ouvert) {
 	        		try {			
+	        			System.out.println("go tester");
 	        			receivePacket = new DatagramPacket(array, array.length);
 	        			serverSocket.receive(receivePacket);
 	        			sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
@@ -109,6 +111,7 @@ public class UDPRunner extends Thread {
 	        			if (validate.equals("notOk")) {
 	        				System.out.println("pseudo Not ok");
 	        				setDisponible(false);
+		    	        	setOuvert(false);
 	        			}else {
 	        				//Si réponse positive then renvoi vrai
 	        				System.out.println("pseudo ok");
@@ -121,6 +124,11 @@ public class UDPRunner extends Thread {
 	    	        	setOuvert(false);
 
 	        		}
+	        		catch(Exception e) {
+	        			e.printStackTrace();
+	    	        	serverSocket.close();
+	    	        	setOuvert(false);
+	        		}
 	        	}
 	        	serverSocket.close();
 
@@ -129,6 +137,7 @@ public class UDPRunner extends Thread {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("im here");
 		}
 	}
 	
