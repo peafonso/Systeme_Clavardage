@@ -40,7 +40,7 @@ public class UDPRunner extends Thread {
 	 *   
 	 */
 	public void run() {  
-		int serverPort=4446;
+		int serverPort=4445;
 		try {
 	        serverSocket = new DatagramSocket(serverPort);
 	        serverSocket.setSoTimeout(2000);
