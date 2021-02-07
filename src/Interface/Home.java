@@ -194,6 +194,38 @@ public class Home {
 		btnSend.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
 		btnSend.setBounds(558, 403, 76, 38);
 
+		btnSend.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (getUsertalking()==null) {
+					// nothing to do
+				}
+				else {
+					String msg = textField.getText();
+					TCPChat chat = new TCPChat(getApp(), usertalking);
+					chat.SendMessage(msg);
+					textField.setText("");
+					loadconvo(usertalking);
+				}
+			}
+		});
+
+		textField.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (getUsertalking()==null){
+					// nothing to do
+					System.out.println("t nul ");
+				}
+				else {
+					String msg = textField.getText();
+					TCPChat chat = new TCPChat(getApp(), usertalking);
+					chat.SendMessage(msg);
+					textField.setText("");
+					loadconvo(usertalking);
+				}
+			}
+	
+		});
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(60, 96, 664, 296);
 		panel.add(scrollPane);
@@ -332,26 +364,6 @@ public class Home {
 	public void Chats(User u2) {
 		System.out.println("talking to" + u2.getPseudo());
 		getTalkingto().setText(u2.getPseudo()); // pour afficher à qui on parle
-		btnSend.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				String msg = textField.getText();
-				TCPChat chat = new TCPChat(getApp(), u2);
-				chat.SendMessage(msg);
-				textField.setText("");
-				loadconvo(u2);
-			}
-		});
-
-		textField.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				String msg = textField.getText();
-				TCPChat chat = new TCPChat(getApp(), u2);
-				chat.SendMessage(msg);
-				textField.setText("");
-				loadconvo(u2);
-			}
-		});
-
 	}
 	
 	/**
@@ -393,7 +405,6 @@ public class Home {
 	 */
 	public static void miseAJourContact() {
 		usersconnected.setListData(getApp().getFriends().getListPseudo());
-		// garder le pointeur du getSelectedValue même si qqn part
 	}
 
 	/**
