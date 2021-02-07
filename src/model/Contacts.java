@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+
 /**
  * Classe Contacts héritant de ArrayList<User> représentant la liste des users connectés 
  * par l'attribut contacts 
@@ -127,6 +128,14 @@ public class Contacts extends ArrayList<User>{
 	}
 
 	
+	public boolean appartient (String pseudo) {
+		for (User user : contacts) {
+			if (user.getPseudo().equals(pseudo)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 
 }

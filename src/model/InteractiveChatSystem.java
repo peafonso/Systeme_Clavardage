@@ -162,14 +162,16 @@ public class InteractiveChatSystem {
     	    		String envoiok= "ok"+getApp().getMe().toString();
     	    		try {
     	    			System.out.println("envoiok "+ usertocompare.getIP());
-    	    			String oldpseudo=getApp().getFriends().getUserfromIP(usertocompare.getIP()).getPseudo();
-    	    			getApp().getFriends().getUserfromIP(usertocompare.getIP()).setPseudo(usertocompare.getPseudo());
     	    			UDPTalk.sendUDP(envoiok, 4445, usertocompare.getIP());
-        	    		Home.displayNotifUsers(oldpseudo," just changed his pseudo to "+usertocompare.getPseudo()+"\n");
-        	    		Home.miseAJourContact();
-            	    	if (Home.getTalkingto().getText()!=usertocompare.getPseudo()) {
-            	    		Home.getTalkingto().setText(usertocompare.getPseudo());
-            	    	}
+    	    			if (!(getApp().getFriends().appartient(usertocompare.getPseudo()))) {
+    	    				String oldpseudo=getApp().getFriends().getUserfromIP(usertocompare.getIP()).getPseudo();
+    	    				getApp().getFriends().getUserfromIP(usertocompare.getIP()).setPseudo(usertocompare.getPseudo());
+    	    				Home.displayNotifUsers(oldpseudo," just changed his pseudo to "+usertocompare.getPseudo()+"\n");
+    	    				Home.miseAJourContact();
+    	    				if (Home.getTalkingto().getText()!=usertocompare.getPseudo()) {
+    	    					Home.getTalkingto().setText(usertocompare.getPseudo());
+    	    				}
+    	    			}
     	    		}catch (Exception e) {
     	    			System.out.println("Pb envoi UDP OK");
     	    		}    	    
