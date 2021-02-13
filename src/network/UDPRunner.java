@@ -53,7 +53,7 @@ public class UDPRunner extends Thread {
 	        String sentence="";
 	        byte[] array = new byte[100000000];
 
-	        System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), serverPort);
+	        //System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), serverPort);
         	while (ouvert) {
         		//cas de la connexion
         		if (getCas()==1) {
@@ -62,25 +62,25 @@ public class UDPRunner extends Thread {
 	        			receivePacket = new DatagramPacket(array, array.length);
 	        			serverSocket.receive(receivePacket);
 	        			sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
-	        			System.out.println("On a reçu: "+ sentence);
+	        			//System.out.println("On a reçu: "+ sentence);
 	        			User usertoadd= User.toUser(sentence);
 	        			String[] parametersuser=sentence.split("_");
 	        			String validate= parametersuser[0];
 	        			//Si réponse négative then renvoi faux
 	        			if (validate.equals("notOk")) {
-	        				System.out.println("pseudo Not ok");
+	        				//System.out.println("pseudo Not ok");
 	        				setDisponible(false);
 	        				setCas(3);
 	        			}else {
 	        				//Si réponse positive then renvoi vrai
-	        				System.out.println("pseudo ok");
+	        				//System.out.println("pseudo ok");
 	        				setDisponible(true);
 	        				if(usertoadd.getIP().equals(getApp().getMe().getIP())) {
 	        					//nothing to do
 	        				}
 	        				else if(!(usertoadd.getIP().equals("IP"))) {
 	        					//si on est le 1er du réseau on ajoute personne 
-	        					System.out.println("on ajoute "+usertoadd);
+	        					//System.out.println("on ajoute "+usertoadd);
 	        					getApp().getFriends().addContact(usertoadd);
 	        					getApp().getDb().createTableConvo(usertoadd.getIP()); //on ajoute dans la bd
 
@@ -105,18 +105,18 @@ public class UDPRunner extends Thread {
 	        			receivePacket = new DatagramPacket(array, array.length);
 	        			serverSocket.receive(receivePacket);
 	        			sentence = new String( receivePacket.getData(), 0, receivePacket.getLength() );
-	        			System.out.println("On a reçu: "+ sentence);
+	        			//System.out.println("On a reçu: "+ sentence);
 	        			User usertoadd= User.toUser(sentence);
 	        			String[] parametersuser=sentence.split("_");
 	        			String validate= parametersuser[0];
 	        			//Si réponse négative then renvoi faux
 	        			if (validate.equals("notOk")) {
-	        				System.out.println("pseudo Not ok");
+	        				//System.out.println("pseudo Not ok");
 	        				setDisponible(false);
 	        				setCas(3);
 	        			}else {
 	        				//Si réponse positive then renvoi vrai
-	        				System.out.println("pseudo ok");
+	        				//System.out.println("pseudo ok");
 	        				setDisponible(true);
 	        			}
 	        		}
@@ -133,11 +133,11 @@ public class UDPRunner extends Thread {
 	        else if (getCas()==3) {
 	        		serverSocket.close();
 	    	        serverSocket = new DatagramSocket(serverPort); //on le recrée pour qu'il n'est pas le settime out
-			        System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), 4445);     
+			        //System.out.printf("Listening on udp:%s:%d%n", getCurrentIp().getHostAddress(), 4445);     
 			        receivePacket = new DatagramPacket(array, array.length);
 			        serverSocket.receive(receivePacket);
 			        String response = new String( receivePacket.getData(), 0, receivePacket.getLength() );
-			        System.out.println("on va dans receptionmsg\n");
+			        //System.out.println("on va dans receptionmsg\n");
 			        InteractiveChatSystem.ReceptionMsg(response);
 			        
 				}

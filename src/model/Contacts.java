@@ -25,9 +25,9 @@ public class Contacts extends ArrayList<User>{
 	 * Affichage de l'ensemble des users de notre liste Contacts
 	 */
 	public static void showContacts() {
-		System.out.println("Contacts list:");
+		//System.out.println("Contacts list:");
 		for (User user : contacts) {
-			System.out.println(user.getPseudo());
+			//System.out.println(user.getPseudo());
 		}
 	}
 	

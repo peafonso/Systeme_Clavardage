@@ -36,7 +36,7 @@ public class UDPTalk {
     		socket.setBroadcast(true);
     		byte[] buffer = broadcastMessage.getBytes();
     		DatagramPacket packet = new DatagramPacket(buffer, buffer.length, addrbroadcast, port);
-    		System.out.println("Envoi msg en broadcast to"+addrbroadcast);
+    		//System.out.println("Envoi msg en broadcast to"+addrbroadcast);
     		socket.send(packet);
     		socket.close();
 		}
@@ -84,7 +84,7 @@ public class UDPTalk {
         DatagramPacket packet;
 		try {
 			packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(laddr), port);
-			System.out.println("Envoi msg");
+			//System.out.println("Envoi msg");
 			socket.send(packet);
         	socket.close();
 		} catch (IOException e) {

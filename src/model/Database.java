@@ -54,8 +54,8 @@ public class Database {
 	   	try (Connection conn = DriverManager.getConnection(url)) {
 	   		if (conn != null) {
 	   			DatabaseMetaData meta = conn.getMetaData();
-	   			System.out.println("The driver name is " + meta.getDriverName());
-	   			System.out.println("A new database has been created.");
+	   			//System.out.println("The driver name is " + meta.getDriverName());
+	   			//System.out.println("A new database has been created.");
 	   		}
 
 	   	} catch (SQLException e) {	
@@ -168,7 +168,7 @@ public class Database {
 	        	pstmt.setInt(4, 1);
 
 	        }
-	    	System.out.println("on ajoute le msg");
+	    	//System.out.println("on ajoute le msg");
 
 	        pstmt.executeUpdate();
 	    } catch (SQLException e) {
@@ -196,7 +196,7 @@ public class Database {
 	public void deleteConvo(String ip2) {
 		String nomtable= getNomTable(ip2);
 		String sql = "DROP TABLE `"+nomtable+"`";
-		System.out.println("DROP TABLE `"+nomtable+"`");
+		//System.out.println("DROP TABLE `"+nomtable+"`");
 	        try (Connection conn = DriverManager.getConnection(url);
 	            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.executeUpdate();

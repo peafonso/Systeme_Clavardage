@@ -45,7 +45,7 @@ public class InteractiveChatSystem {
 		udplisten.start();
 		int port = 4445;
 		try {
-		    System.out.println("Tentative de connexion");
+		    //System.out.println("Tentative de connexion");
 			UDPTalk.broadcast(("CONNEXION_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+port), port);
 			Thread.sleep(2000); //on attends les réponses 
 		}catch (Exception e) {
@@ -67,7 +67,7 @@ public class InteractiveChatSystem {
 	public boolean ChangePseudo(String newPseudo, int port) {
 		udplisten.setCas(2);
 		try {
-		    System.out.println("Tentative de changement de pseudo en broadcast");
+		    //System.out.println("Tentative de changement de pseudo en broadcast");
 		    UDPTalk.broadcast(("CHANGEMENTPSEUDO_"+newPseudo+"_"+getApp().getMe().getIP()+"_"+getApp().getMe().getPort()), port);
 			Thread.sleep(2000); //on attends les réponses 
 		}catch (Exception e) {
@@ -90,7 +90,7 @@ public class InteractiveChatSystem {
 	public void Deconnexion() {
 		int port=4445;
 		try {
-			System.out.println("je me deconnecte et je l'envoie en broadcast ");
+			//System.out.println("je me deconnecte et je l'envoie en broadcast ");
 			UDPTalk.broadcast(("DECONNEXION_"+getApp().getMe().getPseudo()+"_"+getApp().getMe().getIP()+"_"+getApp().getMe().getPort()), port);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -111,28 +111,28 @@ public class InteractiveChatSystem {
 
 		switch (type) {
         case CONNEXION:
-    	    System.out.println(msgrecu);
+    	    //System.out.println(msgrecu);
 
         	User usertoadd= User.toUser(msgrecu);
      	    if (usertoadd.getPseudo().equals(getApp().getMe().getPseudo())) {
-     		    System.out.println("pseudo utilisé");
+     		    //System.out.println("pseudo utilisé");
      	    	String envoiko= "notOk"+getApp().getMe().toString();
      	    	try {
-     	    		System.out.println("envoiko "+ usertoadd.getIP());
+     	    		//System.out.println("envoiko "+ usertoadd.getIP());
          	    	UDPTalk.sendUDP(envoiko, usertoadd.getPort(), usertoadd.getIP());
      	    	}catch (Exception e) {
      	    		System.out.println("Pb envoi UDP KO");
      	    	}
      	    }else{
-     		    System.out.println("pseudo ok");
+     		    //System.out.println("pseudo ok");
      	    	String envoiok= "ok"+getApp().getMe().toString();
         	    	try {
-     	    		System.out.println("envoiok "+ usertoadd.getIP());
+     	    		//System.out.println("envoiok "+ usertoadd.getIP());
      				getApp().getFriends().addContact(usertoadd); //on ajoute dans le tableau
      				getApp().getDb().createTableConvo(usertoadd.getIP()); //on ajoute dans la bd
          	    	UDPTalk.sendUDP(envoiok, usertoadd.getPort(), usertoadd.getIP());
     	    		Home.displayNotifUsers(usertoadd.getPseudo()," just connect \n");
-         		    System.out.println("j'ajoute" +usertoadd+ "et je maj");
+         		    //System.out.println("j'ajoute" +usertoadd+ "et je maj");
         			Home.miseAJourContact();
 
 
@@ -143,28 +143,28 @@ public class InteractiveChatSystem {
      	    break;
      	    
         case CHANGEMENTPSEUDO:
-    	    System.out.println(msgrecu);
+    	    //System.out.println(msgrecu);
     	 
     	    User usertocompare= User.toUser(msgrecu);
     	    //Si c'est moi meme qui recoit
     	    if(usertocompare.getIP().equals(getApp().getMe().getIP())) {
-    		    System.out.println("JE MAUTORISE");
+    		    //System.out.println("JE MAUTORISE");
     	    }
     	    else {
     	    	if (usertocompare.getPseudo().equals(getApp().getMe().getPseudo())) {
-    	    		System.out.println("pseudo utilisé");
+    	    		//System.out.println("pseudo utilisé");
     	    		String envoiko= "notOk"+getApp().getMe().toString();
     	    		try {
-    	    			System.out.println("envoiko "+ usertocompare.getIP());
+    	    			//System.out.println("envoiko "+ usertocompare.getIP());
     	    			UDPTalk.sendUDP(envoiko, 4445, usertocompare.getIP());
     	    		}catch (Exception e) {
     	    			System.out.println("Pb envoi UDP KO");
     	    		}
     	    	}else{
-    	    		System.out.println("pseudo ok");
+    	    		//System.out.println("pseudo ok");
     	    		String envoiok= "ok"+getApp().getMe().toString();
     	    		try {
-    	    			System.out.println("envoiok "+ usertocompare.getIP());
+    	    			//System.out.println("envoiok "+ usertocompare.getIP());
     	    			UDPTalk.sendUDP(envoiok, 4445, usertocompare.getIP());
     	    			if (!(getApp().getFriends().appartient(usertocompare.getPseudo()))) {
     	    				String oldpseudo=getApp().getFriends().getUserfromIP(usertocompare.getIP()).getPseudo();
@@ -183,17 +183,16 @@ public class InteractiveChatSystem {
     	    break;
 
         case DECONNEXION:
-    	    System.out.println(msgrecu);
+    	    //System.out.println(msgrecu);
     	    User usertodisconnect= User.toUser(msgrecu);
     	    //Si c'est moi meme qui recoit
     	    if(usertodisconnect.getIP().equals(getApp().getMe().getIP())) {
-    		    System.out.println("JE MAUTORISE");
+    		    //System.out.println("JE MAUTORISE");
     	    }
     	    else {
     	    	getApp().getFriends().deleteContact(getApp().getFriends().getUserfromPseudo(usertodisconnect.getPseudo()));
 	    		Home.displayNotifUsers(usertodisconnect.getPseudo()," just disconnect \n");
 	    		if (Home.getTalkingto().getText().equals(usertodisconnect.getPseudo())) {
-	    			System.out.println("triste il est parti");
 	    			Home.getTalkingto().setText("");
 	    			Home.clearMessagesArea();
 	    		}
