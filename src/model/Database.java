@@ -46,7 +46,7 @@ public class Database {
 	*/
 	public void createNewDatabase() {
 	   	try {
-			Class.forName("org.sqlite.JDBC");
+	   		Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}

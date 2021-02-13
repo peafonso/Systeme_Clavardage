@@ -54,7 +54,7 @@
           <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
           <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
           <addClasspath>true</addClasspath>
-          <mainClass>MyPackage.Main</mainClass>
+          <mainClass>Interface.AppInterface</mainClass>
         </manifest>
       </archive>
       <descriptorRefs>
