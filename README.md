@@ -14,9 +14,9 @@ $ java -cp ChitChat/target/ChitChat.jar Interface.AppInterface
 ```
 
 ### Rapport
-Ce projet contient deux rapports :
-* Conception
-* Manuel d'utilisation & explication du projet
+Ce projet contient deux rapports placés dans le dossier "Rapports":
+* Conception (Rapport_COO.pdf)
+* Manuel d'utilisation & explication du projet (Rapport_POO.pdf)
 
 La javadoc du projet se trouve dans le dossier "doc".
 
