@@ -10,7 +10,7 @@ $ git clone https://github.com/peafonso/Systeme_Clavardage
 
 ### Utilisation
 ```
-$ java -cp target/ChitChat.jar Interface.AppInterface
+$ java -cp ChitChat/target/ChitChat.jar Interface.AppInterface
 ```
 
 ### Rapport
