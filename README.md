@@ -22,4 +22,4 @@ La javadoc du projet se trouve dans le dossier "doc".
 
 ### Technologies
 * JavaSwing
-* Java SR-1.8
+* Java SE-1.8
